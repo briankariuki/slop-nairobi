@@ -25,8 +25,10 @@ import { cityUniforms } from './tsl-materials.js';
 // Slop New York's lighting.js (MIT, © 2026 Mr.doob), as Slop Singapore runs it on the same three.js commit: the
 // physical Preetham sky with clouds, baked by PMREMGenerator into scene.environment (the light every surface takes from
 // the sky, and what glass and metal reflect), the two-cascade SunLight, a hemisphere fill, and sky-matched aerial haze.
-// The presets are New York's, the sun where it is over Nairobi: 1.3° south of the equator it rises in the east and sets
-// in the west at much the same time all year, passing almost overhead at noon. World frame: x = east, y = up, z = south.
+// The presets are New York's, with more fill at blue hour and night (Nairobi's walls reflect less than New York's
+// palette, tsl-materials.js WALL_ALBEDO, and the sky and the streetlights are all that light them then), the sun where
+// it is over Nairobi: 1.3° south of the equator it rises in the east and sets in the west at much the same time all
+// year, passing almost overhead at noon. World frame: x = east, y = up, z = south.
 //
 // scene.background stays null: SkyMesh is the sky. A background (colour or node) makes the renderer clear before each
 // render, the shadow cascades' included, so the second cascade's render would wipe the first.
@@ -73,9 +75,9 @@ const TIME_PRESETS = {
     roadWetness: 0.0,
     envIntensity: 0.58,
     canyonBounce: 0.58,
-    turbidity: 6.5,
-    rayleigh: 2.4,
-    mieCoefficient: 0.006,
+    turbidity: 3.0,
+    rayleigh: 1.6,
+    mieCoefficient: 0.004,
     mieDirectionalG: 0.86,
     cloudCoverage: 0.32,
     cloudDensity: 0.35,
@@ -88,15 +90,15 @@ const TIME_PRESETS = {
     sunColor: 0xff9466,
     sunIntensity: 3.1,
     hemiSky: 0x4c6ca8,
-    hemiGround: 0x6e5048,
-    hemiIntensity: 0.85,
+    hemiGround: 0x8a6048, // the streetlights coming on, warm off the ground
+    hemiIntensity: 1.5,
     skyTop: 0x102248,
     skyHorizon: 0xb86b6c,
     fogColor: 0x353c58,
     fogDensity: 0.00032,
     interiorGlow: 1.25,
     roadWetness: 0.0,
-    envIntensity: 0.36,
+    envIntensity: 0.62,
     canyonBounce: 0.32,
     turbidity: 9.5,
     rayleigh: 3.4,
@@ -113,15 +115,15 @@ const TIME_PRESETS = {
     sunColor: 0x8cb0e8,
     sunIntensity: 1.45,
     hemiSky: 0x263a62,
-    hemiGround: 0x382e36,
-    hemiIntensity: 0.72,
+    hemiGround: 0x7a5034, // sodium streetlight glow off the streets
+    hemiIntensity: 1.3,
     skyTop: 0x060c1a,
     skyHorizon: 0x182640,
     fogColor: 0x0c1424,
     fogDensity: 0.00036,
     interiorGlow: 1.55,
     roadWetness: 0.0,
-    envIntensity: 0.3,
+    envIntensity: 0.5,
     canyonBounce: 0.18,
     turbidity: 4.0,
     rayleigh: 1.5,

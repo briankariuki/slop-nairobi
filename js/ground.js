@@ -53,7 +53,7 @@ function paintMap() {
     g.stroke();
   };
 
-  g.fillStyle = '#b7ab92'; // dusty urban ground
+  g.fillStyle = '#9d927c'; // dusty urban ground
   g.fillRect(T.x0, T.z0, W, H);
   g.lineCap = 'round';
   g.lineJoin = 'round';
@@ -67,7 +67,7 @@ function paintMap() {
     g.fill(p, 'evenodd');
   }
   // building footprints: slightly darker ground where a wall meets it
-  g.fillStyle = '#9c917c';
+  g.fillStyle = '#867c69';
   for (const b of GEO.buildings) {
     if (b.part || b.minH) continue;
     g.beginPath();

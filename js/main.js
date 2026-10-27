@@ -526,7 +526,7 @@ function inRingOf(ring, x, z) {
   }
   return inside;
 }
-window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, map: mapSystem, streets: streets.userData.layout, roof };
+window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, grade: colorGrade, map: mapSystem, streets: streets.userData.layout, roof };
 
 // Debug menu: "Teleport to a roof". While it is on, a click (not a drag: dragging still orbits the camera) on a
 // building puts the active player on its roof. The ray from the camera through the cursor is marched in 0.5 m steps
