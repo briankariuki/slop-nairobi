@@ -459,10 +459,9 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   // Add vehicle contact shadows last + pre-allocated Clustered SpotLight / PointLight pools
   group.add(carShadowInst, busShadowInst, bodaShadowInst);
 
-  // Nairobi has neither night nor clustered lighting yet: without ClusteredLighting every pooled light would be a
-  // regular scene light in every material, so the pools stay empty (and the lamps unlit) until then
-  const HEADLIGHT_POOL_SIZE = 0;
-  const POLICE_LIGHT_POOL_SIZE = 0;
+  // (lit by ClusteredLighting, main.js: each light shades only the screen tiles it reaches, so a pool this size is cheap)
+  const HEADLIGHT_POOL_SIZE = 96;
+  const POLICE_LIGHT_POOL_SIZE = 6;
   const MAX_LIGHT_DIST = 115;
   const MAX_LIGHT_DIST_SQ = MAX_LIGHT_DIST * MAX_LIGHT_DIST;
 

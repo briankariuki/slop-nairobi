@@ -1,4 +1,8 @@
 import * as THREE from 'three/webgpu';
+import { pass, mrt, output, normalView, positionView, metalness, roughness, vec2, smoothstep } from 'three/tsl';
+import { ssr } from 'three/addons/tsl/display/SSRNode.js';
+import { ClusteredLighting } from 'three/addons/lighting/ClusteredLighting.js';
+import { createPostProcessing } from './post-processing.js';
 import { GEO } from './nairobi-geodata.js';
 import { heightAt } from './terrain.js';
 import { buildGround } from './ground.js';
@@ -25,13 +29,14 @@ const loadingOverlay = document.getElementById('loading-overlay');
 const renderer = new THREE.WebGPURenderer({ antialias: true, reversedDepthBuffer: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
+// (clustered lights, as New York's: the headlamps and the police lights, hundreds of point lights for the cost of a few)
+renderer.lighting = new ClusteredLighting(256, 32, 28, 48);
 renderer.setSize(innerWidth, innerHeight);
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 await renderer.init();
 
-// Equatorial light (lighting.js): a high sun, a bright sky and warm light bounced off the dusty ground, or the HUD's
-// other times of day
+// Equatorial light (lighting.js): a high sun in the physical sky, which lights everything and is what glass reflects,
+// and warm light bounced off the dusty ground, or the HUD's other times of day
 const scene = new THREE.Scene();
 const lighting = new LightingSystem(scene, renderer);
 
@@ -59,6 +64,43 @@ console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${tr
 const controllers = new ThirdPersonControllerManager(scene, world);
 const cameras = new CameraSystem(renderer.domElement, controllers);
 const camera = cameras.camera;
+
+// Slop New York's render pipeline: the scene with its normals, metalness and roughness alongside (transparent decals
+// write none, tsl-materials.js _transparentEffectMRT), half-resolution screen-space reflections on the glossy surfaces
+// near the camera, then bloom and the time of day's colour grade (post-processing.js)
+const scenePass = pass(scene, camera);
+// (the multisampled colour attachments only need resolving, never storing; SSR reads the depth, so it stays stored)
+scenePass.renderTarget.storeMultisampledColorBuffer = false;
+const ssrFade = smoothstep(360.0, 180.0, positionView.z.negate());
+const maxSSRRoughness = 0.75;
+const sceneMRT = mrt({
+  output,
+  normal: normalView,
+  metalRough: vec2(roughness.lessThan(maxSSRRoughness).select(metalness.mul(ssrFade), 0), roughness)
+});
+sceneMRT.setBlendMode('normal', new THREE.BlendMode(THREE.MaterialBlending));
+sceneMRT.setBlendMode('metalRough', new THREE.BlendMode(THREE.MaterialBlending));
+scenePass.setMRT(sceneMRT);
+const scenePassColor = scenePass.getTextureNode('output');
+const scenePassMetalRough = scenePass.getTextureNode('metalRough');
+const ssrPass = ssr(scenePassColor, scenePass.getTextureNode('depth'), scenePass.getTextureNode('normal'), {
+  metalnessNode: scenePassMetalRough.r,
+  roughnessNode: scenePassMetalRough.g,
+  camera
+});
+ssrPass.resolutionScale = 0.5;
+ssrPass.blurQuality = 1;
+ssrPass.maxDistance.value = 42;
+ssrPass.thickness.value = 0.85;
+// (a few coarse steps, then the hits refined, so reflection edges stay precise)
+ssrPass.quality.value = 0.25;
+ssrPass.binaryRefine = true;
+ssrPass.intensity.value = 0.5;
+ssrPass.screenEdgeFadeBlack = true;
+// the roughness blur must not spread reflections onto matte surfaces
+const reflectionMask = scenePassMetalRough.r.greaterThan(0).select(smoothstep(maxSSRRoughness, 0.55, scenePassMetalRough.g), 0);
+const colorGrade = createPostProcessing(renderer, scenePassColor, ssrPass.mul(reflectionMask));
+const renderPipeline = new THREE.RenderPipeline(renderer, colorGrade.outputNode);
 scene.add(camera);
 const PLAYER_STATE = 'nairobi-player-state';
 // Saved players come back at rest, close to where they were (teleport placement keeps them clear of the buildings)
@@ -249,6 +291,7 @@ function toggleFree() {
 
 function selectTime(timeId) {
   lighting.applyPreset(timeId);
+  colorGrade.applyPreset(lighting.activePresetId);
   timeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.getAttribute('data-time') === timeId);
   });
@@ -551,7 +594,7 @@ renderer.setAnimationLoop((time) => {
   gamepadControls.update(dt);
   controllers.update(dt, elapsed);
   cameras.update(dt, elapsed);
-  camera.groundY = heightAt(camera.position.x, camera.position.z); // (for the shadow map's reach)
+  camera.groundY = heightAt(camera.position.x, camera.position.z); // (for the shadow cascades' reach)
   lighting.update(camera);
   const player = controllers.getActiveEntity();
   const parked = Object.values(controllers.entities).filter((e) => e !== player);
@@ -561,7 +604,7 @@ renderer.setAnimationLoop((time) => {
     savePlayerState();
     nextSave = time + 5000;
   }
-  renderer.render(scene, camera);
+  renderPipeline.render();
   if (!shown) {
     // The loading screen stays up until the GPU has got through the first frame, i.e. until the city is on screen
     shown = true;

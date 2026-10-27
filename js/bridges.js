@@ -78,7 +78,7 @@ export function buildBridges() {
   const roadPos = [];
   const roadNrm = [];
   const asphalt = null;
-  const concrete = new THREE.Color('#bdb7aa');
+  const concrete = new THREE.Color('#9b968b'); // weathered precast, as New York's kerbs
   const tri = (a, b, c, color) => {
     const n = new THREE.Vector3().subVectors(new THREE.Vector3(...b), new THREE.Vector3(...a)).cross(new THREE.Vector3().subVectors(new THREE.Vector3(...c), new THREE.Vector3(...a))).normalize();
     for (const p of [a, b, c]) {

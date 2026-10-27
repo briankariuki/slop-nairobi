@@ -1,164 +1,295 @@
 import * as THREE from 'three/webgpu';
-import { uniform, mix, smoothstep, positionWorldDirection } from 'three/tsl';
+import {
+  Fn,
+  float,
+  vec3,
+  vec4,
+  uniform,
+  mix,
+  fog,
+  pmremTexture,
+  positionWorld,
+  cameraPosition,
+  length,
+  normalize,
+  max,
+  exp,
+  abs,
+  select
+} from 'three/tsl';
+import { SkyMesh } from 'three/addons/objects/SkyMesh.js';
+import { SunLight } from 'three/addons/lights/SunLight.js';
+import { SunLightNode } from 'three/addons/lights/SunLightNode.js';
 import { cityUniforms } from './tsl-materials.js';
 
-// Time-of-day presets for the HUD's time switch: Slop New York's four (golden hour, midday, blue hour, night): a
-// hemisphere light (sky and dusty ground bounce), the sun (or the moon) with its shadows, a gradient sky that the fog
-// fades into, and the shared uniforms the facades, glass, windows and headlamps read (tsl-materials.js cityUniforms).
-// New York's physical sky and sky-baked environment lighting are still to come.
+// Slop New York's lighting.js (MIT, © 2026 Mr.doob), as Slop Singapore runs it on the same three.js commit: the
+// physical Preetham sky with clouds, baked by PMREMGenerator into scene.environment (the light every surface takes from
+// the sky, and what glass and metal reflect), the two-cascade SunLight, a hemisphere fill, and sky-matched aerial haze.
+// The presets are New York's, the sun where it is over Nairobi: 1.3° south of the equator it rises in the east and sets
+// in the west at much the same time all year, passing almost overhead at noon. World frame: x = east, y = up, z = south.
 //
-// Shadows: one shadow map that follows the camera's focus (New York's two-cascade SunLight compiles and renders its
-// atlas on this three.js commit but shades nothing here), SHADOW_MAP px over a square 2 × SHADOW_REACH m across at
-// street level (about 7 cm a texel), widening as the camera climbs, its centre snapped to the texel grid so the shadows
-// don't shimmer as the camera moves.
-//
-// Nairobi is 1.3° south of the equator: the sun rises in the east and sets in the west at much the same time all year
-// (about 06:30 and 18:45), passing almost overhead at noon. World frame: x = east, y = up, z = south.
-
-const SHADOW_MAP = 4096;
-const SHADOW_REACH = 150; // m from the focus the shadow map covers at street level
-const SHADOW_DISTANCE = 600; // m the light stands off the focus along its rays
-const _right = new THREE.Vector3();
-const _up = new THREE.Vector3();
-const _dir = new THREE.Vector3();
+// scene.background stays null: SkyMesh is the sky. A background (colour or node) makes the renderer clear before each
+// render, the shadow cascades' included, so the second cascade's render would wipe the first.
 
 const TIME_PRESETS = {
   golden: {
     id: 'golden',
-    sunDir: new THREE.Vector3(-0.9, 0.3, 0.16).normalize(), // low in the west, an hour before sunset
-    sunColor: 0xffc48c,
-    sunIntensity: 2.5,
-    hemiSky: 0x9fb8da,
-    hemiGround: 0xb5865e,
-    hemiIntensity: 1.15,
-    skyTop: 0x3c6ca6,
-    skyHorizon: 0xf0d0aa,
-    fog: [900, 6500],
-    exposure: 1.0,
-    interiorGlow: 0.48
+    sunDir: new THREE.Vector3(-0.78, 0.5, 0.25).normalize(), // in the west, an hour and a half before sunset
+    sunColor: 0xffca92,
+    sunIntensity: 5.8,
+    hemiSky: 0x9abbe6,
+    hemiGround: 0xc88a62, // warm bounce off the dusty ground and the cream and ochre walls
+    hemiIntensity: 1.48,
+    skyTop: 0x2c568c,
+    skyHorizon: 0xebd1b5,
+    fogColor: 0xdcc5ae,
+    fogDensity: 0.00024,
+    interiorGlow: 0.48,
+    roadWetness: 0.0,
+    envIntensity: 0.54,
+    canyonBounce: 0.52,
+    turbidity: 8.0,
+    rayleigh: 2.8,
+    mieCoefficient: 0.008,
+    mieDirectionalG: 0.88,
+    cloudCoverage: 0.36,
+    cloudDensity: 0.38,
+    skyExposure: 0.148,
+    nightFactor: 0.0
   },
   midday: {
     id: 'midday',
-    sunDir: new THREE.Vector3(900, 2200, -600).normalize(),
-    sunColor: 0xfff4e0,
-    sunIntensity: 2.6,
-    hemiSky: 0xcfe3f5,
-    hemiGround: 0x9a8a6c,
-    hemiIntensity: 1.4,
-    skyTop: 0x4f88c6,
-    skyHorizon: 0xb4d1ec,
-    fog: [1200, 7000],
-    exposure: 1.0,
-    interiorGlow: 0.24
+    sunDir: new THREE.Vector3(0.3, 0.92, 0.22).normalize(), // high, a little north-east of overhead after noon
+    sunColor: 0xfff5e8,
+    sunIntensity: 6.6,
+    hemiSky: 0xaad2ff,
+    hemiGround: 0xb89678,
+    hemiIntensity: 1.58,
+    skyTop: 0x225ea8,
+    skyHorizon: 0xc8dff5,
+    fogColor: 0xc6dcf2,
+    fogDensity: 0.00018,
+    interiorGlow: 0.24,
+    roadWetness: 0.0,
+    envIntensity: 0.58,
+    canyonBounce: 0.58,
+    turbidity: 6.5,
+    rayleigh: 2.4,
+    mieCoefficient: 0.006,
+    mieDirectionalG: 0.86,
+    cloudCoverage: 0.32,
+    cloudDensity: 0.35,
+    skyExposure: 0.142,
+    nightFactor: 0.0
   },
   twilight: {
     id: 'twilight',
-    sunDir: new THREE.Vector3(-0.96, 0.08, 0.12).normalize(), // just set: what is left lights the sky in the west
-    sunColor: 0xff9a6e,
-    sunIntensity: 0.7,
-    hemiSky: 0x5a74aa,
-    hemiGround: 0x4c3e42,
-    hemiIntensity: 0.8,
-    skyTop: 0x15275a,
-    skyHorizon: 0xc27a6c,
-    fog: [700, 5000],
-    exposure: 1.05,
-    interiorGlow: 1.25
+    sunDir: new THREE.Vector3(-0.86, 0.34, 0.2).normalize(), // low in the west: the sky's colours, the streets in shade
+    sunColor: 0xff9466,
+    sunIntensity: 3.1,
+    hemiSky: 0x4c6ca8,
+    hemiGround: 0x6e5048,
+    hemiIntensity: 0.85,
+    skyTop: 0x102248,
+    skyHorizon: 0xb86b6c,
+    fogColor: 0x353c58,
+    fogDensity: 0.00032,
+    interiorGlow: 1.25,
+    roadWetness: 0.0,
+    envIntensity: 0.36,
+    canyonBounce: 0.32,
+    turbidity: 9.5,
+    rayleigh: 3.4,
+    mieCoefficient: 0.01,
+    mieDirectionalG: 0.9,
+    cloudCoverage: 0.4,
+    cloudDensity: 0.42,
+    skyExposure: 0.115,
+    nightFactor: 0.28
   },
   midnight: {
     id: 'midnight',
     sunDir: new THREE.Vector3(0.42, 0.68, -0.6).normalize(), // the moon
     sunColor: 0x8cb0e8,
-    sunIntensity: 0.5,
-    hemiSky: 0x2a3c66,
-    hemiGround: 0x2b2630,
-    hemiIntensity: 0.5,
-    skyTop: 0x050a16,
-    skyHorizon: 0x172338,
-    fog: [500, 4000],
-    exposure: 1.1,
-    interiorGlow: 1.55
+    sunIntensity: 1.45,
+    hemiSky: 0x263a62,
+    hemiGround: 0x382e36,
+    hemiIntensity: 0.72,
+    skyTop: 0x060c1a,
+    skyHorizon: 0x182640,
+    fogColor: 0x0c1424,
+    fogDensity: 0.00036,
+    interiorGlow: 1.55,
+    roadWetness: 0.0,
+    envIntensity: 0.3,
+    canyonBounce: 0.18,
+    turbidity: 4.0,
+    rayleigh: 1.5,
+    mieCoefficient: 0.004,
+    mieDirectionalG: 0.8,
+    cloudCoverage: 0.22,
+    cloudDensity: 0.25,
+    skyExposure: 0.022,
+    nightFactor: 0.86
   }
 };
 
 class LightingSystem {
-  constructor(scene, renderer) {
+  constructor(scene, renderer = null) {
     this.scene = scene;
     this.renderer = renderer;
-    this.activePresetId = null;
+    this.activePresetId = 'midday';
 
-    // The sky: the horizon colour (the fog's) up to the zenith's, most of the change in the lowest 30°
-    this.uSkyTop = uniform(new THREE.Color());
-    this.uSkyHorizon = uniform(new THREE.Color());
-    scene.backgroundNode = mix(this.uSkyHorizon, this.uSkyTop, smoothstep(-0.02, 0.5, positionWorldDirection.y));
-    scene.fog = new THREE.Fog(0xffffff, 1200, 7000);
+    // Assign SunLight its node implementation for WebGPURenderer (Light.registerNode since r187; r186 used the library)
+    if (SunLight.registerNode) {
+      SunLight.registerNode(SunLightNode);
+    } else if (renderer && renderer.library) {
+      renderer.library.addLight(SunLightNode, SunLight);
+    }
 
-    this.hemiLight = new THREE.HemisphereLight();
-    scene.add(this.hemiLight);
+    this.scene.fog = new THREE.FogExp2(0xc6dcf2, 0.00018);
+    this.scene.background = null;
+    this.scene.backgroundNode = null;
 
-    this.sunLight = new THREE.DirectionalLight(0xffffff, 1);
+    // Physical Preetham SkyMesh + Beer-Powder Clouds. Its unit box must contain the camera wherever it flies (it renders
+    // at the far plane whatever its size)
+    this.sky = new SkyMesh();
+    this.sky.scale.setScalar(200000);
+    this.sky.cloudScale.value = 0.00018;
+    this.sky.cloudSpeed.value = 0.000015;
+    this.sky.cloudElevation.value = 0.52;
+
+    // Calibrate SkyMesh raw radiance (EE=1000 * 0.04) into standard exposure=1.0 HDR range
+    this.uSkyExposure = uniform(0.142);
+    this.uNightFactor = uniform(0.0);
+    this.uNightSkyColor = uniform(new THREE.Color(0x0b1528));
+    const rawSkyNode = this.sky.material.colorNode;
+    this.sky.material.colorNode = Fn(() => {
+      const dayCol = rawSkyNode.rgb.mul(this.uSkyExposure);
+      return vec4(mix(dayCol, this.uNightSkyColor, this.uNightFactor), float(1.0));
+    })();
+
+    // In reversedDepthBuffer mode ([1..0]), camera.far is z = 0.0 (whereas SkyMesh defaults to z = w)
+    if (renderer && renderer.reversedDepthBuffer) {
+      const rawSkyVertexNode = this.sky.material.vertexNode;
+      this.sky.material.vertexNode = Fn(() => {
+        const pos = rawSkyVertexNode.toVar();
+        pos.z.assign(0.0);
+        return pos;
+      })();
+    }
+    this.scene.add(this.sky);
+
+    // Reusable PMREMGenerator & offscreen envScene
+    this.pmremGenerator = renderer ? new THREE.PMREMGenerator(renderer) : null;
+    this.envScene = new THREE.Scene();
+    this.envRenderTarget = null;
+
+    // SunLight with its automatic 2-cascade shadow map (SunLightShadow + SunShadowNode), shining from its position
+    // towards the origin. 3072 px per cascade where a 6144 px atlas fits, else 2048
+    this.sunLight = new SunLight(0xfff5e8, 6.6);
     this.sunLight.castShadow = true;
-    this.sunLight.shadow.mapSize.set(SHADOW_MAP, SHADOW_MAP);
-    this.sunLight.shadow.camera.near = 1;
-    this.sunLight.shadow.camera.far = SHADOW_DISTANCE + 1200; // the tallest towers upwind of the sun, and the valleys
-    this.sunLight.shadow.normalBias = 0.06; // no acne along the surface, so kerbs, cars and people keep contact shadows
-    this.sunLight.shadow.bias = -0.0002;
-    scene.add(this.sunLight, this.sunLight.target);
-    this.sunDir = new THREE.Vector3(0, 1, 0);
-    this.focus = new THREE.Vector3();
+    const maxTex = renderer?.backend?.device?.limits?.maxTextureDimension2D || 4096;
+    const tile = maxTex >= 6144 ? 3072 : 2048;
+    this.sunLight.shadow.mapSize.set(tile, tile);
+    this.sunLight.shadow.camera.near = 0.5;
+    this.sunLight.shadow.camera.far = 300;
+    // no acne along the surface, so kerbs, cars, trees and people keep crisp contact shadows
+    this.sunLight.shadow.normalBias = 0.05;
+    this.scene.add(this.sunLight);
 
-    this.applyPreset('midday');
+    // A subtle hemisphere fill, kept well under the sun so shadows stay deep
+    this.hemiLight = new THREE.HemisphereLight(0xaad2ff, 0xb89678, 1.05);
+    this.hemiLight.position.set(0, 300, 0);
+    this.scene.add(this.hemiLight);
+
+    this.applyPreset('midday', true);
+
+    // Sky-matched aerial perspective: distant surfaces fade into the baked sky just above the horizon in their view
+    // direction (sun glow included), through an exponential haze layer, so views from the air stay clearer than the
+    // horizon
+    this.uFogDensity = uniform(TIME_PRESETS.midday.fogDensity);
+    this.uFogHeight = uniform(900.0);
+    if (this.envRenderTarget) this.scene.fogNode = this.createAerialFogNode();
   }
 
-  // Move the shadow map with the camera: a sharp square at street level, a wider one from the air, centred ahead of
-  // the camera along its view (on what it is looking at, not on it)
-  update(camera) {
-    const altitude = camera ? Math.max(0, camera.position.y - (camera.groundY || 0)) : 0;
-    const reach = Math.min(SHADOW_REACH * 3, SHADOW_REACH + altitude * 1.2);
-    if (camera) {
-      camera.getWorldDirection(_dir);
-      this.focus.copy(camera.position).addScaledVector(_dir, reach * 0.55);
-    }
-    // the light's basis: right and up across its rays, to snap the focus to the texel grid in the map's own plane
-    const d = this.sunDir;
-    const right = _right.set(d.z, 0, -d.x).normalize();
-    const up = _up.crossVectors(right, d).normalize();
-    const texel = (2 * reach) / SHADOW_MAP;
-    const f = this.focus;
-    const r = Math.round(f.dot(right) / texel) * texel;
-    const u = Math.round(f.dot(up) / texel) * texel;
-    const along = f.dot(d);
-    f.copy(right).multiplyScalar(r).addScaledVector(up, u).addScaledVector(d, along);
-    this.sunLight.target.position.copy(f);
-    this.sunLight.position.copy(f).addScaledVector(d, SHADOW_DISTANCE);
-    const c = this.sunLight.shadow.camera;
-    if (c.right !== reach) {
-      c.left = c.bottom = -reach;
-      c.right = c.top = reach;
-      c.updateProjectionMatrix();
-    }
+  createAerialFogNode() {
+    const toFrag = positionWorld.sub(cameraPosition);
+    const dist = length(toFrag);
+    const dir = toFrag.div(max(dist, 0.001));
+    const horizonDir = normalize(vec3(dir.x, max(dir.y, 0.015), dir.z));
+    const skyColor = pmremTexture(this.envRenderTarget.texture, horizonDir, float(0.3)).rgb;
+    // Mean haze density exp(-y / H) along the ray between the fragment and the camera (heights over KICC's ground:
+    // the valleys are 30 m below it, the ridges 75 m above, so the haze is a touch thicker in the valleys)
+    const H = this.uFogHeight;
+    const ya = max(positionWorld.y.add(40.0), 0.0);
+    const yb = max(cameraPosition.y.add(40.0), 0.0);
+    const dy = yb.sub(ya);
+    const ea = exp(ya.div(H).negate());
+    const eb = exp(yb.div(H).negate());
+    const meanDensity = select(abs(dy).greaterThan(1.0), ea.sub(eb).mul(H).div(dy), ea);
+    const tau = this.uFogDensity.mul(dist).mul(meanDensity);
+    return fog(skyColor, float(1.0).sub(exp(tau.mul(tau).negate())));
   }
 
-  applyPreset(presetId) {
+  bakeEnvironmentMap() {
+    if (!this.pmremGenerator) return;
+    // Bake the sky (without the sun's disc) into scene.environment, into the same render target every time so the
+    // texture never changes identity
+    this.sky.showSunDisc.value = 0;
+    this.envScene.add(this.sky);
+    this.envRenderTarget = this.pmremGenerator.fromScene(this.envScene, 0, 0.1, 100, { renderTarget: this.envRenderTarget });
+    this.scene.environment = this.envRenderTarget.texture;
+    this.sky.showSunDisc.value = 1;
+    this.scene.add(this.sky);
+  }
+
+  applyPreset(presetId, force = false) {
     const p = TIME_PRESETS[presetId] || TIME_PRESETS.midday;
+    if (!force && this.activePresetId === p.id && this.envRenderTarget !== null) return;
     this.activePresetId = p.id;
+
     this.sunLight.color.setHex(p.sunColor);
     this.sunLight.intensity = p.sunIntensity;
-    this.sunDir.copy(p.sunDir);
-    this.update(null);
-    cityUniforms.uSunColor.value.setHex(p.sunColor);
-    cityUniforms.uSunDir.value.copy(p.sunDir);
-    cityUniforms.uSkyTopColor.value.setHex(p.skyTop);
-    cityUniforms.uSkyHorizonColor.value.setHex(p.skyHorizon);
-    cityUniforms.uInteriorGlow.value = p.interiorGlow;
+    this.sunLight.position.copy(p.sunDir);
+    this.sunLight.updateMatrixWorld();
+
     this.hemiLight.color.setHex(p.hemiSky);
     this.hemiLight.groundColor.setHex(p.hemiGround);
     this.hemiLight.intensity = p.hemiIntensity;
-    this.uSkyTop.value.setHex(p.skyTop);
-    this.uSkyHorizon.value.setHex(p.skyHorizon);
-    this.scene.fog.color.setHex(p.skyHorizon);
-    [this.scene.fog.near, this.scene.fog.far] = p.fog;
-    this.renderer.toneMappingExposure = p.exposure;
+
+    this.scene.fog.color.setHex(p.fogColor);
+    this.scene.fog.density = p.fogDensity;
+    if (this.uFogDensity) this.uFogDensity.value = p.fogDensity;
+
+    this.sky.turbidity.value = p.turbidity;
+    this.sky.rayleigh.value = p.rayleigh;
+    this.sky.mieCoefficient.value = p.mieCoefficient;
+    this.sky.mieDirectionalG.value = p.mieDirectionalG;
+    this.sky.cloudCoverage.value = p.cloudCoverage;
+    this.sky.cloudDensity.value = p.cloudDensity;
+    this.sky.sunPosition.value.copy(p.sunDir);
+    this.uSkyExposure.value = p.skyExposure;
+    this.uNightFactor.value = p.nightFactor;
+
+    cityUniforms.uSunColor.value.setHex(p.sunColor);
+    cityUniforms.uSkyTopColor.value.setHex(p.skyTop);
+    cityUniforms.uSkyHorizonColor.value.setHex(p.skyHorizon);
+    cityUniforms.uSkySunDir.value.copy(p.sunDir);
+    cityUniforms.uInteriorGlow.value = p.interiorGlow;
+    cityUniforms.uRoadWetness.value = p.roadWetness;
+    cityUniforms.uCanyonBounce.value = p.canyonBounce;
+
+    this.scene.environmentIntensity = p.envIntensity;
+    this.bakeEnvironmentMap();
+  }
+
+  update(focusPos) {
+    // SunLightShadow fits and texel-snaps its two cascades to the view every frame (SunShadowNode.renderShadow),
+    // the near one ending at about far / 4. Far stays at 300 m at street level, so the near cascade is sharp, and
+    // grows with height over the ground (the helicopter, the towers' roofs) so shadows still reach the street.
+    const altitude = focusPos && Number.isFinite(focusPos.y) ? Math.max(0, focusPos.y - (focusPos.groundY || 0)) : 0;
+    this.sunLight.shadow.camera.far = Math.max(300, Math.min(720, 260 + altitude * 1.6));
   }
 }
 

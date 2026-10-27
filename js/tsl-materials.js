@@ -2,23 +2,40 @@ import * as THREE from 'three/webgpu';
 import {
   Fn, float, vec2, vec3, vec4, color, uniform, uv, attribute, varying, abs, floor, fract, sin, dot, min, max, clamp, mix,
   step, smoothstep, length, fwidth, normalize, reflect, pow, positionGeometry, positionWorld, positionView, normalView,
-  normalWorldGeometry, cameraPosition, cameraProjectionMatrix, cameraViewMatrix, screenSize
+  normalWorldGeometry, cameraPosition, cameraProjectionMatrix, cameraViewMatrix, screenSize, mrt
 } from 'three/tsl';
 
 // Pieces of Slop New York's tsl-materials.js (MIT, © 2026 Mr.doob): the shared time-of-day uniforms its vehicle
-// materials read, the soft contact shadow under each vehicle, and the street surfaces (asphalt, road paint, sidewalk
-// paving, kerbs) with the noise, bump and anti-aliased line helpers they use. New York's wet roads (puddles, the rain
-// film, screen-space reflections) and its street-canyon sky occlusion are left out: Nairobi's streets are dry.
+// materials read, the soft contact shadow under each vehicle, the street surfaces (asphalt, road paint, sidewalk
+// paving, kerbs) with the noise, bump and anti-aliased line helpers they use, and its street-canyon sky occlusion and
+// warm bounce. New York's wet roads (puddles, the rain film) are left out: Nairobi's streets are dry.
 
 // Shared live uniforms controlled by the lighting / time-of-day presets (lighting.js): the sun's colour and direction,
-// the sky's colours (what glass reflects) and how brightly windows and headlamps are lit (0.24 at midday: off)
+// the sky's colours (what glass reflects), how brightly windows and headlamps are lit (0.24 at midday: off), how wet
+// the roads are (always 0 here, for the vehicle materials) and how much warm light the walls bounce into the streets
 const cityUniforms = {
   uSunColor: uniform(new THREE.Color(0xfff4e0)),
-  uSunDir: uniform(new THREE.Vector3(0.37, 0.9, -0.25)),
+  uSkySunDir: uniform(new THREE.Vector3(0.3, 0.92, 0.22).normalize()),
   uSkyTopColor: uniform(new THREE.Color(0x4f88c6)),
   uSkyHorizonColor: uniform(new THREE.Color(0xb4d1ec)),
-  uInteriorGlow: uniform(0.24)
+  uInteriorGlow: uniform(0.24),
+  uRoadWetness: uniform(0.0),
+  uCanyonBounce: uniform(0.58)
 };
+
+// Transparent decals keep the surface under them in the screen-space reflection buffers (main.js): nothing written to
+// the normal and metalRough targets
+const _transparentEffectMRT = mrt({
+  normal: vec4(0.0, 0.0, 0.0, 0.0),
+  metalRough: vec4(0.0, 0.0, 0.0, 0.0)
+});
+
+// Street-canyon sky visibility (New York's canyonSkyAONode, aoNode: it dims only the light from the sky): the walls hide
+// much of the sky near the street, less the higher up a wall, and none on the roofs. New York measures height from its
+// flat ground; Nairobi's ground rises and falls, so the walls measure it up themselves (`v`), and the streets take the
+// street level's
+const STREET_SKY = 0.62;
+const canyonSkyAO = (v) => mix(float(0.5), float(1.0), smoothstep(0.0, 60.0, v)).mul(smoothstep(0.0, 7.5, v).mul(0.22).add(0.78));
 
 // Fast deterministic 2D -> 1D hash in TSL
 const hash2D = Fn(([p]) => {
@@ -96,11 +113,13 @@ function createContactShadowMaterial() {
 
   mat.colorNode = Fn(() => color(0x020305))();
   mat.opacityNode = shadowOpacity;
+  mat.mrtNode = _transparentEffectMRT; // SSR keeps seeing the road underneath
   return mat;
 }
 
 // The streets sit a few centimetres over the terrain: pull them forward in depth too, so they never flicker through it
 function lift(mat, units = -4) {
+  mat.aoNode = float(STREET_SKY);
   mat.polygonOffset = true;
   mat.polygonOffsetFactor = -1;
   mat.polygonOffsetUnits = units;
@@ -197,6 +216,7 @@ function createRoadPaintMaterial() {
   const wear = mix(float(0.5), noise2D(xz.mul(0.8)).mul(0.6).add(noise2D(xz.mul(2.3)).mul(0.4)), detail);
   mat.opacityNode = dashes.mul(varying(float(1.0).div(widen))).mul(smoothstep(0.1, 0.6, wear).mul(0.4).add(0.55));
   mat.roughnessNode = float(0.62);
+  mat.mrtNode = _transparentEffectMRT; // SSR keeps seeing the asphalt underneath
   return mat;
 }
 
@@ -266,14 +286,17 @@ function createCurbMaterial() {
   return mat;
 }
 
+const WALL_ALBEDO = 0.55;
+
 /**
  * Building facades (buildings.js): windows on a grid of bays and storeys, with a taller shopfront ground floor, drawn
  * from each wall's own frame (`wuv`: metres along it and up it; `wall`: its width, height, style and seed; `dims`: the
  * building's storey height and bay width; `tint`: its colour). Styles (buildings.js STYLE): painted render with punched
  * windows and sills, concrete offices with piers and ribbon windows between floor bands, glass curtain walls with
- * mullions and spandrels, roofs, and plain walls. Glass mirrors the sky and the sun (as light of its own, so panes in
- * shade still show the sky); at night (cityUniforms.uInteriorGlow)
- * a share of the windows light up warm. Windows are recessed with bumpNormal; grids are box-filtered so they settle to
+ * mullions and spandrels, roofs, and plain walls. Glass is part metal, so it mirrors the sky baked into
+ * scene.environment (lighting.js) in shade as well as sun, and the sun's glint; at night (cityUniforms.uInteriorGlow)
+ * a share of the windows light up warm. The streets hide some of the sky from the foot of the walls (aoNode), and the
+ * walls bounce warm light at each other there. Windows are recessed with bumpNormal; grids are box-filtered so they settle to
  * their mean at distance instead of shimmering.
  */
 function createFacadeMaterial() {
@@ -343,19 +366,21 @@ function createFacadeMaterial() {
   const lit = step(float(1.0).sub(litProb), hash2D(cellId.add(vec2(seed.mul(0.37), 5.1))));
   const warmth = hash2D(cellId.add(vec2(2.3, seed)));
 
-  // The glass's reflection of the sky (the time of day's colours, lighting.js) and of the sun: light of its own
-  // (emissiveNode), not lit colour, since a pane in shade still mirrors the bright sky; how much of it, by the angle
+  // The glass's reflection of the sky (the time of day's colours, lighting.js) and of the sun, by the angle (New York's
+  // curtain wall), on top of what the environment map gives the metal
   const viewDir = normalize(cameraPosition.sub(positionWorld));
   const reflectDir = reflect(viewDir.negate(), normalWorldGeometry);
   const fresnel = pow(clamp(float(1.0).sub(abs(dot(viewDir, normalWorldGeometry))), 0.0, 1.0), 2.0);
   const reflectance = fresnel.mul(0.7).add(0.15);
   const skyReflect = mix(cityUniforms.uSkyHorizonColor, cityUniforms.uSkyTopColor, clamp(reflectDir.y.mul(1.2).add(0.2), 0.0, 1.0));
-  const sunSpec = pow(max(dot(reflectDir, normalize(cityUniforms.uSunDir)), 0.0), 40.0).mul(0.6);
+  const sunSpec = pow(max(dot(reflectDir, normalize(cityUniforms.uSkySunDir)), 0.0), 48.0).mul(1.25);
+  // (not the shops' windows, which show their insides)
+  const mirrored = float(1.0).sub(isGround.mul(float(1.0).sub(isGlass)));
 
   mat.colorNode = Fn(() => {
     // glass: the building's tint on the curtain walls, dark glazing on the others, less of it the more it reflects
     const paneBase = mix(mix(cGlassDark, tint.mul(mix(float(0.8), float(1.05), isFins)), isGlass), color(0x4f6c82), isRibbon);
-    const glass = paneBase.mul(float(1.0).sub(reflectance.mul(0.5)));
+    const glass = mix(paneBase, skyReflect, reflectance.mul(mirrored)).add(cityUniforms.uSunColor.mul(sunSpec).mul(mirrored));
     const shopGlass = mix(cGlassDark.mul(1.3), cWarmLight.mul(0.35), lit.mul(0.5));
     const pane = mix(glass, shopGlass, isGround.mul(float(1.0).sub(isGlass)));
 
@@ -377,17 +402,25 @@ function createFacadeMaterial() {
     surface = mix(surface, tint.mul(float(1.0).sub(streak.mul(0.6)).sub(foot).sub(bandShade)), isRibbon);
     const plain = tint.mul(0.92).mul(float(1.0).sub(foot));
     surface = mix(surface, plain, isPlain);
+    // (the palette is the paint's colour; what the wall reflects, dust and grime and all, is New York's walls' share
+    // of the light, so its sun and sky don't bleach them white)
+    surface = surface.mul(WALL_ALBEDO);
 
     // roofs: grey concrete and gravel, weathered
     const roofNoise = noise2D(positionWorld.xz.mul(0.35));
     const roof = mix(color(0x6d6a64), color(0x8c8984), roofNoise).mul(noise2D(positionWorld.xz.mul(6.0)).mul(0.12).add(0.94));
 
-    return mix(mix(surface, pane, windowMask), roof, isRoof);
+    // warm light bounced between the walls low in the street, under the time of day's sky (New York's canyon glow)
+    const canyonBand = smoothstep(0.0, 14.0, v).mul(float(1.0).sub(smoothstep(22.0, 75.0, v)));
+    const canyonGlow = color(0xe89c68).mul(canyonBand.mul(cityUniforms.uCanyonBounce).mul(0.16)).mul(float(1.0).sub(windowMask));
+
+    return mix(mix(surface, pane, windowMask).add(canyonGlow), roof, isRoof);
   })();
 
   mat.roughnessNode = mix(mix(float(0.86), float(0.14), windowMask), float(0.92), isRoof);
-  // (barely metallic: with no environment map to reflect, metal goes black in shade; the reflection is the emissive's)
-  mat.metalnessNode = windowMask.mul(0.08);
+  // the curtain walls more mirror-like than the punched windows
+  mat.metalnessNode = windowMask.mul(mix(float(0.15), float(0.55), isGlass));
+  mat.aoNode = mix(canyonSkyAO(v), float(1.0), isRoof);
 
   // Recessed windows (and raised mullions), fading with distance and when the grid is under a few pixels
   mat.normalNode = Fn(() => {
@@ -402,15 +435,13 @@ function createFacadeMaterial() {
     const transmission = float(1.0).sub(fresnel.mul(0.7));
     const glow = mix(cWarmLight, color(0xd8e6ff), step(0.8, warmth)).mul(mix(float(0.45), float(1.0), warmth));
     const lights = glow.mul(lit).mul(transmission).mul(smoothstep(0.3, 1.2, cityUniforms.uInteriorGlow)).mul(0.9);
-    // the sky and sun mirrored in the panes (not the shops' windows, which show their insides)
-    const mirror = skyReflect.mul(reflectance).mul(0.55).add(cityUniforms.uSunColor.mul(sunSpec)).mul(float(1.0).sub(isGround.mul(float(1.0).sub(isGlass))));
-    return lights.add(mirror).mul(windowMask);
+    return lights.mul(windowMask);
   })();
   return mat;
 }
 
 export {
-  cityUniforms, hash2D, noise2D, bumpNormal, gridLine, filteredPulse,
+  cityUniforms, _transparentEffectMRT, hash2D, noise2D, bumpNormal, gridLine, filteredPulse,
   createContactShadowMaterial, createRoadSurfaceMaterial, createRoadPaintMaterial, createSidewalkMaterial, createCurbMaterial,
   createFacadeMaterial
 };
