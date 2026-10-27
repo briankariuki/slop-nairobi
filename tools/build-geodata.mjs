@@ -515,7 +515,62 @@ function buildTerrain() {
 }
 
 // =====================================================================================================================
-// 8. WRITE
+// 8. ROAD GRAPH — drivable ways split at the OSM nodes they share, for the traffic network (js/road-network.js)
+// =====================================================================================================================
+// GEO.roadGraph.nodes: junctions and dead ends { x, z, signal?, roundabout?, deg }. GEO.roadGraph.links: the road between
+// two nodes { a, b, pts, kind, lanes, oneway (+1 a→b, -1 b→a, 0 both), w, name?, layer?, bridge?, link?, roundabout? }.
+const DRIVABLE = new Set(['motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'living_street', 'service']);
+function buildRoadGraph() {
+  const ways = load('osm_roads.json').filter((el) => {
+    const t = el.tags;
+    if (el.type !== 'way' || !el.nodes || t.area === 'yes' || t.access === 'private' || t.access === 'no') return false;
+    if (!DRIVABLE.has(t.highway.replace(/_link$/, ''))) return false;
+    // parking aisles and driveways aren't part of the through network
+    return !(t.highway === 'service' && /^(parking_aisle|driveway|drive-through)$/.test(t.service || ''));
+  });
+  const signals = new Set(load('osm_street.json').filter((el) => el.tags?.highway === 'traffic_signals' || el.tags?.crossing === 'traffic_signals').map((el) => el.id));
+  const uses = new Map();
+  for (const w of ways) for (const id of new Set(w.nodes)) uses.set(id, (uses.get(id) || 0) + 1);
+
+  const roads = new Map(buildRoads(ways).map((r) => [r.id, r])); // per-way attributes, as in GEO.roads
+  const nodeIndex = new Map();
+  const nodes = [];
+  const nodeOf = (id, g) => {
+    if (!nodeIndex.has(id)) {
+      const [x, z] = toWorld(g.lon, g.lat);
+      const n = { x: q(x), z: q(z), deg: 0 };
+      if (signals.has(id)) n.signal = 1;
+      nodeIndex.set(id, nodes.length);
+      nodes.push(n);
+    }
+    return nodeIndex.get(id);
+  };
+  const links = [];
+  for (const w of ways) {
+    const r = roads.get(w.id);
+    if (!r) continue;
+    let start = 0;
+    for (let i = 1; i < w.nodes.length; i++) {
+      // split at junctions (nodes shared with another way, or met twice by this one) and at signals
+      const id = w.nodes[i];
+      if (i < w.nodes.length - 1 && uses.get(id) < 2 && !signals.has(id) && w.nodes.indexOf(id) === i) continue;
+      const a = nodeOf(w.nodes[start], w.geometry[start]);
+      const b = nodeOf(id, w.geometry[i]);
+      const pts = flat(rdp(geomToWorld(w.geometry.slice(start, i + 1)), 0.4));
+      const link = { a, b, pts, kind: r.kind, lanes: r.lanes, oneway: r.oneway, w: r.w };
+      for (const k of ['name', 'layer', 'bridge', 'tunnel', 'link', 'roundabout', 'maxspeed']) if (r[k] !== undefined) link[k] = r[k];
+      nodes[a].deg++;
+      nodes[b].deg++;
+      if (r.roundabout) nodes[a].roundabout = nodes[b].roundabout = 1;
+      links.push(link);
+      start = i;
+    }
+  }
+  return { nodes, links };
+}
+
+// =====================================================================================================================
+// 9. WRITE
 // =====================================================================================================================
 const roads = buildRoads(load('osm_roads.json'));
 const buildings = buildBuildings();
@@ -524,6 +579,7 @@ const { rivers, rail, stations, busStops, termini } = buildWaterRail();
 const landmarks = buildLandmarks(buildings);
 const street = buildStreet();
 const terrain = buildTerrain();
+const roadGraph = buildRoadGraph();
 const [x0, z1] = toWorld(BBOX.west, BBOX.south);
 const [x1, z0] = toWorld(BBOX.east, BBOX.north);
 
@@ -548,7 +604,8 @@ const GEO = {
   termini,
   landmarks,
   ...street,
-  terrain
+  terrain,
+  roadGraph
 };
 
 const est = buildings.filter((b) => b.est).length;
@@ -556,6 +613,7 @@ log(`roads ${roads.length} (${roads.filter((r) => r.name).length} named), buildi
 log(`areas ${areas.length}, rivers ${rivers.length}, rail ${rail.length}, stations ${stations.length}, bus stops ${busStops.length}, termini ${termini.length}, landmarks ${landmarks.length}`);
 log(`signals ${street.signals.length}, crossings ${street.crossings.length}, lamps ${street.lamps.length}, trees ${street.trees.length}, tree rows ${street.treeRows.length}`);
 log(`terrain ${terrain.nx}×${terrain.nz} at ${terrain.cell} m, ${Math.min(...terrain.heights)}..${Math.max(...terrain.heights)} m around ${terrain.base} m at KICC`);
+log(`road graph: ${roadGraph.nodes.length} nodes (${roadGraph.nodes.filter((n) => n.deg > 2).length} junctions, ${roadGraph.nodes.filter((n) => n.signal).length} signals, ${roadGraph.nodes.filter((n) => n.roundabout).length} on roundabouts), ${roadGraph.links.length} links`);
 log(`extent x ${GEO.frame.extent.x0}..${GEO.frame.extent.x1}, z ${GEO.frame.extent.z0}..${GEO.frame.extent.z1}`);
 
 const header = `// Generated by tools/build-geodata.mjs — do not edit by hand.
