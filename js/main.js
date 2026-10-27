@@ -104,6 +104,6 @@ renderer.setAnimationLoop((time) => {
     const p = camera.position;
     const ground = heightAt(p.x, p.z);
     place.textContent = nearestName(p.x, p.z);
-    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s · ${[...traffic.cars, ...traffic.buses, ...traffic.bodas].filter((v) => v.edge).length} vehicles`;
+    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s · ${[...traffic.cars, ...traffic.buses, ...traffic.bodas].filter((v) => v.edge).length} vehicles · ${traffic.peds.filter((p) => p.placed).length} people`;
   }
 });

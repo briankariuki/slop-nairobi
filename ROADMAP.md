@@ -19,8 +19,8 @@ So the work is mostly a new road network, plus adapting the systems that use it.
 ## Phases
 
 1. **Road network.** Build a graph from OSM: 4,447 junctions, left-hand lanes, roundabouts (149 segments), the 13 mapped signals plus generated ones at major junctions, the Expressway as elevated lanes, and kerbs and sidewalks from road widths.
-2. **Traffic.** Port `traffic.js` onto that network, driving on the left on terrain. Add Nairobi vehicles: matatus, buses and boda bodas alongside cars.
-3. **People.** Port `pedestrian-system` with sidewalks, crossings and walk signals.
+2. **Traffic.** Port `traffic.js` onto that network, driving on the left on terrain. Add Nairobi vehicles: matatus, buses and boda bodas alongside cars. *Done.*
+3. **People.** Port `pedestrian-system` with sidewalks, crossings and walk signals. *Done: crosswalks at signalised junctions only; no zebra crossings, jaywalking or raised kerbs yet.*
 4. **Player.** Port the walk, drive, cycle and helicopter controllers and cameras onto terrain, with buildings as colliders.
 5. **Looks.** New York's materials (window facades), roof shapes for the towers, shadows, trees, street lamps and signal heads.
 6. **The rest.** The Nairobi map and teleports, landmark labels, and audio (hooting, matatu music).

@@ -19,7 +19,7 @@ function blockAt() {
 // Pedestrians cross with the traffic that runs parallel to them, stepping off only on the WALK, the first `walk`
 // seconds of its green. Every signalised junction runs the cycle from its own offset (signalOffset), so the city's
 // lights don't all change at once.
-const SIGNAL_TIMING = { cycle: 60, mainAmber: 26, mainRed: 30, sideAmber: 56, walk: 7 };
+const SIGNAL_TIMING = { cycle: 60, mainAmber: 26, mainRed: 30, sideAmber: 56, walk: 12 };
 
 // 'green', 'amber' or 'red' for the main road's (or the other roads') traffic at a given time
 function signalPhase(time, isMain, offset = 0) {
