@@ -1,0 +1,15 @@
+title: Nairobi Tour
+description: >-
+  A three.js WebGPU remix of Slop New York, set in Nairobi's CBD: walk, drive, cycle or fly a helicopter through the
+  city's real streets and skyline, from KICC and Times Tower to Uhuru Park, at four times of day.
+url: https://briankariuki.github.io
+baseurl: /slop-nairobi
+
+# The game is static (index.html, css/, js/): Jekyll copies it as it is. Only the sources for the build tools and the
+# tests stay out of the site.
+exclude:
+  - tools
+  - tests
+  - node_modules
+  - package.json
+  - package-lock.json
