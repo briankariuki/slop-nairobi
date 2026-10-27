@@ -19,6 +19,7 @@ const DECK_Y = 0.012; // over a deck's surface
 const CROSS_AT = 1.5; // a signalised junction's crosswalks: m past each stop line towards it (pedestrian-routes.js)
 const DASH = [9, 1 / 3]; // centre and lane lines: 3 m dashes, 6 m gaps
 const DECK_STEP = 4; // m between deck samples
+const JUNCTION_LINK = 15; // m: links between junctions shorter than this get no lines along them
 
 function buildRoadPaint(scene, network, zebras = []) {
   const position = [];
@@ -112,6 +113,8 @@ function buildRoadPaint(scene, network, zebras = []) {
   }
 
   for (const [e, back] of roads.values()) {
+    // (a link under 15 m between two junctions lies within their asphalt, as one junction: no lines across it)
+    if (!e.from.shape && !e.to.shape && e.len < JUNCTION_LINK) continue;
     const firstLine = lines.length;
     // Lanes of both directions, measured to the right of e, left to right
     const lanes = e.lanes.map((o) => ({ o, dir: 1 }));
@@ -130,10 +133,11 @@ function buildRoadPaint(scene, network, zebras = []) {
       else along(e, mid, 0.12, WHITE, ...DASH);
     }
 
-    // One way of a divided road whose other way runs between other junctions (road-network.js): its half of the road,
-    // up to its half of a double white line down the middle
+    // One way of a divided road whose other way runs between other junctions (road-network.js): its half of the road.
+    // The double white line down the middle is the eastbound (or southbound) way's alone: the two ways' centrelines
+    // are straight lines between different junctions, not quite parallel, and two halves of it would drift apart
     const half = !back && e.divided;
-    if (half) along(e, -0.15, 0.12, WHITE);
+    if (half && (e.dx > 0.05 || (e.dx > -0.05 && e.dz > 0))) for (const o of [-0.15, 0.15]) along(e, o, 0.12, WHITE);
 
     // Yellow edge lines 0.4 m in from the kerbs of the main roads (a divided road's other way paints the far one)
     if (e.axis === 'ave') for (const o of half ? [-e.half + 0.4] : [-e.half + 0.4, e.half - 0.4]) along(e, o, 0.1, YELLOW);

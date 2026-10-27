@@ -374,9 +374,12 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
           const hits = Math.max(onTop(e, f), onTop(f, e));
           if (hits < 10) continue;
           // (two roadways either side of a wide median, which only meet at their ends, stay apart; a kerb between them
-          // doesn't: a long roadway may face several shorter ones, and they must all meet it)
+          // doesn't: a long roadway may face several shorter ones, and they must all meet it. Decks, bridges.js, are
+          // built along each roadway's own line: two with a gap between them stay apart, or their lanes would run over
+          // the gap)
           const offset = offsetOf(e, f);
-          if (Math.abs(offset) >= e.half + f.half + MEDIAN) continue;
+          const deck = Math.max(e.from.lift, e.to.lift, f.from.lift, f.to.lift) > 0.05;
+          if (Math.abs(offset) >= e.half + f.half + (deck ? 0 : MEDIAN)) continue;
           for (const [p, q, o] of [[e, f, offset], [f, e, offsetOf(f, e)]]) {
             const best = partner.get(p);
             if (!best || hits > best.hits) partner.set(p, { half: q.half, offset: o, hits });
