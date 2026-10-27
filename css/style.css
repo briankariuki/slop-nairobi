@@ -1,0 +1,9 @@
+html, body { margin: 0; height: 100%; overflow: hidden; background: #9cc3e6; font: 13px/1.4 system-ui, -apple-system, sans-serif; color: #fff; }
+canvas { display: block; }
+[hidden] { display: none !important; }
+#loading { position: fixed; inset: 0; display: grid; place-items: center; font-size: 20px; text-shadow: 0 1px 3px #0008; }
+#hud { position: fixed; left: 12px; top: 12px; max-width: min(560px, calc(100vw - 24px)); pointer-events: none; text-shadow: 0 1px 2px #000a; }
+#place { font-size: 18px; font-weight: 600; }
+#stats { opacity: .9; font-variant-numeric: tabular-nums; }
+#help { margin-top: 6px; opacity: .85; }
+#credits { position: fixed; right: 8px; bottom: 6px; left: 8px; text-align: right; font-size: 10px; opacity: .75; pointer-events: none; text-shadow: 0 1px 2px #000a; }

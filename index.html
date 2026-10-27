@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Nairobi Tour</title>
+  <link rel="icon" href="data:," />
+  <!-- three.js dev branch pinned to the same commit as Slop New York (builds committed to mrdoob/three.js@dev, served by jsDelivr) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@f17eb5d689094a3fbd4cd0d64d54729a48036ce0/build/three.webgpu.js",
+        "three/webgpu": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@f17eb5d689094a3fbd4cd0d64d54729a48036ce0/build/three.webgpu.js",
+        "three/tsl": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@f17eb5d689094a3fbd4cd0d64d54729a48036ce0/build/three.tsl.js",
+        "three/addons/": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@f17eb5d689094a3fbd4cd0d64d54729a48036ce0/examples/jsm/"
+      }
+    }
+  </script>
+  <link rel="modulepreload" href="./js/nairobi-geodata.js" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+  <div id="loading">Loading Nairobi…</div>
+  <div id="hud" hidden>
+    <div id="place"></div>
+    <div id="stats"></div>
+    <div id="help">
+      Click to look around (Esc to release) · <b>WASD</b> move · <b>Space</b>/<b>C</b> up/down · <b>Shift</b> fast · scroll to change speed · <b>1–9</b> jump to the tallest towers · <b>0</b> back to the start
+    </div>
+  </div>
+  <div id="credits">© OpenStreetMap contributors · Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the EU and ESA</div>
+</body>
+</html>

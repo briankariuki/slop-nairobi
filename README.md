@@ -1,6 +1,24 @@
 # Nairobi Tour
 
-A Nairobi remix of [Slop New York](https://github.com/mrdoob/slop-newyork). This repo currently holds the geodata pipeline for the CBD.
+A Nairobi remix of [Slop New York](https://github.com/mrdoob/slop-newyork): the CBD at 1:1 on its real terrain, built with [three.js](https://threejs.org/).
+
+## Run it
+
+The page needs a local web server because it loads ES modules:
+
+```bash
+python3 -m http.server 8080
+```
+
+Then open http://localhost:8080.
+
+Controls: click to look around (Esc releases the mouse) or drag. **WASD** moves, **Space**/**C** go up and down, **Shift** goes faster and the scroll wheel sets the speed. **1–9** jump to the tallest towers and **0** returns to the start.
+
+The scene so far:
+- **Terrain:** a mesh made from `GEO.terrain`. Parks, water, rivers, rail, roads and footways are painted on a 4096 px map texture draped over it (`js/ground.js`).
+- **Buildings:** every building and building part, extruded and standing on the lowest point of its footprint. A tower's parts share one footing (`js/buildings.js`).
+- **Elevated roads:** the Expressway and flyovers as decks on piers, 8 m per OSM `layer`. Slip roads ramp up from the street (`js/bridges.js`).
+- **Camera:** a fly camera (`js/fly-camera.js`). `window.nairobi` exposes the scene, camera and data for debugging in the console.
 
 ## Geodata
 
