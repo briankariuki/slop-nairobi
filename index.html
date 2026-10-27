@@ -50,6 +50,7 @@
       <symbol id="i-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></symbol>
       <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m20 20-4.6-4.6"/></symbol>
       <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+      <symbol id="i-bug" viewBox="0 0 24 24"><rect x="7.5" y="8" width="9" height="12" rx="4.5"/><path d="M9.5 8a2.5 2.5 0 0 1 5 0M12 12v8M3.5 13h4M16.5 13h4M4.5 8.5l3 2M19.5 8.5l-3 2M4.5 18.5l3-2M19.5 18.5l-3-2"/></symbol>
     </defs>
   </svg>
 
@@ -101,6 +102,9 @@
       <button id="btn-open-map" class="tool-btn" type="button" title="Nairobi street map [M]">
         <svg class="icon" aria-hidden="true"><use href="#i-map"/></svg><span class="tool-label">Map</span><kbd>M</kbd>
       </button>
+      <button id="btn-debug" class="tool-btn icon-only" type="button" popovertarget="debug-popover" title="Debug tools" aria-label="Debug tools">
+        <svg class="icon" aria-hidden="true"><use href="#i-bug"/></svg>
+      </button>
       <span class="toolbar-divider" aria-hidden="true"></span>
       <button id="btn-toggle-hud" class="tool-btn icon-only" type="button" title="Clean view: hide the HUD [H]" aria-label="Hide HUD" aria-pressed="false">
         <svg class="icon icon-hide" aria-hidden="true"><use href="#i-eye"/></svg><svg class="icon icon-show" aria-hidden="true"><use href="#i-eye-off"/></svg>
@@ -112,6 +116,13 @@
   <div id="teleport-popover" class="popover" popover data-side="below" data-anchor="hud-toolbar" aria-label="Teleport the active player">
     <div class="pop-title">Teleport to</div>
   </div>
+
+  <!-- Debug tools (native popover) -->
+  <div id="debug-popover" class="popover" popover data-side="below" data-anchor="hud-toolbar" aria-label="Debug tools">
+    <div class="pop-title">Debug</div>
+    <button id="debug-roof" class="pop-item tp-btn" type="button" aria-pressed="false"><span class="pop-name">Teleport to a roof</span><span class="pop-sub">Click any building to stand on its roof · Esc to stop</span></button>
+  </div>
+  <div id="debug-banner" class="panel debug-banner" hidden>Click a building to teleport onto its roof · <kbd>Esc</kbd> to stop</div>
 
   <!-- Bottom-Left: Street-Name Signs & Live Radar Minimap -->
   <div class="hud hud-bottom-left">

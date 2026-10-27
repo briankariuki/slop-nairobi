@@ -261,7 +261,9 @@ class ThirdPersonControllerManager {
       const floor = this.world.surfaceAt(px, pz, Infinity, true) + 0.25;
       return Math.max(floor, Math.min(HELI_CEILING, savedAltitude ?? Math.max(this.world.surfaceAt(px, pz) + 92, ent.position.y)));
     };
-    const destination = this.findTeleportPosition(x, z, heading, altitude);
+    // on foot or wheels, the surface a saved (or nairobi.roof()) height stands on: a deck or a roof
+    const ground = (px, pz) => this.getGroundHeight(px, pz, this.activeMode, savedAltitude ?? Infinity);
+    const destination = this.findTeleportPosition(x, z, heading, altitude, ground);
     if (destination) {
       ent.position.x = destination.x;
       ent.position.z = destination.z;
@@ -302,8 +304,8 @@ class ThirdPersonControllerManager {
 
   // Find a fully clear arrival before moving the player. Sequential collision pushes can leave a player trapped
   // between overlapping buildings, so test whole candidate footprints instead; retain the old position if none fits.
-  // altitude(x, z): the helicopter's arrival height there.
-  findTeleportPosition(x, z, heading, altitude) {
+  // altitude(x, z): the helicopter's arrival height there; ground(x, z): anyone else's.
+  findTeleportPosition(x, z, heading, altitude, ground = (px, pz) => this.getGroundHeight(px, pz, this.activeMode)) {
     if (!Number.isFinite(x) || !Number.isFinite(z)) return null;
     const heli = this.activeMode === 'helicopter';
     const radius = heli ? 4.5 : this.activeMode === 'person' ? 0.48 : 0.65;
@@ -325,7 +327,7 @@ class ThirdPersonControllerManager {
       z: Math.max(BOUNDS.minZ + inset, Math.min(BOUNDS.maxZ - inset, pz))
     });
     const clear = (p) => {
-      const baseY = heli ? altitude(p.x, p.z) : this.getGroundHeight(p.x, p.z, this.activeMode);
+      const baseY = heli ? altitude(p.x, p.z) : ground(p.x, p.z);
       // Keep other player models out of both the arrival and its default chase view. A corridor also prevents a
       // parked car between camera and character from hiding the character even when the camera itself is outside it.
       const viewTop = baseY + Math.max(body[entity.type][1], cameraUp);
@@ -743,8 +745,10 @@ class ThirdPersonControllerManager {
 
   // The surface under (x, z) for a body now at height y (colliders.js): the terrain, a deck it can step onto, and for
   // the helicopter the roofs. Without y, the terrain or a deck there (the highest one).
+  // The surface under a body at height y: the terrain, a deck, or a roof it is on (the helicopter lands on roofs; on
+  // foot or wheels one is only on a roof when put there: nairobi.roof() in main.js)
   getGroundHeight(x, z, mode = 'person', y = Infinity) {
-    return this.world.surfaceAt(x, z, y, mode === 'helicopter');
+    return this.world.surfaceAt(x, z, y, mode === 'helicopter' || Number.isFinite(y));
   }
 
   // Grade (rise per metre) of the surface under an entity along its heading, from halfL ahead to halfL behind, and its

@@ -2,7 +2,7 @@ import * as THREE from 'three/webgpu';
 import { GEO } from './nairobi-geodata.js';
 import { heightAt } from './terrain.js';
 import { buildGround } from './ground.js';
-import { buildBuildings } from './buildings.js';
+import { buildBuildings, roofOf } from './buildings.js';
 import { buildBridges } from './bridges.js';
 import { buildStreets } from './streets.js';
 import { buildColliders } from './colliders.js';
@@ -39,7 +39,7 @@ const t0 = performance.now();
 const ground = buildGround(renderer);
 ground.receiveShadow = true;
 scene.add(ground);
-const buildings = buildBuildings();
+const buildings = await buildBuildings();
 scene.add(buildings);
 const bridges = buildBridges();
 bridges.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
@@ -453,7 +453,86 @@ selectCamera('chase', true);
 selectTime('midday');
 // the web fonts change the buttons' widths once they arrive
 if (document.fonts) document.fonts.ready.then(placeModeIndicator);
-window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, map: mapSystem, streets: streets.userData.layout }; // for poking at from the console
+// Debugging, from the console: nairobi.roof('times') puts the active player on the roof of the tallest building whose
+// name has that text, nairobi.roof(x, z) on the building at (x, z), nairobi.roof(n) on the nth tallest of all
+function roof(what, z) {
+  let b = null;
+  const tallest = (list) => list.reduce((a, c) => (!a || c.h > a.h ? c : a), null);
+  if (typeof what === 'string') {
+    const q = what.toLowerCase();
+    b = tallest(GEO.buildings.filter((c) => c.name && c.name.toLowerCase().includes(q)));
+  } else if (typeof what === 'number' && Number.isFinite(z)) {
+    b = tallest(GEO.buildings.filter((c) => inRingOf(c.ring, what, z)));
+  } else if (typeof what === 'number') {
+    b = GEO.buildings.filter((c) => !c.part).sort((p, q) => q.h - p.h)[what - 1];
+  }
+  if (!b) return 'no such building';
+  const r = roofOf(b);
+  controllers.teleportActiveTo(r.x, r.z, controllers.getActiveEntity().heading, r.y + 0.3);
+  touchControls.reset();
+  gamepadControls.reset();
+  cameras.resetForTeleport();
+  selectCamera('chase', true);
+  return `${b.name || `Building ${b.id}`}: on its roof, ${Math.round(b.h)} m up (${Math.round(GEO.terrain.base + r.y).toLocaleString('en-GB')} m above sea level)`;
+}
+function inRingOf(ring, x, z) {
+  let inside = false;
+  for (let i = 0, n = ring.length / 2, j = n - 1; i < n; j = i++) {
+    const ax = ring[2 * i], az = ring[2 * i + 1], bx = ring[2 * j], bz = ring[2 * j + 1];
+    if (az > z !== bz > z && x < ((bx - ax) * (z - az)) / (bz - az) + ax) inside = !inside;
+  }
+  return inside;
+}
+window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, map: mapSystem, streets: streets.userData.layout, roof };
+
+// Debug menu: "Teleport to a roof". While it is on, a click (not a drag: dragging still orbits the camera) on a
+// building puts the active player on its roof. The ray from the camera through the cursor is marched in 0.5 m steps
+// until it enters a building's collider (colliders.js) or meets the ground.
+const debugRoofBtn = document.getElementById('debug-roof');
+const debugBanner = document.getElementById('debug-banner');
+let roofPick = false;
+function setRoofPick(on) {
+  roofPick = on;
+  document.body.classList.toggle('debug-roof', on);
+  debugBanner.hidden = !on;
+  debugBanner.textContent = 'Click a building to teleport onto its roof · Esc to stop';
+  debugRoofBtn.classList.toggle('active', on);
+  debugRoofBtn.setAttribute('aria-pressed', String(on));
+}
+debugRoofBtn.addEventListener('click', () => {
+  setRoofPick(!roofPick);
+  closePopovers();
+});
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'Escape' && roofPick) setRoofPick(false);
+});
+const pickRay = new THREE.Raycaster();
+const pickNdc = new THREE.Vector2();
+function buildingUnder(clientX, clientY) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  pickNdc.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+  pickRay.setFromCamera(pickNdc, camera);
+  const { origin: o, direction: d } = pickRay.ray;
+  for (let t = 0; t < 4000; t += 0.5) {
+    const x = o.x + d.x * t, y = o.y + d.y * t, z = o.z + d.z * t;
+    if (y < heightAt(x, z)) return null; // the ground first: no building there
+    if (world.solidAt(x, z, y)) return { x, z };
+  }
+  return null;
+}
+let pickDown = null;
+const canvas = renderer.domElement;
+canvas.addEventListener('pointerdown', (e) => {
+  if (roofPick && e.button === 0) pickDown = { x: e.clientX, y: e.clientY };
+}, { capture: true });
+canvas.addEventListener('pointerup', (e) => {
+  if (!roofPick || !pickDown || e.button !== 0) return;
+  const moved = Math.hypot(e.clientX - pickDown.x, e.clientY - pickDown.y);
+  pickDown = null;
+  if (moved > 5) return; // a drag: the camera's
+  const hit = buildingUnder(e.clientX, e.clientY);
+  debugBanner.textContent = hit ? roof(hit.x, hit.z) : 'No building there · click a building, or Esc to stop';
+}, { capture: true }); // for poking at from the console
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Frame loop
