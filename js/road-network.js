@@ -86,6 +86,57 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
     const parent = pos.map((_, i) => i);
     const find = (i) => (parent[i] === i ? i : (parent[i] = find(parent[i])));
     for (const l of links) if (l.len < 14 && Math.abs(nodeLift[l.a] - nodeLift[l.b]) < 2) parent[find(l.a)] = find(l.b);
+    // ...and so are the corners of a closed loop of three or four links under 30 m off any roundabout: where two divided
+    // roads cross (Haile Selassie Avenue and Upper Hill Road), the box between their carriageways. Left as four
+    // junctions, the links inside are a car or two long each and traffic going round fills them until nobody can leave.
+    {
+      const BOX = 30;
+      const near = new Map(); // junction -> junctions a short link away
+      for (const l of links) {
+        if (l.ring || l.len >= BOX || Math.abs(nodeLift[l.a] - nodeLift[l.b]) >= 2) continue;
+        const [a, b] = [find(l.a), find(l.b)];
+        if (a === b) continue;
+        for (const [p, q] of [[a, b], [b, a]]) {
+          if (!near.has(p)) near.set(p, new Set());
+          near.get(p).add(q);
+        }
+      }
+      const loops = [];
+      for (const [a, next] of near) {
+        for (const b of next) {
+          for (const c of near.get(b)) {
+            if (c === a) continue;
+            if (near.get(c).has(a)) loops.push([a, b, c]);
+            for (const d of near.get(c)) if (d !== a && d !== b && near.get(d).has(a)) loops.push([a, b, c, d]);
+          }
+        }
+      }
+      for (const loop of loops) for (const i of loop) parent[find(i)] = find(loop[0]);    }
+    // ...and a roundabout left with fewer than three junctions on its ring (or under 60 m round), whose ring would be a
+    // couple of stubs too short to queue on, is one junction: traffic crosses it as it would a plain junction
+    {
+      const ringOf = new Map(); // node -> a node of its roundabout
+      const rfind = (i) => (ringOf.get(i) === i ? i : rfind(ringOf.get(i)));
+      for (const l of links) {
+        if (!l.ring) continue;
+        for (const i of [l.a, l.b]) if (!ringOf.has(i)) ringOf.set(i, i);
+        ringOf.set(rfind(l.a), rfind(l.b));
+      }
+      const rings = new Map(); // roundabout -> { nodes, round }
+      for (const l of links) {
+        if (!l.ring) continue;
+        const r = rfind(l.a);
+        if (!rings.has(r)) rings.set(r, { nodes: new Set(), round: 0 });
+        const g = rings.get(r);
+        g.nodes.add(l.a).add(l.b);
+        g.round += l.len;
+      }
+      for (const g of rings.values()) {
+        const nodesOf = [...g.nodes];
+        if (new Set(nodesOf.map(find)).size >= 3 && g.round >= 60) continue;
+        for (const i of nodesOf) parent[find(i)] = find(nodesOf[0]);
+      }
+    }
     const sum = new Map();
     const counted = new Set();
     for (const l of links) {
@@ -134,11 +185,21 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
       const B = junction(find(l.b));
       if (A === B) continue;
       const pts = [{ x: A.x, z: A.z }, ...l.pts.slice(1, -1), { x: B.x, z: B.z }];
-      // stations along it: the ends, every bend over 12° at least 15 m from the last station and from the far end, and
-      // where its lift profile bends (elevation.js), each lifted as far along the link as it is
+      // stations along it: the ends, every bend at least 15 m from the last station and from the far end (over 12°, or
+      // where going straight on to the next vertex would cut more than 1.5 m off the road, as on the Expressway's long
+      // sweeping curves), and where its lift profile bends (elevation.js), each lifted as far along the link as it is
       const bends = [];
       let last = pts[0];
+      let since = 1; // index of the first vertex after the last station
       let rest = l.len;
+      const offChord = (a, b, k0, k1) => { // furthest vertex k0..k1 from the chord a-b
+        const ex = b.x - a.x;
+        const ez = b.z - a.z;
+        const L = Math.hypot(ex, ez) || 1;
+        let worst = 0;
+        for (let k = k0; k <= k1; k++) worst = Math.max(worst, Math.abs((pts[k].x - a.x) * ez - (pts[k].z - a.z) * ex) / L);
+        return worst;
+      };
       for (let k = 1; k < pts.length - 1; k++) {
         const p1 = pts[k];
         const p2 = pts[k + 1];
@@ -146,9 +207,10 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
         rest -= Math.hypot(p1.x - pts[k - 1].x, p1.z - pts[k - 1].z);
         let turn = Math.abs(Math.atan2(p2.z - p1.z, p2.x - p1.x) - Math.atan2(p1.z - last.z, p1.x - last.x));
         if (turn > Math.PI) turn = 2 * Math.PI - turn;
-        if (turn < 12 * DEG || d0 < 15 || rest < 15) continue;
+        if ((turn < 12 * DEG && offChord(last, p2, since, k) < 1.5) || d0 < 15 || rest < 15) continue;
         bends.push({ d: l.len - rest, x: p1.x, z: p1.z });
         last = p1;
+        since = k + 1;
       }
       for (const d of liftBreaks(l.raw, l.len)) {
         if (d < 8 || d > l.len - 8 || bends.some((b) => Math.abs(b.d - d) < 8)) continue;
@@ -568,6 +630,16 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
         for (let i = 0; i < n; i++) link(e, m, i, i + best);
       }
     }
+    // On a roundabout's ring the links between arms are too short to change lanes on, so every lane may go on round or
+    // leave by any exit, into its nearest lane there (else the inner lane can't get out, fills up and locks the ring)
+    if (e.ring) {
+      for (const m of e.moves) {
+        for (let i = 0; i < n; i++) {
+          const j = nearestLane(e, i, m.to);
+          if (m.out[i] < 0 && pathClear(e, i, m.to, j)) m.out[i] = j;
+        }
+      }
+    }
     serveEveryLane(e);
   }
 
@@ -715,11 +787,14 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
 
   // 6. Signalised junctions (city-config.js SIGNALS: OSM's and generated ones): the node nearest each, within 20 m (OSM
   //    sometimes maps the signal on an approach, a few metres before the junction proper, and nearby junctions merge).
-  //    Each runs the signal cycle from the offset (s) it comes with.
+  //    Each runs the signal cycle from the offset (s) it comes with. Not on a roundabout's ring: the ring stopping at a
+  //    red queues back over its short links into the junctions before it, where the entries wait for the ring, and
+  //    the whole roundabout locks up; there the ring keeps the right of way instead (step 7).
   for (const s of signalIntersections) {
     let best = null;
     let bd = Infinity;
     for (const m of nodes) {
+      if (m.roundabout) continue;
       const d = Math.hypot(m.x - s.x, m.z - s.z);
       if (d < bd) [best, bd] = [m, d];
     }
