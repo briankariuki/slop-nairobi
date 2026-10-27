@@ -1,0 +1,12 @@
+{
+  "name": "nairobitour",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "tools/fetch-geodata.sh && node tools/fetch-terrain.mjs",
+    "build": "node tools/build-geodata.mjs"
+  },
+  "devDependencies": {
+    "geotiff": "2.1.3"
+  }
+}

@@ -1,0 +1,7942 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-27T07:49:04Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 30157497,
+  "lat": -1.2975511,
+  "lon": 36.8041698,
+  "tags": {
+    "bench": "yes",
+    "bin": "no",
+    "highway": "bus_stop",
+    "name": "KMTC Bus Stop",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 30158643,
+  "lat": -1.2892228,
+  "lon": 36.8108271,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 30215043,
+  "lat": -1.2921393,
+  "lon": 36.8221118,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 30215726,
+  "lat": -1.2740510,
+  "lon": 36.8112823,
+  "tags": {
+    "bench": "no",
+    "created_by": "JOSM",
+    "highway": "bus_stop",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 30216551,
+  "lat": -1.2726578,
+  "lon": 36.8088999,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "created_by": "JOSM",
+    "highway": "bus_stop",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 30295140,
+  "lat": -1.2703427,
+  "lon": 36.8075322,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 30295155,
+  "lat": -1.2709132,
+  "lon": 36.8070642,
+  "tags": {
+    "created_by": "JOSM",
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 30295159,
+  "lat": -1.2883301,
+  "lon": 36.8137315,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 30312222,
+  "lat": -1.2683794,
+  "lon": 36.8048795,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 30405969,
+  "lat": -1.2721821,
+  "lon": 36.8014144,
+  "tags": {
+    "created_by": "JOSM",
+    "highway": "bus_stop",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 541352243,
+  "lat": -1.2914030,
+  "lon": 36.8286501,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Railway Stage",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 927164438,
+  "lat": -1.2723767,
+  "lon": 36.8035609,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 928938241,
+  "lat": -1.2809876,
+  "lon": 36.8166968,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1170377782,
+  "lat": -1.2860654,
+  "lon": 36.8180503,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 1271155391,
+  "lat": -1.2951890,
+  "lon": 36.8050460,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 1284303773,
+  "lat": -1.2859576,
+  "lon": 36.8189243,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "local_ref": "Posta Stage",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 1507544234,
+  "lat": -1.2854623,
+  "lon": 36.8258768,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Ambassador Bus Stage",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 1507591543,
+  "lat": -1.2803523,
+  "lon": 36.8217290,
+  "tags": {
+    "bench": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Koja",
+    "public_transport": "platform",
+    "ref": "0102KHJ",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1537502919,
+  "lat": -1.2856398,
+  "lon": 36.8249899,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Kencom",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 1719355502,
+  "lat": -1.2828150,
+  "lon": 36.8250001,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Lopha Travels",
+    "operator": "Ruiru",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 1875685126,
+  "lat": -1.2934304,
+  "lon": 36.8410683,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 2473361317,
+  "lat": -1.2742456,
+  "lon": 36.8237289,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Ngara",
+    "public_transport": "platform",
+    "ref": "0110IRT"
+  }
+},
+{
+  "type": "node",
+  "id": 2556112945,
+  "lat": -1.2809208,
+  "lon": 36.8189151,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Riverside Shuttle",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 2875606116,
+  "lat": -1.2881283,
+  "lon": 36.8287205,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "North Rift Shuttle",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 2875606117,
+  "lat": -1.2876885,
+  "lon": 36.8284898,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Blue Line Shuttle",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 2875606118,
+  "lat": -1.2889810,
+  "lon": 36.8285703,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Haile Selassie Avenue",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Easy Coach Booking Office Nairobi",
+    "public_transport": "platform",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3294734492,
+  "lat": -1.2897089,
+  "lon": 36.8293269,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "The Guardian Angel",
+    "public_transport": "platform",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3912657550,
+  "lat": -1.3009034,
+  "lon": 36.8085978,
+  "tags": {
+    "bench": "yes",
+    "bus": "yes",
+    "covered": "yes",
+    "highway": "bus_stop",
+    "name": "Kenyatta National Hospital Bus Stop",
+    "operator": "Nairobi City Council",
+    "public_transport": "platform",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4406623089,
+  "lat": -1.2817825,
+  "lon": 36.8279004,
+  "tags": {
+    "addr:street": "Accra Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Modern Coast Booking Nairobi Cross Lane",
+    "name:de": "Modern Coast Express",
+    "name:en": "Modern Coast Express",
+    "public_transport": "station",
+    "website": "https://www.modern.co.ke/"
+  }
+},
+{
+  "type": "node",
+  "id": 4548730892,
+  "lat": -1.2833024,
+  "lon": 36.8286172,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-04-03",
+    "name": "Simba Booking Office",
+    "name:en": "Simba Booking Office",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5001805022,
+  "lat": -1.2829040,
+  "lon": 36.8281722,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Chania Cool Booking Office and Bus Stop",
+    "name:en": "Chania Cool Booking Office and Bus Stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 5013388221,
+  "lat": -1.2857103,
+  "lon": 36.8248346,
+  "tags": {
+    "addr:street": "City Hall Way",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "46 Bus station",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5178217727,
+  "lat": -1.2823691,
+  "lon": 36.8309855,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Narokline",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5178217728,
+  "lat": -1.2821372,
+  "lon": 36.8254291,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Latema Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Lopha Travels",
+    "operator": "107 Ndenderu/Karura/Ruaka",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5234651121,
+  "lat": -1.2847846,
+  "lon": 36.8307639,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Naivasha bus stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 5333186922,
+  "lat": -1.2882450,
+  "lon": 36.8288228,
+  "tags": {
+    "addr:street": "Mfangano Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Kitale shuttles Co.",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5336131021,
+  "lat": -1.2810246,
+  "lon": 36.8187987,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Arusha shuttle",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5378545277,
+  "lat": -1.2987459,
+  "lon": 36.8129230,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "KCB/Equity",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396275,
+  "lat": -1.2836672,
+  "lon": 36.8250603,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Kinoo/Kikuyu",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396276,
+  "lat": -1.2838156,
+  "lon": 36.8252379,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Eastleigh/Ngara/Mlango",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396277,
+  "lat": -1.2832786,
+  "lon": 36.8245566,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Unified Poa",
+    "network": "Githurai 45",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396278,
+  "lat": -1.2836045,
+  "lon": 36.8252170,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Tripple (S) Services Kiambu/Kirigiti",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396279,
+  "lat": -1.2836714,
+  "lon": 36.8252985,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Bahimia SACCO",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396280,
+  "lat": -1.2830404,
+  "lon": 36.8243037,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Hannover Trans",
+    "network": "Kasaraini/Mwiki",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396281,
+  "lat": -1.2829151,
+  "lon": 36.8241428,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "MSL Operators",
+    "network": "Kasaraini/Mwiki",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396282,
+  "lat": -1.2825764,
+  "lon": 36.8238707,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Eastleigh Commuter Services",
+    "network": "Eastleigh 9",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396283,
+  "lat": -1.2826273,
+  "lon": 36.8239343,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Manchester Travellers",
+    "network": "Huruma 46",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396284,
+  "lat": -1.2819728,
+  "lon": 36.8236788,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Lagos Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Lopha Travels",
+    "network": "GachIe/UNEP",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396285,
+  "lat": -1.2828524,
+  "lon": 36.8246945,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Timboroa Lane",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Githurai Zimmerman",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396286,
+  "lat": -1.2825620,
+  "lon": 36.8251438,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Latema Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Killeton Sacco",
+    "network": "48/49 Lavington Kileleshwa",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396287,
+  "lat": -1.2837215,
+  "lon": 36.8253507,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Sony Classic",
+    "network": "Kiambu",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396288,
+  "lat": -1.2837738,
+  "lon": 36.8254218,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Kaka Travellers Sacco",
+    "network": "Kiambu",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396289,
+  "lat": -1.2839576,
+  "lon": 36.8256224,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "City Bus",
+    "network": "KInoo/Kikuyu/Regen",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396290,
+  "lat": -1.2841561,
+  "lon": 36.8262243,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Accra Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Embassava SACCO",
+    "network": "Embakasi/Savannah",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396291,
+  "lat": -1.2844528,
+  "lon": 36.8261762,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Accra Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Buruburu SACCO",
+    "network": "Buruburu 58",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396296,
+  "lat": -1.2840914,
+  "lon": 36.8253424,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Supermetro",
+    "network": "Kikuyu/Kinoo",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552396297,
+  "lat": -1.2842559,
+  "lon": 36.8252374,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Supermetro",
+    "network": "Ruiru",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552492022,
+  "lat": -1.2819825,
+  "lon": 36.8230012,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Eastleigh",
+    "network": "Mlango/Ngara",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552492023,
+  "lat": -1.2816655,
+  "lon": 36.8224442,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Westlands/Graffins",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552492024,
+  "lat": -1.2829702,
+  "lon": 36.8236761,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Government Lane",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Zuri Genesis",
+    "network": "Zimmerman 44",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5552492025,
+  "lat": -1.2819906,
+  "lon": 36.8252616,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Lagos Road;Firestation Lane",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Latema Sacco;Nawas Hotel",
+    "network": "Westlands/Kangemi",
+    "public_transport": "station",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 5552492026,
+  "lat": -1.2821166,
+  "lon": 36.8253104,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Lagos Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Star Bus Sacco",
+    "network": "Westlands/Kangemi",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5555074078,
+  "lat": -1.2867396,
+  "lon": 36.8271666,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Tom Mboya Street",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "ROG SACCO",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5555074090,
+  "lat": -1.2861181,
+  "lon": 36.8256977,
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Moi Avenue",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Karen/Hardy",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5654059640,
+  "lat": -1.2827624,
+  "lon": 36.8255895,
+  "tags": {
+    "addr:housenumber": "4",
+    "addr:street": "Tsavo Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Prestige Shuttle",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5776763653,
+  "lat": -1.2708930,
+  "lon": 36.8070935,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Chiromo Bus Stage",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5820858254,
+  "lat": -1.2821787,
+  "lon": 36.8270832,
+  "tags": {
+    "addr:street": "River Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Tahmeed Booking Office",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5832891486,
+  "lat": -1.2813250,
+  "lon": 36.8237941,
+  "tags": {
+    "addr:street": "River Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Modern Coast Booking Office",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 5940324789,
+  "lat": -1.2840487,
+  "lon": 36.8296765,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Minibuses for Naivasha",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 5950738186,
+  "lat": -1.2820189,
+  "lon": 36.8257614,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Mololine shuttle",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 6909462287,
+  "lat": -1.2840874,
+  "lon": 36.8203902,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "East Africa Shuttles and Safaris",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 7234655285,
+  "lat": -1.2817976,
+  "lon": 36.8273937,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Dreamline bus",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 7848968285,
+  "lat": -1.2825253,
+  "lon": 36.8243570,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Nawasuku",
+    "operator": "kahawa Sukari",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 7881075185,
+  "lat": -1.2825872,
+  "lon": 36.8244194,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Nawasuku",
+    "operator": "Nawasuku",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 10673606285,
+  "lat": -1.3026822,
+  "lon": 36.8026259,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "lit": "yes",
+    "name": "Mosque",
+    "public_transport": "platform",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10732771853,
+  "lat": -1.2859377,
+  "lon": 36.8307515,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 10732771854,
+  "lat": -1.2974800,
+  "lon": 36.8054355,
+  "tags": {
+    "bench": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "KNH/KMTC",
+    "public_transport": "platform",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10772600705,
+  "lat": -1.2847314,
+  "lon": 36.8306079,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Naeka Sacco Bus to Oloitoktok 800ksh 2023",
+    "name:es": "Naeka Sacco Bus a Oloitoktok 800ksh 2023",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 10832093286,
+  "lat": -1.2773484,
+  "lon": 36.8211132,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Globe",
+    "public_transport": "platform",
+    "ref": "0800NGR"
+  }
+},
+{
+  "type": "node",
+  "id": 10832093294,
+  "lat": -1.2726116,
+  "lon": 36.8210006,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Stima Plaza",
+    "public_transport": "platform",
+    "ref": "0110SAI"
+  }
+},
+{
+  "type": "node",
+  "id": 10832093299,
+  "lat": -1.2699938,
+  "lon": 36.8206036,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Stima Plaza",
+    "public_transport": "platform",
+    "ref": "0110PMA"
+  }
+},
+{
+  "type": "node",
+  "id": 10832093304,
+  "lat": -1.2721610,
+  "lon": 36.8222559,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "JamhurI High",
+    "public_transport": "platform",
+    "ref": "0110HHH"
+  }
+},
+{
+  "type": "node",
+  "id": 10844057329,
+  "lat": -1.2756923,
+  "lon": 36.8229532,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Fig Tree",
+    "public_transport": "platform",
+    "ref": "0811ANG",
+    "shelter": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10844057336,
+  "lat": -1.2696000,
+  "lon": 36.8204000,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Stima Plaza Stage",
+    "public_transport": "platform",
+    "ref": "0111SPS"
+  }
+},
+{
+  "type": "node",
+  "id": 10844057357,
+  "lat": -1.2704300,
+  "lon": 36.8204800,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Stima Plaza",
+    "public_transport": "platform",
+    "ref": "0101STP"
+  }
+},
+{
+  "type": "node",
+  "id": 10844057376,
+  "lat": -1.2733500,
+  "lon": 36.8229700,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Jamhuri High School",
+    "public_transport": "platform",
+    "ref": "0101JHS"
+  }
+},
+{
+  "type": "node",
+  "id": 11301678570,
+  "lat": -1.2820726,
+  "lon": 36.8254083,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Minibuses to Westlands",
+    "public_transport": "platform"
+  }
+},
+{
+  "type": "node",
+  "id": 12075903086,
+  "lat": -1.2817261,
+  "lon": 36.8226609,
+  "tags": {
+    "bench": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Trufi Stop",
+    "public_transport": "platform",
+    "ref": "0102KHJ",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12075903087,
+  "lat": -1.2803518,
+  "lon": 36.8217288,
+  "tags": {
+    "bench": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Koja",
+    "public_transport": "platform",
+    "ref": "0102KHJ",
+    "shelter": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12174833915,
+  "lat": -1.2926990,
+  "lon": 36.8053955,
+  "tags": {
+    "highway": "bus_stop"
+  }
+},
+{
+  "type": "node",
+  "id": 12817662801,
+  "lat": -1.2881566,
+  "lon": 36.8309408,
+  "tags": {
+    "amenity": "bus_station",
+    "name": "ENA Coach"
+  }
+},
+{
+  "type": "node",
+  "id": 13009141047,
+  "lat": -1.2842700,
+  "lon": 36.8263005,
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "internet_access": "no",
+    "name": "Royal swift Sacco",
+    "network": "Embakasi",
+    "operator": "Royal Swift",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 13375561501,
+  "lat": -1.2745006,
+  "lon": 36.8112025,
+  "tags": {
+    "amenity": "bus_station",
+    "name": "Nairobi"
+  }
+},
+{
+  "type": "way",
+  "id": 4742020,
+  "bounds": {
+    "minlat": -1.2742742,
+    "minlon": 36.7820402,
+    "maxlat": -1.2650761,
+    "maxlon": 36.8104203
+  },
+  "nodes": [
+    11072570697,
+    11132205587,
+    11132205588,
+    14097546709,
+    1667938187,
+    11132205589,
+    11132205590,
+    11132205591,
+    1667938295,
+    1667938092,
+    1667937974,
+    1667938286,
+    1667938132,
+    1667938050,
+    1667938654,
+    1667938147,
+    1667938354,
+    1667938085,
+    1667938582,
+    1667938530,
+    1667938067,
+    1667938081,
+    1667938106,
+    1667938109,
+    1667938469,
+    1667938660,
+    1667938650,
+    1667938513,
+    1667938046,
+    1667938621,
+    1667938369,
+    1667938002,
+    1667937984,
+    1667938148,
+    1667938039,
+    1667938218,
+    1667938684,
+    1667938440,
+    1667938030,
+    1667938560,
+    1667937995,
+    1667938607,
+    1667938611,
+    1667938626,
+    1667937982,
+    1667938639,
+    1667938304,
+    1667938021,
+    1667937951,
+    1667938182,
+    1667938300,
+    1667938657,
+    1667938700,
+    1667938663,
+    1667938690,
+    1667938665,
+    1667938688,
+    1667938694,
+    1667938341,
+    1667938309,
+    1667938192,
+    11815090298,
+    1667938711,
+    1667938555,
+    1667938605,
+    1667938646,
+    1667938599,
+    1667938415,
+    1667938551,
+    1667938471,
+    1667938478,
+    7045855814,
+    1667938159,
+    1667938468,
+    1667938731,
+    1667938662,
+    1667938216,
+    1667938526,
+    1667938448,
+    1667938524,
+    1667938446,
+    1667938444,
+    1667938528,
+    939058205,
+    939058206,
+    939058207,
+    939058208,
+    30402767,
+    7045855815,
+    30295118,
+    7045855816,
+    7045855817,
+    7045855818,
+    30215733,
+    7045855819,
+    1739764073,
+    2472078162
+  ],
+  "geometry": [
+    { "lat": -1.2655595, "lon": 36.7820402 },
+    { "lat": -1.2654740, "lon": 36.7821032 },
+    { "lat": -1.2653267, "lon": 36.7822241 },
+    { "lat": -1.2651441, "lon": 36.7823283 },
+    { "lat": -1.2651108, "lon": 36.7823473 },
+    { "lat": -1.2650761, "lon": 36.7826049 },
+    { "lat": -1.2651763, "lon": 36.7827846 },
+    { "lat": -1.2653810, "lon": 36.7827687 },
+    { "lat": -1.2656034, "lon": 36.7827981 },
+    { "lat": -1.2658249, "lon": 36.7830846 },
+    { "lat": -1.2661359, "lon": 36.7834923 },
+    { "lat": -1.2663612, "lon": 36.7837283 },
+    { "lat": -1.2664470, "lon": 36.7840609 },
+    { "lat": -1.2663504, "lon": 36.7845652 },
+    { "lat": -1.2662093, "lon": 36.7847557 },
+    { "lat": -1.2662207, "lon": 36.7849737 },
+    { "lat": -1.2662979, "lon": 36.7852321 },
+    { "lat": -1.2661864, "lon": 36.7855304 },
+    { "lat": -1.2663176, "lon": 36.7856888 },
+    { "lat": -1.2664575, "lon": 36.7857733 },
+    { "lat": -1.2667179, "lon": 36.7860002 },
+    { "lat": -1.2668205, "lon": 36.7863207 },
+    { "lat": -1.2669801, "lon": 36.7864494 },
+    { "lat": -1.2670381, "lon": 36.7865610 },
+    { "lat": -1.2671227, "lon": 36.7867646 },
+    { "lat": -1.2672193, "lon": 36.7870062 },
+    { "lat": -1.2673411, "lon": 36.7872799 },
+    { "lat": -1.2674008, "lon": 36.7874448 },
+    { "lat": -1.2674483, "lon": 36.7876583 },
+    { "lat": -1.2674054, "lon": 36.7879158 },
+    { "lat": -1.2674016, "lon": 36.7881379 },
+    { "lat": -1.2674697, "lon": 36.7882484 },
+    { "lat": -1.2675303, "lon": 36.7884276 },
+    { "lat": -1.2676306, "lon": 36.7886239 },
+    { "lat": -1.2676483, "lon": 36.7888889 },
+    { "lat": -1.2676483, "lon": 36.7893502 },
+    { "lat": -1.2675410, "lon": 36.7896721 },
+    { "lat": -1.2673587, "lon": 36.7899296 },
+    { "lat": -1.2672407, "lon": 36.7900369 },
+    { "lat": -1.2671158, "lon": 36.7902976 },
+    { "lat": -1.2671587, "lon": 36.7904693 },
+    { "lat": -1.2673373, "lon": 36.7906913 },
+    { "lat": -1.2674375, "lon": 36.7909306 },
+    { "lat": -1.2674161, "lon": 36.7911988 },
+    { "lat": -1.2672193, "lon": 36.7914424 },
+    { "lat": -1.2671978, "lon": 36.7917750 },
+    { "lat": -1.2673373, "lon": 36.7920432 },
+    { "lat": -1.2675089, "lon": 36.7922792 },
+    { "lat": -1.2677271, "lon": 36.7925399 },
+    { "lat": -1.2678843, "lon": 36.7929122 },
+    { "lat": -1.2678414, "lon": 36.7933736 },
+    { "lat": -1.2678022, "lon": 36.7936986 },
+    { "lat": -1.2679309, "lon": 36.7941600 },
+    { "lat": -1.2683133, "lon": 36.7948970 },
+    { "lat": -1.2685638, "lon": 36.7952543 },
+    { "lat": -1.2685386, "lon": 36.7956052 },
+    { "lat": -1.2683562, "lon": 36.7957983 },
+    { "lat": -1.2681417, "lon": 36.7959807 },
+    { "lat": -1.2678950, "lon": 36.7962596 },
+    { "lat": -1.2677915, "lon": 36.7965203 },
+    { "lat": -1.2679095, "lon": 36.7969066 },
+    { "lat": -1.2680418, "lon": 36.7971186 },
+    { "lat": -1.2681417, "lon": 36.7972788 },
+    { "lat": -1.2682742, "lon": 36.7978078 },
+    { "lat": -1.2683268, "lon": 36.7980514 },
+    { "lat": -1.2682704, "lon": 36.7983303 },
+    { "lat": -1.2681524, "lon": 36.7985878 },
+    { "lat": -1.2680613, "lon": 36.7990089 },
+    { "lat": -1.2681293, "lon": 36.7993983 },
+    { "lat": -1.2681632, "lon": 36.7997143 },
+    { "lat": -1.2681739, "lon": 36.8001407 },
+    { "lat": -1.2681945, "lon": 36.8004709 },
+    { "lat": -1.2683493, "lon": 36.8006509 },
+    { "lat": -1.2689140, "lon": 36.8009910 },
+    { "lat": -1.2692251, "lon": 36.8014416 },
+    { "lat": -1.2694219, "lon": 36.8024534 },
+    { "lat": -1.2694112, "lon": 36.8032795 },
+    { "lat": -1.2693468, "lon": 36.8036765 },
+    { "lat": -1.2694541, "lon": 36.8039339 },
+    { "lat": -1.2697008, "lon": 36.8041485 },
+    { "lat": -1.2700333, "lon": 36.8042558 },
+    { "lat": -1.2703872, "lon": 36.8042236 },
+    { "lat": -1.2707627, "lon": 36.8041914 },
+    { "lat": -1.2710696, "lon": 36.8042793 },
+    { "lat": -1.2712707, "lon": 36.8045502 },
+    { "lat": -1.2714209, "lon": 36.8048425 },
+    { "lat": -1.2714719, "lon": 36.8051349 },
+    { "lat": -1.2712290, "lon": 36.8055905 },
+    { "lat": -1.2709246, "lon": 36.8061833 },
+    { "lat": -1.2708454, "lon": 36.8068030 },
+    { "lat": -1.2709610, "lon": 36.8069480 },
+    { "lat": -1.2713278, "lon": 36.8073014 },
+    { "lat": -1.2717871, "lon": 36.8077231 },
+    { "lat": -1.2731933, "lon": 36.8090989 },
+    { "lat": -1.2741256, "lon": 36.8099960 },
+    { "lat": -1.2742742, "lon": 36.8102413 },
+    { "lat": -1.2742131, "lon": 36.8104203 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "waterway": "river"
+  }
+},
+{
+  "type": "way",
+  "id": 4775779,
+  "bounds": {
+    "minlat": -1.3014230,
+    "minlon": 36.8364238,
+    "maxlat": -1.2893454,
+    "maxlon": 36.8691806
+  },
+  "nodes": [
+    2165064526,
+    2165064542,
+    2165064548,
+    2165064554,
+    2165064558,
+    2165064562,
+    2165064566,
+    2165064570,
+    2165064574,
+    2165064576,
+    2165064578,
+    2165071177,
+    2165071178,
+    242166237,
+    242166238,
+    291749396,
+    242166239,
+    291749210,
+    242166241,
+    9071578384,
+    242166242,
+    242166243,
+    8197733109,
+    9071578369,
+    7724284957,
+    242166245,
+    9071578370,
+    291749388,
+    242166246,
+    8197733102,
+    9071578374,
+    8197733101,
+    242166247,
+    242166248,
+    11822694590,
+    242166249,
+    242166251,
+    242166252,
+    9071578361,
+    9071578358,
+    8197733089,
+    8197733090,
+    8197733091,
+    8197733092
+  ],
+  "geometry": [
+    { "lat": -1.2893454, "lon": 36.8364238 },
+    { "lat": -1.2894339, "lon": 36.8365698 },
+    { "lat": -1.2895443, "lon": 36.8367530 },
+    { "lat": -1.2897438, "lon": 36.8370066 },
+    { "lat": -1.2898753, "lon": 36.8371498 },
+    { "lat": -1.2899950, "lon": 36.8372625 },
+    { "lat": -1.2901053, "lon": 36.8373658 },
+    { "lat": -1.2902673, "lon": 36.8374856 },
+    { "lat": -1.2904738, "lon": 36.8376311 },
+    { "lat": -1.2907767, "lon": 36.8378119 },
+    { "lat": -1.2911170, "lon": 36.8380209 },
+    { "lat": -1.2915042, "lon": 36.8382584 },
+    { "lat": -1.2919597, "lon": 36.8385289 },
+    { "lat": -1.2945361, "lon": 36.8401351 },
+    { "lat": -1.2960951, "lon": 36.8410938 },
+    { "lat": -1.2972346, "lon": 36.8417853 },
+    { "lat": -1.2991499, "lon": 36.8429477 },
+    { "lat": -1.2995520, "lon": 36.8432008 },
+    { "lat": -1.2998989, "lon": 36.8434458 },
+    { "lat": -1.3001737, "lon": 36.8437135 },
+    { "lat": -1.3005242, "lon": 36.8441218 },
+    { "lat": -1.3009605, "lon": 36.8447845 },
+    { "lat": -1.3011258, "lon": 36.8452252 },
+    { "lat": -1.3012329, "lon": 36.8455321 },
+    { "lat": -1.3013378, "lon": 36.8458844 },
+    { "lat": -1.3013815, "lon": 36.8460576 },
+    { "lat": -1.3014045, "lon": 36.8462817 },
+    { "lat": -1.3014091, "lon": 36.8464876 },
+    { "lat": -1.3014230, "lon": 36.8468847 },
+    { "lat": -1.3014075, "lon": 36.8470941 },
+    { "lat": -1.3013911, "lon": 36.8472996 },
+    { "lat": -1.3013387, "lon": 36.8477469 },
+    { "lat": -1.3010641, "lon": 36.8497093 },
+    { "lat": -1.3004193, "lon": 36.8545080 },
+    { "lat": -1.3002758, "lon": 36.8555326 },
+    { "lat": -1.3001793, "lon": 36.8562219 },
+    { "lat": -1.2999412, "lon": 36.8578937 },
+    { "lat": -1.2994464, "lon": 36.8615647 },
+    { "lat": -1.2991829, "lon": 36.8634197 },
+    { "lat": -1.2989496, "lon": 36.8651471 },
+    { "lat": -1.2985623, "lon": 36.8684568 },
+    { "lat": -1.2985290, "lon": 36.8686952 },
+    { "lat": -1.2984905, "lon": 36.8688565 },
+    { "lat": -1.2984141, "lon": 36.8691806 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "passenger_lines": "1",
+    "railway": "rail",
+    "source": "survey",
+    "usage": "main"
+  }
+},
+{
+  "type": "way",
+  "id": 24968935,
+  "bounds": {
+    "minlat": -1.2894957,
+    "minlon": 36.8373861,
+    "maxlat": -1.2715788,
+    "maxlon": 36.8741903
+  },
+  "nodes": [
+    290887324,
+    290887323,
+    290887322,
+    290887321,
+    290887320,
+    290887319,
+    290887318,
+    290887317,
+    290887316,
+    290887315,
+    290887314,
+    290887313,
+    290887312,
+    290887311,
+    290887310,
+    290887309,
+    290887308,
+    290887307,
+    290887306,
+    290887305,
+    290887304,
+    290887303,
+    290887302,
+    290887301,
+    290887300,
+    290887299,
+    290887298,
+    290887297,
+    290887296,
+    290887295,
+    290887294,
+    290887293,
+    290887292,
+    290887291,
+    290887290,
+    290887289,
+    290887288,
+    290887287,
+    290887286,
+    290887285,
+    290887284,
+    290887283,
+    290887282,
+    290887281,
+    290887280,
+    290887279,
+    290887278,
+    290887277,
+    290887276,
+    290887275,
+    290887273,
+    290887272,
+    290887271,
+    290887270,
+    290887269,
+    290887268,
+    290887266,
+    290887265,
+    290887264,
+    290887263,
+    290887262,
+    290887261,
+    290887260,
+    290887259,
+    290887257,
+    290887256,
+    290887255,
+    290887254,
+    290887253,
+    290887252,
+    290887251,
+    290887250,
+    290887249,
+    290887247,
+    290887246,
+    290887245,
+    290887244,
+    290887243,
+    290887242,
+    290887241,
+    290887240,
+    290887239,
+    290887238,
+    290887237,
+    290887236,
+    290887235,
+    290887234,
+    290887233,
+    290887232,
+    290887231,
+    290887230,
+    290887229,
+    290887228,
+    290887226,
+    290887223,
+    290887221,
+    290887219,
+    290887217,
+    290887215,
+    290887213,
+    290887211,
+    290887209,
+    290887207,
+    290887205,
+    290887203,
+    8913677001,
+    8913677000,
+    8913676999,
+    8913676998,
+    8913676997,
+    290887201,
+    8913676996,
+    290887200,
+    290887199,
+    290887198,
+    290887197,
+    290887196,
+    290887195,
+    290887194,
+    290887193,
+    290887192,
+    290887191,
+    290887190,
+    290887189,
+    290887188,
+    290887187,
+    290887186,
+    290887185,
+    290887183,
+    290887179,
+    290887177,
+    290887174,
+    290887172,
+    6979844748,
+    290887170,
+    6979844749,
+    290887168,
+    290887166,
+    290887163,
+    290887161,
+    290887159,
+    290887157,
+    290887155,
+    290887153,
+    290887151,
+    290887149,
+    290887147,
+    290887143,
+    290887141,
+    290887139,
+    290887136,
+    290887135,
+    290887133,
+    290887132,
+    290887131,
+    290887130,
+    290887129,
+    290887128,
+    290887127,
+    290887126,
+    290887124,
+    290887123,
+    290887122,
+    290887121,
+    290887120,
+    290887119,
+    290887117,
+    290887116,
+    290887115,
+    290887114,
+    290887113,
+    290887112,
+    290887111,
+    290887110,
+    290887109,
+    290887108,
+    290887107,
+    290887106,
+    290887104,
+    290887103,
+    290887102,
+    290887101,
+    290887100,
+    290887099,
+    290887098,
+    290887097,
+    290887096,
+    290887095,
+    290887094,
+    290887092,
+    290887091,
+    290887090,
+    6979844778,
+    6979844779,
+    6979844780,
+    6979844781,
+    6979844782,
+    6979844783,
+    6979844784,
+    6979845185,
+    6979845186,
+    6979845187,
+    6979845188,
+    6979845189,
+    6979845190,
+    6979845191,
+    6979845192,
+    6979845193,
+    6979845194,
+    6979845195,
+    6979845196,
+    6979845197,
+    6979845198,
+    6979845199,
+    6979845200,
+    6979845201,
+    6979845202,
+    6979845203,
+    6979845204,
+    6979845205,
+    6979845206,
+    6979845207,
+    6979845208,
+    6979845209,
+    6979845210,
+    6979845211,
+    6979845212,
+    6979845213,
+    6979845214,
+    6979845215,
+    6979845216,
+    6979845217,
+    6979845218,
+    6979845219,
+    6979845220,
+    6979845221,
+    6979845222,
+    6979845223,
+    6979845224,
+    6979845225,
+    6979845226,
+    6979845227,
+    6979845228,
+    6979845229,
+    6979845230,
+    6979845231,
+    6979845232,
+    6979845233,
+    6979845234,
+    6979845235,
+    6979845236,
+    6979845237,
+    6979845238,
+    6979845239,
+    6979845240,
+    6979845241,
+    6979845242,
+    6979845243,
+    6979845244,
+    7045851067,
+    7045851068,
+    290887042
+  ],
+  "geometry": [
+    { "lat": -1.2862178, "lon": 36.8373861 },
+    { "lat": -1.2862607, "lon": 36.8375578 },
+    { "lat": -1.2863037, "lon": 36.8377638 },
+    { "lat": -1.2863380, "lon": 36.8379440 },
+    { "lat": -1.2863551, "lon": 36.8381243 },
+    { "lat": -1.2862951, "lon": 36.8383131 },
+    { "lat": -1.2863037, "lon": 36.8385449 },
+    { "lat": -1.2863380, "lon": 36.8387423 },
+    { "lat": -1.2862693, "lon": 36.8389483 },
+    { "lat": -1.2863122, "lon": 36.8390684 },
+    { "lat": -1.2863294, "lon": 36.8391886 },
+    { "lat": -1.2863466, "lon": 36.8394976 },
+    { "lat": -1.2863551, "lon": 36.8397722 },
+    { "lat": -1.2863122, "lon": 36.8400297 },
+    { "lat": -1.2863466, "lon": 36.8402443 },
+    { "lat": -1.2864753, "lon": 36.8404675 },
+    { "lat": -1.2866469, "lon": 36.8406992 },
+    { "lat": -1.2868614, "lon": 36.8408537 },
+    { "lat": -1.2869558, "lon": 36.8410082 },
+    { "lat": -1.2871188, "lon": 36.8411026 },
+    { "lat": -1.2872733, "lon": 36.8411627 },
+    { "lat": -1.2873934, "lon": 36.8413086 },
+    { "lat": -1.2874363, "lon": 36.8414888 },
+    { "lat": -1.2875050, "lon": 36.8416262 },
+    { "lat": -1.2875050, "lon": 36.8417978 },
+    { "lat": -1.2875050, "lon": 36.8420038 },
+    { "lat": -1.2875565, "lon": 36.8422957 },
+    { "lat": -1.2875650, "lon": 36.8425531 },
+    { "lat": -1.2875221, "lon": 36.8426905 },
+    { "lat": -1.2873334, "lon": 36.8427248 },
+    { "lat": -1.2872046, "lon": 36.8429136 },
+    { "lat": -1.2869987, "lon": 36.8429995 },
+    { "lat": -1.2868099, "lon": 36.8431454 },
+    { "lat": -1.2866126, "lon": 36.8431625 },
+    { "lat": -1.2864667, "lon": 36.8432741 },
+    { "lat": -1.2864409, "lon": 36.8434458 },
+    { "lat": -1.2864495, "lon": 36.8436174 },
+    { "lat": -1.2865010, "lon": 36.8437462 },
+    { "lat": -1.2866469, "lon": 36.8438406 },
+    { "lat": -1.2868185, "lon": 36.8439608 },
+    { "lat": -1.2869129, "lon": 36.8440638 },
+    { "lat": -1.2870073, "lon": 36.8442612 },
+    { "lat": -1.2870416, "lon": 36.8444500 },
+    { "lat": -1.2871017, "lon": 36.8448191 },
+    { "lat": -1.2871617, "lon": 36.8450937 },
+    { "lat": -1.2871617, "lon": 36.8453169 },
+    { "lat": -1.2871961, "lon": 36.8455229 },
+    { "lat": -1.2872390, "lon": 36.8456945 },
+    { "lat": -1.2873419, "lon": 36.8458920 },
+    { "lat": -1.2874106, "lon": 36.8460207 },
+    { "lat": -1.2874278, "lon": 36.8462009 },
+    { "lat": -1.2874363, "lon": 36.8464584 },
+    { "lat": -1.2874964, "lon": 36.8466730 },
+    { "lat": -1.2876251, "lon": 36.8468962 },
+    { "lat": -1.2876938, "lon": 36.8470678 },
+    { "lat": -1.2877452, "lon": 36.8472395 },
+    { "lat": -1.2878482, "lon": 36.8473167 },
+    { "lat": -1.2879683, "lon": 36.8474970 },
+    { "lat": -1.2880971, "lon": 36.8475485 },
+    { "lat": -1.2882344, "lon": 36.8476858 },
+    { "lat": -1.2883631, "lon": 36.8477373 },
+    { "lat": -1.2884317, "lon": 36.8478746 },
+    { "lat": -1.2885366, "lon": 36.8480222 },
+    { "lat": -1.2885816, "lon": 36.8481799 },
+    { "lat": -1.2886640, "lon": 36.8484540 },
+    { "lat": -1.2887017, "lon": 36.8486777 },
+    { "lat": -1.2887331, "lon": 36.8488418 },
+    { "lat": -1.2887959, "lon": 36.8490473 },
+    { "lat": -1.2888645, "lon": 36.8491445 },
+    { "lat": -1.2890200, "lon": 36.8490290 },
+    { "lat": -1.2890911, "lon": 36.8489103 },
+    { "lat": -1.2890983, "lon": 36.8489304 },
+    { "lat": -1.2892217, "lon": 36.8489261 },
+    { "lat": -1.2893214, "lon": 36.8490317 },
+    { "lat": -1.2894175, "lon": 36.8491090 },
+    { "lat": -1.2894957, "lon": 36.8493359 },
+    { "lat": -1.2894786, "lon": 36.8494539 },
+    { "lat": -1.2894614, "lon": 36.8495655 },
+    { "lat": -1.2894164, "lon": 36.8496980 },
+    { "lat": -1.2893922, "lon": 36.8497972 },
+    { "lat": -1.2893472, "lon": 36.8498509 },
+    { "lat": -1.2893043, "lon": 36.8498798 },
+    { "lat": -1.2892528, "lon": 36.8499421 },
+    { "lat": -1.2892297, "lon": 36.8500462 },
+    { "lat": -1.2892812, "lon": 36.8502693 },
+    { "lat": -1.2892898, "lon": 36.8503981 },
+    { "lat": -1.2893241, "lon": 36.8505011 },
+    { "lat": -1.2893719, "lon": 36.8505976 },
+    { "lat": -1.2893616, "lon": 36.8507447 },
+    { "lat": -1.2893413, "lon": 36.8509388 },
+    { "lat": -1.2893585, "lon": 36.8511190 },
+    { "lat": -1.2894014, "lon": 36.8516340 },
+    { "lat": -1.2894099, "lon": 36.8520804 },
+    { "lat": -1.2893928, "lon": 36.8524065 },
+    { "lat": -1.2890924, "lon": 36.8537712 },
+    { "lat": -1.2883631, "lon": 36.8545609 },
+    { "lat": -1.2876423, "lon": 36.8552475 },
+    { "lat": -1.2874278, "lon": 36.8554792 },
+    { "lat": -1.2873162, "lon": 36.8557882 },
+    { "lat": -1.2871360, "lon": 36.8566294 },
+    { "lat": -1.2871617, "lon": 36.8568354 },
+    { "lat": -1.2870931, "lon": 36.8571615 },
+    { "lat": -1.2871017, "lon": 36.8573246 },
+    { "lat": -1.2870073, "lon": 36.8576765 },
+    { "lat": -1.2869472, "lon": 36.8579254 },
+    { "lat": -1.2869218, "lon": 36.8580010 },
+    { "lat": -1.2868659, "lon": 36.8580647 },
+    { "lat": -1.2867968, "lon": 36.8580687 },
+    { "lat": -1.2867170, "lon": 36.8580542 },
+    { "lat": -1.2866554, "lon": 36.8580414 },
+    { "lat": -1.2865641, "lon": 36.8580491 },
+    { "lat": -1.2864941, "lon": 36.8580775 },
+    { "lat": -1.2864152, "lon": 36.8581743 },
+    { "lat": -1.2863980, "lon": 36.8582687 },
+    { "lat": -1.2864324, "lon": 36.8583717 },
+    { "lat": -1.2861578, "lon": 36.8586893 },
+    { "lat": -1.2859347, "lon": 36.8589983 },
+    { "lat": -1.2857974, "lon": 36.8592043 },
+    { "lat": -1.2857202, "lon": 36.8593760 },
+    { "lat": -1.2856944, "lon": 36.8595562 },
+    { "lat": -1.2855485, "lon": 36.8597193 },
+    { "lat": -1.2854885, "lon": 36.8599253 },
+    { "lat": -1.2853855, "lon": 36.8601313 },
+    { "lat": -1.2852310, "lon": 36.8603373 },
+    { "lat": -1.2850251, "lon": 36.8605604 },
+    { "lat": -1.2847419, "lon": 36.8608694 },
+    { "lat": -1.2843360, "lon": 36.8612493 },
+    { "lat": -1.2841941, "lon": 36.8613616 },
+    { "lat": -1.2840769, "lon": 36.8614705 },
+    { "lat": -1.2838656, "lon": 36.8616864 },
+    { "lat": -1.2837294, "lon": 36.8618162 },
+    { "lat": -1.2836013, "lon": 36.8619479 },
+    { "lat": -1.2835327, "lon": 36.8620377 },
+    { "lat": -1.2835106, "lon": 36.8621069 },
+    { "lat": -1.2835050, "lon": 36.8621826 },
+    { "lat": -1.2835314, "lon": 36.8622734 },
+    { "lat": -1.2836139, "lon": 36.8623659 },
+    { "lat": -1.2836816, "lon": 36.8625206 },
+    { "lat": -1.2837465, "lon": 36.8627663 },
+    { "lat": -1.2837980, "lon": 36.8629379 },
+    { "lat": -1.2839353, "lon": 36.8630238 },
+    { "lat": -1.2839525, "lon": 36.8631954 },
+    { "lat": -1.2838838, "lon": 36.8634958 },
+    { "lat": -1.2837980, "lon": 36.8637533 },
+    { "lat": -1.2837129, "lon": 36.8639801 },
+    { "lat": -1.2836626, "lon": 36.8641627 },
+    { "lat": -1.2835928, "lon": 36.8644056 },
+    { "lat": -1.2834369, "lon": 36.8647983 },
+    { "lat": -1.2834119, "lon": 36.8649206 },
+    { "lat": -1.2834176, "lon": 36.8650340 },
+    { "lat": -1.2834205, "lon": 36.8652554 },
+    { "lat": -1.2833776, "lon": 36.8655300 },
+    { "lat": -1.2833776, "lon": 36.8656673 },
+    { "lat": -1.2833347, "lon": 36.8658304 },
+    { "lat": -1.2831201, "lon": 36.8658991 },
+    { "lat": -1.2828713, "lon": 36.8659592 },
+    { "lat": -1.2826482, "lon": 36.8660708 },
+    { "lat": -1.2824680, "lon": 36.8661566 },
+    { "lat": -1.2824251, "lon": 36.8662767 },
+    { "lat": -1.2824251, "lon": 36.8664484 },
+    { "lat": -1.2823564, "lon": 36.8666630 },
+    { "lat": -1.2823049, "lon": 36.8668776 },
+    { "lat": -1.2823479, "lon": 36.8670492 },
+    { "lat": -1.2823564, "lon": 36.8672381 },
+    { "lat": -1.2823564, "lon": 36.8673582 },
+    { "lat": -1.2822020, "lon": 36.8675213 },
+    { "lat": -1.2821333, "lon": 36.8677015 },
+    { "lat": -1.2821762, "lon": 36.8678732 },
+    { "lat": -1.2822191, "lon": 36.8680792 },
+    { "lat": -1.2821162, "lon": 36.8681994 },
+    { "lat": -1.2816957, "lon": 36.8684740 },
+    { "lat": -1.2814640, "lon": 36.8686285 },
+    { "lat": -1.2812667, "lon": 36.8687058 },
+    { "lat": -1.2810865, "lon": 36.8687916 },
+    { "lat": -1.2809320, "lon": 36.8689032 },
+    { "lat": -1.2808376, "lon": 36.8690577 },
+    { "lat": -1.2806917, "lon": 36.8692207 },
+    { "lat": -1.2805544, "lon": 36.8693667 },
+    { "lat": -1.2805459, "lon": 36.8696241 },
+    { "lat": -1.2805201, "lon": 36.8698731 },
+    { "lat": -1.2805030, "lon": 36.8701220 },
+    { "lat": -1.2804171, "lon": 36.8704224 },
+    { "lat": -1.2803485, "lon": 36.8706198 },
+    { "lat": -1.2802112, "lon": 36.8707571 },
+    { "lat": -1.2800310, "lon": 36.8707399 },
+    { "lat": -1.2798635, "lon": 36.8706510 },
+    { "lat": -1.2796792, "lon": 36.8705809 },
+    { "lat": -1.2794358, "lon": 36.8705304 },
+    { "lat": -1.2792298, "lon": 36.8705586 },
+    { "lat": -1.2790099, "lon": 36.8705854 },
+    { "lat": -1.2788387, "lon": 36.8705857 },
+    { "lat": -1.2787292, "lon": 36.8706063 },
+    { "lat": -1.2786811, "lon": 36.8706254 },
+    { "lat": -1.2786543, "lon": 36.8706536 },
+    { "lat": -1.2786422, "lon": 36.8707005 },
+    { "lat": -1.2786489, "lon": 36.8707555 },
+    { "lat": -1.2786556, "lon": 36.8708025 },
+    { "lat": -1.2786449, "lon": 36.8708601 },
+    { "lat": -1.2786033, "lon": 36.8709446 },
+    { "lat": -1.2785712, "lon": 36.8710707 },
+    { "lat": -1.2785148, "lon": 36.8712088 },
+    { "lat": -1.2784934, "lon": 36.8713550 },
+    { "lat": -1.2784170, "lon": 36.8716058 },
+    { "lat": -1.2783875, "lon": 36.8717372 },
+    { "lat": -1.2783137, "lon": 36.8718338 },
+    { "lat": -1.2782065, "lon": 36.8719558 },
+    { "lat": -1.2781086, "lon": 36.8720188 },
+    { "lat": -1.2779437, "lon": 36.8721181 },
+    { "lat": -1.2777989, "lon": 36.8721838 },
+    { "lat": -1.2776795, "lon": 36.8721918 },
+    { "lat": -1.2775817, "lon": 36.8721637 },
+    { "lat": -1.2774851, "lon": 36.8721154 },
+    { "lat": -1.2774060, "lon": 36.8720859 },
+    { "lat": -1.2771526, "lon": 36.8720711 },
+    { "lat": -1.2769783, "lon": 36.8720658 },
+    { "lat": -1.2766874, "lon": 36.8721194 },
+    { "lat": -1.2765023, "lon": 36.8721583 },
+    { "lat": -1.2761124, "lon": 36.8722270 },
+    { "lat": -1.2758783, "lon": 36.8723163 },
+    { "lat": -1.2757459, "lon": 36.8724057 },
+    { "lat": -1.2754655, "lon": 36.8725751 },
+    { "lat": -1.2753772, "lon": 36.8725874 },
+    { "lat": -1.2752270, "lon": 36.8725560 },
+    { "lat": -1.2750801, "lon": 36.8725494 },
+    { "lat": -1.2749843, "lon": 36.8725131 },
+    { "lat": -1.2749084, "lon": 36.8724603 },
+    { "lat": -1.2748242, "lon": 36.8723777 },
+    { "lat": -1.2746889, "lon": 36.8722737 },
+    { "lat": -1.2745964, "lon": 36.8722291 },
+    { "lat": -1.2745205, "lon": 36.8722258 },
+    { "lat": -1.2744396, "lon": 36.8722555 },
+    { "lat": -1.2743802, "lon": 36.8722753 },
+    { "lat": -1.2742712, "lon": 36.8722886 },
+    { "lat": -1.2741590, "lon": 36.8723463 },
+    { "lat": -1.2740781, "lon": 36.8724074 },
+    { "lat": -1.2740534, "lon": 36.8724636 },
+    { "lat": -1.2740534, "lon": 36.8725527 },
+    { "lat": -1.2740979, "lon": 36.8726419 },
+    { "lat": -1.2741111, "lon": 36.8727162 },
+    { "lat": -1.2741161, "lon": 36.8727839 },
+    { "lat": -1.2740880, "lon": 36.8728301 },
+    { "lat": -1.2740451, "lon": 36.8728697 },
+    { "lat": -1.2740071, "lon": 36.8728763 },
+    { "lat": -1.2739609, "lon": 36.8728598 },
+    { "lat": -1.2739081, "lon": 36.8728367 },
+    { "lat": -1.2738470, "lon": 36.8728252 },
+    { "lat": -1.2737216, "lon": 36.8728400 },
+    { "lat": -1.2735350, "lon": 36.8728681 },
+    { "lat": -1.2731209, "lon": 36.8729586 },
+    { "lat": -1.2729052, "lon": 36.8730387 },
+    { "lat": -1.2726865, "lon": 36.8731681 },
+    { "lat": -1.2724802, "lon": 36.8732913 },
+    { "lat": -1.2723508, "lon": 36.8733221 },
+    { "lat": -1.2722676, "lon": 36.8733745 },
+    { "lat": -1.2721198, "lon": 36.8734947 },
+    { "lat": -1.2719750, "lon": 36.8735748 },
+    { "lat": -1.2718364, "lon": 36.8736179 },
+    { "lat": -1.2717471, "lon": 36.8736857 },
+    { "lat": -1.2717009, "lon": 36.8737535 },
+    { "lat": -1.2716768, "lon": 36.8739256 },
+    { "lat": -1.2716366, "lon": 36.8741402 },
+    { "lat": -1.2715788, "lon": 36.8741903 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "waterway": "river"
+  }
+},
+{
+  "type": "way",
+  "id": 26583748,
+  "bounds": {
+    "minlat": -1.2979125,
+    "minlon": 36.8370183,
+    "maxlat": -1.2913742,
+    "maxlon": 36.8383057
+  },
+  "nodes": [
+    291533553,
+    291533554,
+    291533555,
+    291532668,
+    291533556,
+    291533552,
+    13825289219,
+    8534923254,
+    291532670,
+    6455415560,
+    291532671,
+    2165071177,
+    291532672
+  ],
+  "geometry": [
+    { "lat": -1.2979125, "lon": 36.8378766 },
+    { "lat": -1.2963765, "lon": 36.8371127 },
+    { "lat": -1.2961191, "lon": 36.8370268 },
+    { "lat": -1.2957673, "lon": 36.8370183 },
+    { "lat": -1.2952696, "lon": 36.8371384 },
+    { "lat": -1.2940962, "lon": 36.8375652 },
+    { "lat": -1.2940384, "lon": 36.8375862 },
+    { "lat": -1.2936402, "lon": 36.8377309 },
+    { "lat": -1.2922491, "lon": 36.8382371 },
+    { "lat": -1.2921040, "lon": 36.8382586 },
+    { "lat": -1.2917857, "lon": 36.8383057 },
+    { "lat": -1.2915042, "lon": 36.8382584 },
+    { "lat": -1.2913742, "lon": 36.8382365 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26583770,
+  "bounds": {
+    "minlat": -1.2965395,
+    "minlon": 36.8355076,
+    "maxlat": -1.2952696,
+    "maxlon": 36.8371384
+  },
+  "nodes": [
+    291533228,
+    291533229,
+    291533230,
+    291533231,
+    291533556
+  ],
+  "geometry": [
+    { "lat": -1.2965395, "lon": 36.8355076 },
+    { "lat": -1.2960333, "lon": 36.8365119 },
+    { "lat": -1.2958616, "lon": 36.8367694 },
+    { "lat": -1.2955785, "lon": 36.8369753 },
+    { "lat": -1.2952696, "lon": 36.8371384 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584000,
+  "bounds": {
+    "minlat": -1.3008128,
+    "minlon": 36.8320143,
+    "maxlat": -1.2940962,
+    "maxlon": 36.8375652
+  },
+  "nodes": [
+    291533543,
+    6455479039,
+    291533544,
+    291533545,
+    291533546,
+    291533547,
+    291533548,
+    291533549,
+    6455479040,
+    8534923259,
+    291533550,
+    291533551,
+    291533552
+  ],
+  "geometry": [
+    { "lat": -1.3008128, "lon": 36.8329327 },
+    { "lat": -1.2992804, "lon": 36.8321264 },
+    { "lat": -1.2991653, "lon": 36.8320658 },
+    { "lat": -1.2989079, "lon": 36.8320143 },
+    { "lat": -1.2985560, "lon": 36.8321002 },
+    { "lat": -1.2969428, "lon": 36.8329070 },
+    { "lat": -1.2967197, "lon": 36.8330958 },
+    { "lat": -1.2964880, "lon": 36.8334906 },
+    { "lat": -1.2957938, "lon": 36.8348762 },
+    { "lat": -1.2955762, "lon": 36.8353657 },
+    { "lat": -1.2946775, "lon": 36.8371041 },
+    { "lat": -1.2943772, "lon": 36.8373788 },
+    { "lat": -1.2940962, "lon": 36.8375652 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584019,
+  "bounds": {
+    "minlat": -1.2963937,
+    "minlon": 36.8284009,
+    "maxlat": -1.2928394,
+    "maxlon": 36.8343415
+  },
+  "nodes": [
+    291534169,
+    291534170,
+    291534171,
+    291534172,
+    292848213
+  ],
+  "geometry": [
+    { "lat": -1.2963937, "lon": 36.8284009 },
+    { "lat": -1.2936993, "lon": 36.8336966 },
+    { "lat": -1.2935362, "lon": 36.8339284 },
+    { "lat": -1.2932581, "lon": 36.8341924 },
+    { "lat": -1.2928394, "lon": 36.8343415 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584021,
+  "bounds": {
+    "minlat": -1.2929956,
+    "minlon": 36.8345292,
+    "maxlat": -1.2907424,
+    "maxlon": 36.8349154
+  },
+  "nodes": [
+    291534161,
+    291534162,
+    291534163,
+    291534164,
+    291534165,
+    291534166,
+    291534167,
+    291534168
+  ],
+  "geometry": [
+    { "lat": -1.2929956, "lon": 36.8345292 },
+    { "lat": -1.2928412, "lon": 36.8346579 },
+    { "lat": -1.2925837, "lon": 36.8348124 },
+    { "lat": -1.2922663, "lon": 36.8349154 },
+    { "lat": -1.2919059, "lon": 36.8348982 },
+    { "lat": -1.2915369, "lon": 36.8348038 },
+    { "lat": -1.2911507, "lon": 36.8347094 },
+    { "lat": -1.2907424, "lon": 36.8346861 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584023,
+  "bounds": {
+    "minlat": -1.2928412,
+    "minlon": 36.8346579,
+    "maxlat": -1.2923521,
+    "maxlon": 36.8362887
+  },
+  "nodes": [
+    291534264,
+    291534265,
+    291534266,
+    291534267,
+    291534268,
+    291534269,
+    291534162
+  ],
+  "geometry": [
+    { "lat": -1.2923521, "lon": 36.8362887 },
+    { "lat": -1.2923521, "lon": 36.8358338 },
+    { "lat": -1.2923521, "lon": 36.8354991 },
+    { "lat": -1.2923950, "lon": 36.8352416 },
+    { "lat": -1.2924722, "lon": 36.8350699 },
+    { "lat": -1.2926438, "lon": 36.8348639 },
+    { "lat": -1.2928412, "lon": 36.8346579 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584026,
+  "bounds": {
+    "minlat": -1.2923521,
+    "minlon": 36.8348038,
+    "maxlat": -1.2915369,
+    "maxlon": 36.8358338
+  },
+  "nodes": [
+    291534265,
+    291534322,
+    291534323,
+    291534324,
+    291534325,
+    291534166
+  ],
+  "geometry": [
+    { "lat": -1.2923521, "lon": 36.8358338 },
+    { "lat": -1.2922748, "lon": 36.8354905 },
+    { "lat": -1.2921633, "lon": 36.8352931 },
+    { "lat": -1.2920517, "lon": 36.8351300 },
+    { "lat": -1.2918801, "lon": 36.8349669 },
+    { "lat": -1.2915369, "lon": 36.8348038 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584028,
+  "bounds": {
+    "minlat": -1.2889473,
+    "minlon": 36.8328484,
+    "maxlat": -1.2882376,
+    "maxlon": 36.8351371
+  },
+  "nodes": [
+    291534372,
+    291534373,
+    291534374,
+    291534375,
+    242163549
+  ],
+  "geometry": [
+    { "lat": -1.2882376, "lon": 36.8328484 },
+    { "lat": -1.2887567, "lon": 36.8337138 },
+    { "lat": -1.2888682, "lon": 36.8340399 },
+    { "lat": -1.2889025, "lon": 36.8345463 },
+    { "lat": -1.2889473, "lon": 36.8351371 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26584052,
+  "bounds": {
+    "minlat": -1.2938264,
+    "minlon": 36.8225266,
+    "maxlat": -1.2932459,
+    "maxlon": 36.8258609
+  },
+  "nodes": [
+    291534843,
+    291534844,
+    6562509563,
+    291534845,
+    291534846,
+    6562509570,
+    6562509569,
+    291534847,
+    6562509571,
+    6562509572,
+    6906519661
+  ],
+  "geometry": [
+    { "lat": -1.2934234, "lon": 36.8225266 },
+    { "lat": -1.2935340, "lon": 36.8227866 },
+    { "lat": -1.2937807, "lon": 36.8235541 },
+    { "lat": -1.2938100, "lon": 36.8237261 },
+    { "lat": -1.2938241, "lon": 36.8240111 },
+    { "lat": -1.2938264, "lon": 36.8241070 },
+    { "lat": -1.2938248, "lon": 36.8242423 },
+    { "lat": -1.2937796, "lon": 36.8244371 },
+    { "lat": -1.2936189, "lon": 36.8250223 },
+    { "lat": -1.2933509, "lon": 36.8255627 },
+    { "lat": -1.2932459, "lon": 36.8258609 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26598657,
+  "bounds": {
+    "minlat": -1.2774089,
+    "minlon": 36.8152266,
+    "maxlat": -1.2756310,
+    "maxlon": 36.8193730
+  },
+  "nodes": [
+    291694433,
+    291694434,
+    291694280,
+    291694227,
+    291694435,
+    291694229,
+    291694231,
+    291694232,
+    291694436,
+    291694234,
+    291694285,
+    291694236,
+    291694237,
+    291694239,
+    291694241,
+    291694288,
+    291694438,
+    291694244,
+    291694290,
+    291694246,
+    291694439,
+    291694440,
+    291694249,
+    291694293,
+    291694251,
+    6444203444,
+    291694441,
+    10249802921,
+    291694253,
+    10249802920,
+    291694254,
+    6444203443,
+    10249802919,
+    10249802918,
+    10249802917,
+    291694295,
+    6444203442,
+    291694256,
+    291694442,
+    291694258,
+    291694259,
+    291694297,
+    291694261,
+    291694443,
+    291694263,
+    291694444,
+    291694300,
+    291694266,
+    291694445,
+    291694268,
+    291694302,
+    291694271,
+    291694446,
+    291694273,
+    291694305,
+    291694275,
+    271329226
+  ],
+  "geometry": [
+    { "lat": -1.2756528, "lon": 36.8152266 },
+    { "lat": -1.2756898, "lon": 36.8153130 },
+    { "lat": -1.2757343, "lon": 36.8154469 },
+    { "lat": -1.2757549, "lon": 36.8155548 },
+    { "lat": -1.2757894, "lon": 36.8156429 },
+    { "lat": -1.2758204, "lon": 36.8157701 },
+    { "lat": -1.2758267, "lon": 36.8158840 },
+    { "lat": -1.2757730, "lon": 36.8159647 },
+    { "lat": -1.2757730, "lon": 36.8160763 },
+    { "lat": -1.2758226, "lon": 36.8161342 },
+    { "lat": -1.2758564, "lon": 36.8161970 },
+    { "lat": -1.2758831, "lon": 36.8162651 },
+    { "lat": -1.2759146, "lon": 36.8163662 },
+    { "lat": -1.2759439, "lon": 36.8164945 },
+    { "lat": -1.2759476, "lon": 36.8165989 },
+    { "lat": -1.2759142, "lon": 36.8166980 },
+    { "lat": -1.2757537, "lon": 36.8168285 },
+    { "lat": -1.2756310, "lon": 36.8170073 },
+    { "lat": -1.2756464, "lon": 36.8172263 },
+    { "lat": -1.2757668, "lon": 36.8174278 },
+    { "lat": -1.2758759, "lon": 36.8175097 },
+    { "lat": -1.2759130, "lon": 36.8175998 },
+    { "lat": -1.2759274, "lon": 36.8176985 },
+    { "lat": -1.2759914, "lon": 36.8178207 },
+    { "lat": -1.2761298, "lon": 36.8179595 },
+    { "lat": -1.2762078, "lon": 36.8179969 },
+    { "lat": -1.2762859, "lon": 36.8179891 },
+    { "lat": -1.2763402, "lon": 36.8179328 },
+    { "lat": -1.2763715, "lon": 36.8178445 },
+    { "lat": -1.2763564, "lon": 36.8177807 },
+    { "lat": -1.2763413, "lon": 36.8177183 },
+    { "lat": -1.2762726, "lon": 36.8175786 },
+    { "lat": -1.2762576, "lon": 36.8175422 },
+    { "lat": -1.2762591, "lon": 36.8175002 },
+    { "lat": -1.2763121, "lon": 36.8174629 },
+    { "lat": -1.2763696, "lon": 36.8174829 },
+    { "lat": -1.2765413, "lon": 36.8175848 },
+    { "lat": -1.2766289, "lon": 36.8176598 },
+    { "lat": -1.2766720, "lon": 36.8177343 },
+    { "lat": -1.2767257, "lon": 36.8178180 },
+    { "lat": -1.2767539, "lon": 36.8179770 },
+    { "lat": -1.2767348, "lon": 36.8181188 },
+    { "lat": -1.2766139, "lon": 36.8182478 },
+    { "lat": -1.2765803, "lon": 36.8183638 },
+    { "lat": -1.2765682, "lon": 36.8185205 },
+    { "lat": -1.2766248, "lon": 36.8186096 },
+    { "lat": -1.2767213, "lon": 36.8187340 },
+    { "lat": -1.2768055, "lon": 36.8187904 },
+    { "lat": -1.2768776, "lon": 36.8189491 },
+    { "lat": -1.2769070, "lon": 36.8190781 },
+    { "lat": -1.2769339, "lon": 36.8191748 },
+    { "lat": -1.2769643, "lon": 36.8192215 },
+    { "lat": -1.2770252, "lon": 36.8192849 },
+    { "lat": -1.2771064, "lon": 36.8193192 },
+    { "lat": -1.2772365, "lon": 36.8193546 },
+    { "lat": -1.2773285, "lon": 36.8193669 },
+    { "lat": -1.2774089, "lon": 36.8193730 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "waterway": "river"
+  }
+},
+{
+  "type": "way",
+  "id": 26603129,
+  "bounds": {
+    "minlat": -1.2953936,
+    "minlon": 36.8217048,
+    "maxlat": -1.2898464,
+    "maxlon": 36.8353789
+  },
+  "nodes": [
+    291534145,
+    292848201,
+    292848406,
+    292848203,
+    292848431,
+    9188479598,
+    292848205,
+    292848432,
+    292848207,
+    291747378,
+    291747873,
+    291747872,
+    291747764,
+    291747449,
+    291747381,
+    291746810,
+    291746836,
+    291746812,
+    291746837,
+    292848427,
+    291746838,
+    3797229635,
+    291746814,
+    291746815
+  ],
+  "geometry": [
+    { "lat": -1.2898464, "lon": 36.8353789 },
+    { "lat": -1.2902800, "lon": 36.8345028 },
+    { "lat": -1.2906577, "lon": 36.8337784 },
+    { "lat": -1.2912463, "lon": 36.8329755 },
+    { "lat": -1.2914608, "lon": 36.8325721 },
+    { "lat": -1.2915245, "lon": 36.8323302 },
+    { "lat": -1.2917611, "lon": 36.8315249 },
+    { "lat": -1.2919585, "lon": 36.8305379 },
+    { "lat": -1.2920701, "lon": 36.8301087 },
+    { "lat": -1.2932341, "lon": 36.8277121 },
+    { "lat": -1.2935104, "lon": 36.8271593 },
+    { "lat": -1.2937266, "lon": 36.8267268 },
+    { "lat": -1.2938176, "lon": 36.8265448 },
+    { "lat": -1.2939757, "lon": 36.8261946 },
+    { "lat": -1.2940579, "lon": 36.8260126 },
+    { "lat": -1.2942466, "lon": 36.8255320 },
+    { "lat": -1.2943496, "lon": 36.8252230 },
+    { "lat": -1.2944354, "lon": 36.8248883 },
+    { "lat": -1.2947105, "lon": 36.8238091 },
+    { "lat": -1.2948336, "lon": 36.8233261 },
+    { "lat": -1.2949846, "lon": 36.8227339 },
+    { "lat": -1.2950367, "lon": 36.8225188 },
+    { "lat": -1.2951042, "lon": 36.8223016 },
+    { "lat": -1.2953936, "lon": 36.8217048 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603136,
+  "bounds": {
+    "minlat": -1.2953364,
+    "minlon": 36.8240815,
+    "maxlat": -1.2939757,
+    "maxlon": 36.8261946
+  },
+  "nodes": [
+    291747290,
+    291747446,
+    291747292,
+    291747447,
+    291747448,
+    291747449
+  ],
+  "geometry": [
+    { "lat": -1.2953364, "lon": 36.8240815 },
+    { "lat": -1.2949588, "lon": 36.8243304 },
+    { "lat": -1.2947443, "lon": 36.8247080 },
+    { "lat": -1.2943496, "lon": 36.8255406 },
+    { "lat": -1.2941780, "lon": 36.8258753 },
+    { "lat": -1.2939757, "lon": 36.8261946 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603169,
+  "bounds": {
+    "minlat": -1.2979192,
+    "minlon": 36.8267937,
+    "maxlat": -1.2935104,
+    "maxlon": 36.8284502
+  },
+  "nodes": [
+    291747748,
+    6370400103,
+    6455396052,
+    6455396051,
+    291747751,
+    291747753,
+    291747755,
+    291747757,
+    291747873
+  ],
+  "geometry": [
+    { "lat": -1.2979192, "lon": 36.8284502 },
+    { "lat": -1.2965741, "lon": 36.8278000 },
+    { "lat": -1.2963416, "lon": 36.8276876 },
+    { "lat": -1.2961213, "lon": 36.8275812 },
+    { "lat": -1.2945985, "lon": 36.8268452 },
+    { "lat": -1.2942981, "lon": 36.8267937 },
+    { "lat": -1.2939463, "lon": 36.8268280 },
+    { "lat": -1.2936631, "lon": 36.8269825 },
+    { "lat": -1.2935104, "lon": 36.8271593 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603177,
+  "bounds": {
+    "minlat": -1.2980909,
+    "minlon": 36.8263817,
+    "maxlat": -1.2937266,
+    "maxlon": 36.8280554
+  },
+  "nodes": [
+    291747867,
+    291747868,
+    291747869,
+    291747870,
+    291747871,
+    291747872
+  ],
+  "geometry": [
+    { "lat": -1.2980909, "lon": 36.8280554 },
+    { "lat": -1.2950704, "lon": 36.8265534 },
+    { "lat": -1.2946328, "lon": 36.8263903 },
+    { "lat": -1.2942552, "lon": 36.8263817 },
+    { "lat": -1.2938948, "lon": 36.8265620 },
+    { "lat": -1.2937266, "lon": 36.8267268 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603185,
+  "bounds": {
+    "minlat": -1.2970869,
+    "minlon": 36.8260470,
+    "maxlat": -1.2937266,
+    "maxlon": 36.8269997
+  },
+  "nodes": [
+    291747941,
+    291747942,
+    291747943,
+    291747944,
+    291747945,
+    291747872
+  ],
+  "geometry": [
+    { "lat": -1.2970869, "lon": 36.8269997 },
+    { "lat": -1.2951562, "lon": 36.8261071 },
+    { "lat": -1.2948473, "lon": 36.8260470 },
+    { "lat": -1.2944178, "lon": 36.8261906 },
+    { "lat": -1.2940407, "lon": 36.8263646 },
+    { "lat": -1.2937266, "lon": 36.8267268 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603202,
+  "bounds": {
+    "minlat": -1.2970440,
+    "minlon": 36.8257552,
+    "maxlat": -1.2948473,
+    "maxlon": 36.8262787
+  },
+  "nodes": [
+    291748153,
+    291748154,
+    291748155,
+    291748156,
+    291747943
+  ],
+  "geometry": [
+    { "lat": -1.2970440, "lon": 36.8262787 },
+    { "lat": -1.2960400, "lon": 36.8257981 },
+    { "lat": -1.2957569, "lon": 36.8257552 },
+    { "lat": -1.2954823, "lon": 36.8257895 },
+    { "lat": -1.2948473, "lon": 36.8260470 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603204,
+  "bounds": {
+    "minlat": -1.2942123,
+    "minlon": 36.8221932,
+    "maxlat": -1.2938241,
+    "maxlon": 36.8240111
+  },
+  "nodes": [
+    291748174,
+    291534846
+  ],
+  "geometry": [
+    { "lat": -1.2942123, "lon": 36.8221932 },
+    { "lat": -1.2938241, "lon": 36.8240111 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603241,
+  "bounds": {
+    "minlat": -1.2945899,
+    "minlon": 36.8293515,
+    "maxlat": -1.2938364,
+    "maxlon": 36.8309403
+  },
+  "nodes": [
+    291748356,
+    2165044565,
+    2165044569,
+    2165044535
+  ],
+  "geometry": [
+    { "lat": -1.2945899, "lon": 36.8293515 },
+    { "lat": -1.2942292, "lon": 36.8301121 },
+    { "lat": -1.2938818, "lon": 36.8308446 },
+    { "lat": -1.2938364, "lon": 36.8309403 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603253,
+  "bounds": {
+    "minlat": -1.2900763,
+    "minlon": 36.8302355,
+    "maxlat": -1.2894757,
+    "maxlon": 36.8326888
+  },
+  "nodes": [
+    291748459,
+    291748460,
+    291748461,
+    291748462,
+    1455714802,
+    291748463,
+    291748464,
+    291748465,
+    1455714813,
+    292847771,
+    291748466
+  ],
+  "geometry": [
+    { "lat": -1.2894757, "lon": 36.8302355 },
+    { "lat": -1.2896628, "lon": 36.8303935 },
+    { "lat": -1.2898243, "lon": 36.8306223 },
+    { "lat": -1.2899527, "lon": 36.8308545 },
+    { "lat": -1.2900205, "lon": 36.8311036 },
+    { "lat": -1.2900763, "lon": 36.8313084 },
+    { "lat": -1.2900420, "lon": 36.8316861 },
+    { "lat": -1.2899219, "lon": 36.8321066 },
+    { "lat": -1.2898685, "lon": 36.8322864 },
+    { "lat": -1.2898024, "lon": 36.8325087 },
+    { "lat": -1.2897981, "lon": 36.8326888 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603269,
+  "bounds": {
+    "minlat": -1.2996268,
+    "minlon": 36.8381234,
+    "maxlat": -1.2968037,
+    "maxlon": 36.8417853
+  },
+  "nodes": [
+    291748609,
+    291748610,
+    291748611,
+    291748612,
+    291748613,
+    291748614,
+    291748615,
+    291749396
+  ],
+  "geometry": [
+    { "lat": -1.2996268, "lon": 36.8381234 },
+    { "lat": -1.2971899, "lon": 36.8399687 },
+    { "lat": -1.2969668, "lon": 36.8402348 },
+    { "lat": -1.2968295, "lon": 36.8405695 },
+    { "lat": -1.2968037, "lon": 36.8409300 },
+    { "lat": -1.2968724, "lon": 36.8412218 },
+    { "lat": -1.2970869, "lon": 36.8415823 },
+    { "lat": -1.2972346, "lon": 36.8417853 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "layer": "-1",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603353,
+  "bounds": {
+    "minlat": -1.3013344,
+    "minlon": 36.8379345,
+    "maxlat": -1.2992493,
+    "maxlon": 36.8432008
+  },
+  "nodes": [
+    291749206,
+    291749207,
+    291749208,
+    291749209,
+    291749210
+  ],
+  "geometry": [
+    { "lat": -1.3013344, "lon": 36.8379345 },
+    { "lat": -1.2992836, "lon": 36.8420458 },
+    { "lat": -1.2992493, "lon": 36.8423548 },
+    { "lat": -1.2993265, "lon": 36.8426981 },
+    { "lat": -1.2995520, "lon": 36.8432008 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26603357,
+  "bounds": {
+    "minlat": -1.3025186,
+    "minlon": 36.8384838,
+    "maxlat": -1.2989442,
+    "maxlon": 36.8655333
+  },
+  "nodes": [
+    291749249,
+    291749250,
+    291749251,
+    9071578383,
+    9071578382,
+    9071578381,
+    9071578380,
+    9071578379,
+    9071578378,
+    9071578328,
+    9071578377,
+    9071578376,
+    9071578372,
+    9071578375,
+    9071578368,
+    9071578366,
+    9071578367,
+    9071578364,
+    9071578362,
+    11822694584,
+    9071578363,
+    9071578360,
+    9071578359,
+    9071578356
+  ],
+  "geometry": [
+    { "lat": -1.3025186, "lon": 36.8384838 },
+    { "lat": -1.3002704, "lon": 36.8429985 },
+    { "lat": -1.3002361, "lon": 36.8433762 },
+    { "lat": -1.3003762, "lon": 36.8437806 },
+    { "lat": -1.3005558, "lon": 36.8440810 },
+    { "lat": -1.3007838, "lon": 36.8444377 },
+    { "lat": -1.3009634, "lon": 36.8447354 },
+    { "lat": -1.3011216, "lon": 36.8450654 },
+    { "lat": -1.3012584, "lon": 36.8454033 },
+    { "lat": -1.3013861, "lon": 36.8458482 },
+    { "lat": -1.3014414, "lon": 36.8460356 },
+    { "lat": -1.3014541, "lon": 36.8462442 },
+    { "lat": -1.3014643, "lon": 36.8463526 },
+    { "lat": -1.3014702, "lon": 36.8468289 },
+    { "lat": -1.3014421, "lon": 36.8472809 },
+    { "lat": -1.3012493, "lon": 36.8486967 },
+    { "lat": -1.3011230, "lon": 36.8496251 },
+    { "lat": -1.3008119, "lon": 36.8518795 },
+    { "lat": -1.3003784, "lon": 36.8550680 },
+    { "lat": -1.3003120, "lon": 36.8555372 },
+    { "lat": -1.2999766, "lon": 36.8579078 },
+    { "lat": -1.2994939, "lon": 36.8615743 },
+    { "lat": -1.2992365, "lon": 36.8634358 },
+    { "lat": -1.2989442, "lon": 36.8655333 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding",
+    "usage": "industrial"
+  }
+},
+{
+  "type": "way",
+  "id": 26603358,
+  "bounds": {
+    "minlat": -1.3035655,
+    "minlon": 36.8390932,
+    "maxlat": -1.3009778,
+    "maxlon": 36.8456857
+  },
+  "nodes": [
+    291749281,
+    291749282,
+    291749283,
+    7724284964
+  ],
+  "geometry": [
+    { "lat": -1.3035655, "lon": 36.8390932 },
+    { "lat": -1.3010169, "lon": 36.8442088 },
+    { "lat": -1.3009778, "lon": 36.8445441 },
+    { "lat": -1.3014539, "lon": 36.8456857 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding",
+    "usage": "industrial"
+  }
+},
+{
+  "type": "way",
+  "id": 26603359,
+  "bounds": {
+    "minlat": -1.3047839,
+    "minlon": 36.8396426,
+    "maxlat": -1.3014643,
+    "maxlon": 36.8463526
+  },
+  "nodes": [
+    291749383,
+    291749386,
+    9071578373,
+    9071578372
+  ],
+  "geometry": [
+    { "lat": -1.3047839, "lon": 36.8396426 },
+    { "lat": -1.3015488, "lon": 36.8459031 },
+    { "lat": -1.3014957, "lon": 36.8462026 },
+    { "lat": -1.3014643, "lon": 36.8463526 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702715,
+  "bounds": {
+    "minlat": -1.2911605,
+    "minlon": 36.8290359,
+    "maxlat": -1.2909116,
+    "maxlon": 36.8302082
+  },
+  "nodes": [
+    292847419,
+    292847461,
+    292847421,
+    292847463,
+    292847423,
+    292847464
+  ],
+  "geometry": [
+    { "lat": -1.2909116, "lon": 36.8290359 },
+    { "lat": -1.2910403, "lon": 36.8291989 },
+    { "lat": -1.2911347, "lon": 36.8294478 },
+    { "lat": -1.2911605, "lon": 36.8297225 },
+    { "lat": -1.2911004, "lon": 36.8299972 },
+    { "lat": -1.2910505, "lon": 36.8302082 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702727,
+  "bounds": {
+    "minlat": -1.2908773,
+    "minlon": 36.8294736,
+    "maxlat": -1.2906542,
+    "maxlon": 36.8307976
+  },
+  "nodes": [
+    292847642,
+    292847643,
+    292847644,
+    292847645,
+    292847647,
+    292847649
+  ],
+  "geometry": [
+    { "lat": -1.2906542, "lon": 36.8294736 },
+    { "lat": -1.2907829, "lon": 36.8296281 },
+    { "lat": -1.2908773, "lon": 36.8298942 },
+    { "lat": -1.2908773, "lon": 36.8302804 },
+    { "lat": -1.2908172, "lon": 36.8305722 },
+    { "lat": -1.2907530, "lon": 36.8307976 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702757,
+  "bounds": {
+    "minlat": -1.2898024,
+    "minlon": 36.8311730,
+    "maxlat": -1.2891096,
+    "maxlon": 36.8325087
+  },
+  "nodes": [
+    292847766,
+    292847767,
+    292847768,
+    292847769,
+    292847770,
+    292847771
+  ],
+  "geometry": [
+    { "lat": -1.2891096, "lon": 36.8311730 },
+    { "lat": -1.2893585, "lon": 36.8313190 },
+    { "lat": -1.2895644, "lon": 36.8315335 },
+    { "lat": -1.2897275, "lon": 36.8318168 },
+    { "lat": -1.2897875, "lon": 36.8321343 },
+    { "lat": -1.2898024, "lon": 36.8325087 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702762,
+  "bounds": {
+    "minlat": -1.2894529,
+    "minlon": 36.8316919,
+    "maxlat": -1.2887103,
+    "maxlon": 36.8335705
+  },
+  "nodes": [
+    292847821,
+    292847822,
+    292848080,
+    292847824,
+    292848081,
+    292847826,
+    292848082
+  ],
+  "geometry": [
+    { "lat": -1.2887103, "lon": 36.8316919 },
+    { "lat": -1.2890067, "lon": 36.8318597 },
+    { "lat": -1.2892126, "lon": 36.8320399 },
+    { "lat": -1.2893842, "lon": 36.8323747 },
+    { "lat": -1.2894529, "lon": 36.8328038 },
+    { "lat": -1.2894186, "lon": 36.8331986 },
+    { "lat": -1.2893530, "lon": 36.8335705 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702765,
+  "bounds": {
+    "minlat": -1.2891611,
+    "minlon": 36.8320828,
+    "maxlat": -1.2886205,
+    "maxlon": 36.8339970
+  },
+  "nodes": [
+    292847881,
+    292847992,
+    292847884,
+    292847994,
+    291531395
+  ],
+  "geometry": [
+    { "lat": -1.2886205, "lon": 36.8320828 },
+    { "lat": -1.2890753, "lon": 36.8328897 },
+    { "lat": -1.2891526, "lon": 36.8332072 },
+    { "lat": -1.2891611, "lon": 36.8336192 },
+    { "lat": -1.2891428, "lon": 36.8339970 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702778,
+  "bounds": {
+    "minlat": -1.2889294,
+    "minlon": 36.8324862,
+    "maxlat": -1.2884661,
+    "maxlon": 36.8345463
+  },
+  "nodes": [
+    292847984,
+    292847986,
+    292847987,
+    292847988,
+    292847989,
+    291534375
+  ],
+  "geometry": [
+    { "lat": -1.2884661, "lon": 36.8324862 },
+    { "lat": -1.2886806, "lon": 36.8328639 },
+    { "lat": -1.2888694, "lon": 36.8332501 },
+    { "lat": -1.2889294, "lon": 36.8336020 },
+    { "lat": -1.2889294, "lon": 36.8338853 },
+    { "lat": -1.2889025, "lon": 36.8345463 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702797,
+  "bounds": {
+    "minlat": -1.2952808,
+    "minlon": 36.8295928,
+    "maxlat": -1.2944438,
+    "maxlon": 36.8313068
+  },
+  "nodes": [
+    2165056050,
+    292848210,
+    2165044584
+  ],
+  "geometry": [
+    { "lat": -1.2952808, "lon": 36.8295928 },
+    { "lat": -1.2952621, "lon": 36.8296281 },
+    { "lat": -1.2944438, "lon": 36.8313068 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702803,
+  "bounds": {
+    "minlat": -1.2952544,
+    "minlon": 36.8289282,
+    "maxlat": -1.2941753,
+    "maxlon": 36.8311708
+  },
+  "nodes": [
+    292848289,
+    2324373837,
+    2165044560
+  ],
+  "geometry": [
+    { "lat": -1.2952544, "lon": 36.8289282 },
+    { "lat": -1.2950160, "lon": 36.8294564 },
+    { "lat": -1.2941753, "lon": 36.8311708 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702805,
+  "bounds": {
+    "minlat": -1.2948331,
+    "minlon": 36.8220750,
+    "maxlat": -1.2938241,
+    "maxlon": 36.8240111
+  },
+  "nodes": [
+    292848298,
+    291534846
+  ],
+  "geometry": [
+    { "lat": -1.2948331, "lon": 36.8220750 },
+    { "lat": -1.2938241, "lon": 36.8240111 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702819,
+  "bounds": {
+    "minlat": -1.2933394,
+    "minlon": 36.8256757,
+    "maxlat": -1.2917344,
+    "maxlon": 36.8295680
+  },
+  "nodes": [
+    292848378,
+    292848379,
+    292848380
+  ],
+  "geometry": [
+    { "lat": -1.2917344, "lon": 36.8295680 },
+    { "lat": -1.2924734, "lon": 36.8280231 },
+    { "lat": -1.2933394, "lon": 36.8256757 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702820,
+  "bounds": {
+    "minlat": -1.2917344,
+    "minlon": 36.8295680,
+    "maxlat": -1.2906577,
+    "maxlon": 36.8337784
+  },
+  "nodes": [
+    292848406,
+    1455718296,
+    1455718297,
+    292848382,
+    1455718307,
+    1455718305,
+    1455718290,
+    292848378
+  ],
+  "geometry": [
+    { "lat": -1.2906577, "lon": 36.8337784 },
+    { "lat": -1.2909724, "lon": 36.8331374 },
+    { "lat": -1.2911432, "lon": 36.8323599 },
+    { "lat": -1.2912881, "lon": 36.8316365 },
+    { "lat": -1.2915616, "lon": 36.8303688 },
+    { "lat": -1.2916206, "lon": 36.8300952 },
+    { "lat": -1.2916723, "lon": 36.8298555 },
+    { "lat": -1.2917344, "lon": 36.8295680 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 26702825,
+  "bounds": {
+    "minlat": -1.2948336,
+    "minlon": 36.8233261,
+    "maxlat": -1.2890296,
+    "maxlon": 36.8368591
+  },
+  "nodes": [
+    292848427,
+    292848378,
+    2165071175,
+    2165067143,
+    2165067135,
+    2165067117,
+    2165067110,
+    292848407,
+    292848410,
+    292848428,
+    2165064499,
+    2165064509,
+    2165064515,
+    2165064517,
+    2165064526,
+    2165064538,
+    30498672
+  ],
+  "geometry": [
+    { "lat": -1.2948336, "lon": 36.8233261 },
+    { "lat": -1.2917344, "lon": 36.8295680 },
+    { "lat": -1.2898043, "lon": 36.8333772 },
+    { "lat": -1.2895846, "lon": 36.8338107 },
+    { "lat": -1.2894148, "lon": 36.8340521 },
+    { "lat": -1.2892197, "lon": 36.8343706 },
+    { "lat": -1.2891203, "lon": 36.8346145 },
+    { "lat": -1.2890379, "lon": 36.8349145 },
+    { "lat": -1.2890296, "lon": 36.8351127 },
+    { "lat": -1.2890433, "lon": 36.8355421 },
+    { "lat": -1.2891044, "lon": 36.8357897 },
+    { "lat": -1.2892049, "lon": 36.8360961 },
+    { "lat": -1.2892528, "lon": 36.8362090 },
+    { "lat": -1.2892997, "lon": 36.8363198 },
+    { "lat": -1.2893454, "lon": 36.8364238 },
+    { "lat": -1.2893974, "lon": 36.8365423 },
+    { "lat": -1.2895757, "lon": 36.8368591 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 78055803,
+  "bounds": {
+    "minlat": -1.2743748,
+    "minlon": 36.7861211,
+    "maxlat": -1.2714776,
+    "maxlon": 36.8007021
+  },
+  "nodes": [
+    245372620,
+    917049779,
+    917049781,
+    917049782,
+    917049784,
+    917049787,
+    917049788,
+    917049789,
+    917049790,
+    917049791,
+    917049792,
+    917049793,
+    917049794,
+    917049795,
+    917049797,
+    917049798,
+    917049800,
+    1667938391,
+    1667938024,
+    1667938189,
+    9412863378,
+    1667938249,
+    1667938179,
+    1667938267,
+    9412863377,
+    1667938273,
+    1667938044,
+    1667938291,
+    1667938433,
+    11813670995,
+    1667938352,
+    1667938429,
+    1667938617,
+    1667938565,
+    9412863379
+  ],
+  "geometry": [
+    { "lat": -1.2743748, "lon": 36.7861211 },
+    { "lat": -1.2740570, "lon": 36.7864561 },
+    { "lat": -1.2740141, "lon": 36.7867457 },
+    { "lat": -1.2738317, "lon": 36.7868316 },
+    { "lat": -1.2737888, "lon": 36.7870140 },
+    { "lat": -1.2732954, "lon": 36.7874431 },
+    { "lat": -1.2731131, "lon": 36.7878401 },
+    { "lat": -1.2729549, "lon": 36.7880895 },
+    { "lat": -1.2724651, "lon": 36.7883395 },
+    { "lat": -1.2720727, "lon": 36.7886877 },
+    { "lat": -1.2720083, "lon": 36.7892241 },
+    { "lat": -1.2718259, "lon": 36.7896103 },
+    { "lat": -1.2719010, "lon": 36.7899751 },
+    { "lat": -1.2719010, "lon": 36.7903721 },
+    { "lat": -1.2721906, "lon": 36.7908334 },
+    { "lat": -1.2719761, "lon": 36.7911660 },
+    { "lat": -1.2721799, "lon": 36.7917132 },
+    { "lat": -1.2723893, "lon": 36.7921290 },
+    { "lat": -1.2723678, "lon": 36.7928371 },
+    { "lat": -1.2720632, "lon": 36.7932722 },
+    { "lat": -1.2718602, "lon": 36.7935858 },
+    { "lat": -1.2717645, "lon": 36.7938403 },
+    { "lat": -1.2717028, "lon": 36.7944035 },
+    { "lat": -1.2716744, "lon": 36.7951256 },
+    { "lat": -1.2715661, "lon": 36.7954950 },
+    { "lat": -1.2715848, "lon": 36.7957875 },
+    { "lat": -1.2714776, "lon": 36.7964742 },
+    { "lat": -1.2715634, "lon": 36.7973110 },
+    { "lat": -1.2716492, "lon": 36.7977402 },
+    { "lat": -1.2717239, "lon": 36.7979127 },
+    { "lat": -1.2720176, "lon": 36.7985910 },
+    { "lat": -1.2722391, "lon": 36.7989633 },
+    { "lat": -1.2726360, "lon": 36.7992851 },
+    { "lat": -1.2728291, "lon": 36.8003366 },
+    { "lat": -1.2733497, "lon": 36.8007021 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Kirichwa Dogo River",
+    "source": "yahoo",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 78237724,
+  "bounds": {
+    "minlat": -1.3087437,
+    "minlon": 36.8012989,
+    "maxlat": -1.2983529,
+    "maxlon": 36.8063750
+  },
+  "nodes": [
+    10655219047,
+    4192413228,
+    4192413227,
+    4192413226,
+    4192413225,
+    4192413224,
+    4192413223,
+    4192413222,
+    4192413221,
+    4192413220,
+    4192413219,
+    4192413218,
+    4192413217,
+    4192413216,
+    4192413215,
+    4192413214,
+    4192413213,
+    4192413212,
+    4192413211,
+    4192413210,
+    4192413209,
+    4192413208,
+    4192413207,
+    4192413206,
+    4192413205,
+    918804935,
+    918804934,
+    918804933,
+    918804932,
+    918804931,
+    918804929,
+    918804927,
+    918804926,
+    918804924,
+    918804923,
+    4192413283,
+    4192413284,
+    4192413285,
+    4192413286,
+    918804920,
+    4192413287,
+    4192413288,
+    918804918,
+    918804914,
+    4192413389,
+    4192413390,
+    4192413391,
+    4192413392,
+    918804912,
+    918804910,
+    918804906,
+    4192413393,
+    279104144
+  ],
+  "geometry": [
+    { "lat": -1.2983529, "lon": 36.8012989 },
+    { "lat": -1.2984667, "lon": 36.8013880 },
+    { "lat": -1.2987670, "lon": 36.8017325 },
+    { "lat": -1.2990740, "lon": 36.8020389 },
+    { "lat": -1.2991786, "lon": 36.8021060 },
+    { "lat": -1.2993395, "lon": 36.8021972 },
+    { "lat": -1.2997337, "lon": 36.8024104 },
+    { "lat": -1.3000099, "lon": 36.8025552 },
+    { "lat": -1.3002995, "lon": 36.8027256 },
+    { "lat": -1.3007655, "lon": 36.8029926 },
+    { "lat": -1.3014524, "lon": 36.8033747 },
+    { "lat": -1.3017389, "lon": 36.8035414 },
+    { "lat": -1.3021860, "lon": 36.8038301 },
+    { "lat": -1.3027469, "lon": 36.8041736 },
+    { "lat": -1.3029562, "lon": 36.8043098 },
+    { "lat": -1.3033708, "lon": 36.8045436 },
+    { "lat": -1.3035395, "lon": 36.8046249 },
+    { "lat": -1.3036492, "lon": 36.8046838 },
+    { "lat": -1.3037041, "lon": 36.8047306 },
+    { "lat": -1.3038062, "lon": 36.8048378 },
+    { "lat": -1.3038888, "lon": 36.8049125 },
+    { "lat": -1.3040069, "lon": 36.8049908 },
+    { "lat": -1.3041369, "lon": 36.8050070 },
+    { "lat": -1.3042121, "lon": 36.8049948 },
+    { "lat": -1.3042731, "lon": 36.8049989 },
+    { "lat": -1.3043641, "lon": 36.8050242 },
+    { "lat": -1.3045128, "lon": 36.8050721 },
+    { "lat": -1.3047998, "lon": 36.8051955 },
+    { "lat": -1.3049540, "lon": 36.8052639 },
+    { "lat": -1.3051256, "lon": 36.8054141 },
+    { "lat": -1.3053079, "lon": 36.8054463 },
+    { "lat": -1.3055546, "lon": 36.8056394 },
+    { "lat": -1.3059367, "lon": 36.8055831 },
+    { "lat": -1.3061205, "lon": 36.8055831 },
+    { "lat": -1.3063225, "lon": 36.8055243 },
+    { "lat": -1.3065032, "lon": 36.8054328 },
+    { "lat": -1.3066203, "lon": 36.8054437 },
+    { "lat": -1.3066941, "lon": 36.8055076 },
+    { "lat": -1.3068109, "lon": 36.8055609 },
+    { "lat": -1.3069680, "lon": 36.8056537 },
+    { "lat": -1.3071709, "lon": 36.8056251 },
+    { "lat": -1.3073031, "lon": 36.8055453 },
+    { "lat": -1.3075147, "lon": 36.8054934 },
+    { "lat": -1.3077557, "lon": 36.8054552 },
+    { "lat": -1.3078654, "lon": 36.8053407 },
+    { "lat": -1.3080265, "lon": 36.8053659 },
+    { "lat": -1.3081806, "lon": 36.8054684 },
+    { "lat": -1.3083415, "lon": 36.8055651 },
+    { "lat": -1.3084471, "lon": 36.8056796 },
+    { "lat": -1.3086929, "lon": 36.8058283 },
+    { "lat": -1.3087277, "lon": 36.8060283 },
+    { "lat": -1.3086529, "lon": 36.8062742 },
+    { "lat": -1.3087437, "lon": 36.8063750 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "name": "Kirimiri stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 123269001,
+  "bounds": {
+    "minlat": -1.2891360,
+    "minlon": 36.8283763,
+    "maxlat": -1.2889019,
+    "maxlon": 36.8286982
+  },
+  "nodes": [
+    1375269261,
+    1375269758,
+    1375269690,
+    1375269669,
+    1375269337,
+    1375269666,
+    1375269576,
+    1375269524,
+    1375269261
+  ],
+  "geometry": [
+    { "lat": -1.2889019, "lon": 36.8286401 },
+    { "lat": -1.2889429, "lon": 36.8285534 },
+    { "lat": -1.2889161, "lon": 36.8285292 },
+    { "lat": -1.2889563, "lon": 36.8284514 },
+    { "lat": -1.2889831, "lon": 36.8284595 },
+    { "lat": -1.2890287, "lon": 36.8283763 },
+    { "lat": -1.2891360, "lon": 36.8284300 },
+    { "lat": -1.2890073, "lon": 36.8286982 },
+    { "lat": -1.2889019, "lon": 36.8286401 }
+  ],
+  "tags": {
+    "amenity": "bus_station",
+    "building": "yes",
+    "bus": "yes",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 125299163,
+  "bounds": {
+    "minlat": -1.2871624,
+    "minlon": 36.8283770,
+    "maxlat": -1.2861374,
+    "maxlon": 36.8292053
+  },
+  "nodes": [
+    1392072705,
+    1392072716,
+    1392072714,
+    1392072707,
+    1392072705
+  ],
+  "geometry": [
+    { "lat": -1.2863475, "lon": 36.8283770 },
+    { "lat": -1.2871624, "lon": 36.8287775 },
+    { "lat": -1.2869523, "lon": 36.8292053 },
+    { "lat": -1.2861374, "lon": 36.8288048 },
+    { "lat": -1.2863475, "lon": 36.8283770 }
+  ],
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Temple Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "operator": "NCC",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 125301881,
+  "bounds": {
+    "minlat": -1.2886167,
+    "minlon": 36.8330059,
+    "maxlat": -1.2872124,
+    "maxlon": 36.8347898
+  },
+  "nodes": [
+    1392099927,
+    1392099978,
+    1392099959,
+    1392099957,
+    6443956639,
+    1392099961,
+    1392099914,
+    1392099927
+  ],
+  "geometry": [
+    { "lat": -1.2872553, "lon": 36.8333653 },
+    { "lat": -1.2878506, "lon": 36.8330059 },
+    { "lat": -1.2885684, "lon": 36.8340335 },
+    { "lat": -1.2886167, "lon": 36.8344841 },
+    { "lat": -1.2884352, "lon": 36.8345955 },
+    { "lat": -1.2881340, "lon": 36.8347898 },
+    { "lat": -1.2872124, "lon": 36.8333868 },
+    { "lat": -1.2872553, "lon": 36.8333653 }
+  ],
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Muthurwa Bus Station",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 132312856,
+  "bounds": {
+    "minlat": -1.2902906,
+    "minlon": 36.8299551,
+    "maxlat": -1.2900117,
+    "maxlon": 36.8311036
+  },
+  "nodes": [
+    1455714802,
+    1455714809,
+    1455714823,
+    1455714805,
+    1455714806,
+    1455714800,
+    1455714799
+  ],
+  "geometry": [
+    { "lat": -1.2900205, "lon": 36.8311036 },
+    { "lat": -1.2900117, "lon": 36.8309583 },
+    { "lat": -1.2900117, "lon": 36.8308134 },
+    { "lat": -1.2900171, "lon": 36.8306203 },
+    { "lat": -1.2900707, "lon": 36.8304540 },
+    { "lat": -1.2901511, "lon": 36.8302180 },
+    { "lat": -1.2902906, "lon": 36.8299551 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132312857,
+  "bounds": {
+    "minlat": -1.2904032,
+    "minlon": 36.8311782,
+    "maxlat": -1.2898685,
+    "maxlon": 36.8322864
+  },
+  "nodes": [
+    1455714812,
+    1455714813
+  ],
+  "geometry": [
+    { "lat": -1.2904032, "lon": 36.8311782 },
+    { "lat": -1.2898685, "lon": 36.8322864 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132312858,
+  "bounds": {
+    "minlat": -1.2905909,
+    "minlon": 36.8304782,
+    "maxlat": -1.2900420,
+    "maxlon": 36.8316861
+  },
+  "nodes": [
+    1455714814,
+    291748464
+  ],
+  "geometry": [
+    { "lat": -1.2905909, "lon": 36.8304782 },
+    { "lat": -1.2900420, "lon": 36.8316861 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132313186,
+  "bounds": {
+    "minlat": -1.2924144,
+    "minlon": 36.8283700,
+    "maxlat": -1.2916723,
+    "maxlon": 36.8298555
+  },
+  "nodes": [
+    1455718291,
+    1455718290
+  ],
+  "geometry": [
+    { "lat": -1.2924144, "lon": 36.8283700 },
+    { "lat": -1.2916723, "lon": 36.8298555 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132313187,
+  "bounds": {
+    "minlat": -1.2928461,
+    "minlon": 36.8278469,
+    "maxlat": -1.2915616,
+    "maxlon": 36.8303688
+  },
+  "nodes": [
+    1455718308,
+    1455718307
+  ],
+  "geometry": [
+    { "lat": -1.2928461, "lon": 36.8278469 },
+    { "lat": -1.2915616, "lon": 36.8303688 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132313188,
+  "bounds": {
+    "minlat": -1.2925994,
+    "minlon": 36.8281688,
+    "maxlat": -1.2916206,
+    "maxlon": 36.8300952
+  },
+  "nodes": [
+    1455718306,
+    1455718305
+  ],
+  "geometry": [
+    { "lat": -1.2925994, "lon": 36.8281688 },
+    { "lat": -1.2916206, "lon": 36.8300952 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132313189,
+  "bounds": {
+    "minlat": -1.2905185,
+    "minlon": 36.8325381,
+    "maxlat": -1.2892019,
+    "maxlon": 36.8358067
+  },
+  "nodes": [
+    1455718295,
+    1455718284,
+    1455718282,
+    1455718280,
+    1455718279,
+    1455718294,
+    2165064511
+  ],
+  "geometry": [
+    { "lat": -1.2905185, "lon": 36.8325381 },
+    { "lat": -1.2899715, "lon": 36.8336646 },
+    { "lat": -1.2892877, "lon": 36.8350782 },
+    { "lat": -1.2892287, "lon": 36.8352981 },
+    { "lat": -1.2892072, "lon": 36.8355368 },
+    { "lat": -1.2892019, "lon": 36.8357568 },
+    { "lat": -1.2892062, "lon": 36.8358067 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 132313190,
+  "bounds": {
+    "minlat": -1.2907116,
+    "minlon": 36.8325327,
+    "maxlat": -1.2892743,
+    "maxlon": 36.8360196
+  },
+  "nodes": [
+    1455718310,
+    1455718302,
+    1455718303,
+    1455718285,
+    1455718283,
+    1455718281,
+    1455718278,
+    1455718301,
+    1455718300
+  ],
+  "geometry": [
+    { "lat": -1.2907116, "lon": 36.8325327 },
+    { "lat": -1.2904273, "lon": 36.8330585 },
+    { "lat": -1.2901002, "lon": 36.8337076 },
+    { "lat": -1.2895317, "lon": 36.8348341 },
+    { "lat": -1.2893655, "lon": 36.8351828 },
+    { "lat": -1.2892904, "lon": 36.8354456 },
+    { "lat": -1.2892743, "lon": 36.8356495 },
+    { "lat": -1.2892743, "lon": 36.8358855 },
+    { "lat": -1.2892904, "lon": 36.8360196 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 140586099,
+  "bounds": {
+    "minlat": -1.2917476,
+    "minlon": 36.8288275,
+    "maxlat": -1.2889473,
+    "maxlon": 36.8368591
+  },
+  "nodes": [
+    1540074566,
+    292847464,
+    292847649,
+    291748466,
+    292848082,
+    6906519657,
+    291531395,
+    1455714801,
+    242163548,
+    242163549,
+    242163550,
+    2165064498,
+    2165064503,
+    2165064516,
+    2165064519,
+    2165064540,
+    30498672
+  ],
+  "geometry": [
+    { "lat": -1.2917476, "lon": 36.8288275 },
+    { "lat": -1.2910505, "lon": 36.8302082 },
+    { "lat": -1.2907530, "lon": 36.8307976 },
+    { "lat": -1.2897981, "lon": 36.8326888 },
+    { "lat": -1.2893530, "lon": 36.8335705 },
+    { "lat": -1.2892083, "lon": 36.8338571 },
+    { "lat": -1.2891428, "lon": 36.8339970 },
+    { "lat": -1.2890241, "lon": 36.8342756 },
+    { "lat": -1.2889644, "lon": 36.8345878 },
+    { "lat": -1.2889473, "lon": 36.8351371 },
+    { "lat": -1.2890073, "lon": 36.8355148 },
+    { "lat": -1.2891019, "lon": 36.8359310 },
+    { "lat": -1.2891728, "lon": 36.8361277 },
+    { "lat": -1.2892565, "lon": 36.8363373 },
+    { "lat": -1.2893220, "lon": 36.8364646 },
+    { "lat": -1.2894175, "lon": 36.8366273 },
+    { "lat": -1.2895757, "lon": 36.8368591 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "passenger_lines": "1",
+    "railway": "rail",
+    "usage": "main"
+  }
+},
+{
+  "type": "way",
+  "id": 154232830,
+  "bounds": {
+    "minlat": -1.2755921,
+    "minlon": 36.8012839,
+    "maxlat": -1.2737660,
+    "maxlon": 36.8118502
+  },
+  "nodes": [
+    1667938329,
+    1667938151,
+    1667938348,
+    1667938517,
+    1667938112,
+    1667938117,
+    1667938332,
+    1667938126,
+    1667938119,
+    1667938175,
+    1667938576,
+    1667938221,
+    1667938223,
+    1667937992,
+    1667938123,
+    1667938570,
+    1667938198,
+    1667938162,
+    1667938470,
+    1667938183,
+    1667938574,
+    1667938075,
+    9811155510,
+    1667938703,
+    1667938337,
+    2472078171,
+    1667938262
+  ],
+  "geometry": [
+    { "lat": -1.2740985, "lon": 36.8012839 },
+    { "lat": -1.2740127, "lon": 36.8015200 },
+    { "lat": -1.2738518, "lon": 36.8018740 },
+    { "lat": -1.2737660, "lon": 36.8021208 },
+    { "lat": -1.2738518, "lon": 36.8024641 },
+    { "lat": -1.2739269, "lon": 36.8026143 },
+    { "lat": -1.2741629, "lon": 36.8028932 },
+    { "lat": -1.2744203, "lon": 36.8032795 },
+    { "lat": -1.2751175, "lon": 36.8037730 },
+    { "lat": -1.2753320, "lon": 36.8042129 },
+    { "lat": -1.2752891, "lon": 36.8046420 },
+    { "lat": -1.2752891, "lon": 36.8050927 },
+    { "lat": -1.2751068, "lon": 36.8058973 },
+    { "lat": -1.2749030, "lon": 36.8062728 },
+    { "lat": -1.2747635, "lon": 36.8065089 },
+    { "lat": -1.2748064, "lon": 36.8069917 },
+    { "lat": -1.2749995, "lon": 36.8073135 },
+    { "lat": -1.2750102, "lon": 36.8077963 },
+    { "lat": -1.2750210, "lon": 36.8084508 },
+    { "lat": -1.2752033, "lon": 36.8089980 },
+    { "lat": -1.2753320, "lon": 36.8097275 },
+    { "lat": -1.2754715, "lon": 36.8101352 },
+    { "lat": -1.2755921, "lon": 36.8106063 },
+    { "lat": -1.2754892, "lon": 36.8109152 },
+    { "lat": -1.2750571, "lon": 36.8114830 },
+    { "lat": -1.2748838, "lon": 36.8116598 },
+    { "lat": -1.2746011, "lon": 36.8118502 }
+  ],
+  "tags": {
+    "name": "Masonga Wai River",
+    "source": "yahoo",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 206495399,
+  "bounds": {
+    "minlat": -1.2945842,
+    "minlon": 36.8315545,
+    "maxlat": -1.2939256,
+    "maxlon": 36.8328720
+  },
+  "nodes": [
+    2165044587,
+    2165044544
+  ],
+  "geometry": [
+    { "lat": -1.2945842, "lon": 36.8315545 },
+    { "lat": -1.2939256, "lon": 36.8328720 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495401,
+  "bounds": {
+    "minlat": -1.2943350,
+    "minlon": 36.8314282,
+    "maxlat": -1.2933523,
+    "maxlon": 36.8334321
+  },
+  "nodes": [
+    2165044571,
+    2165044554,
+    2324373817
+  ],
+  "geometry": [
+    { "lat": -1.2943350, "lon": 36.8314282 },
+    { "lat": -1.2941232, "lon": 36.8318723 },
+    { "lat": -1.2933523, "lon": 36.8334321 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495405,
+  "bounds": {
+    "minlat": -1.2942897,
+    "minlon": 36.8314053,
+    "maxlat": -1.2933003,
+    "maxlon": 36.8334051
+  },
+  "nodes": [
+    2165044567,
+    2165044550,
+    2324373815
+  ],
+  "geometry": [
+    { "lat": -1.2942897, "lon": 36.8314053 },
+    { "lat": -1.2940619, "lon": 36.8318564 },
+    { "lat": -1.2933003, "lon": 36.8334051 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495409,
+  "bounds": {
+    "minlat": -1.2940269,
+    "minlon": 36.8312722,
+    "maxlat": -1.2938484,
+    "maxlon": 36.8316246
+  },
+  "nodes": [
+    2165044548,
+    2165044537
+  ],
+  "geometry": [
+    { "lat": -1.2940269, "lon": 36.8312722 },
+    { "lat": -1.2938484, "lon": 36.8316246 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495410,
+  "bounds": {
+    "minlat": -1.2942244,
+    "minlon": 36.8313723,
+    "maxlat": -1.2939584,
+    "maxlon": 36.8318929
+  },
+  "nodes": [
+    2165044563,
+    2165044546
+  ],
+  "geometry": [
+    { "lat": -1.2942244, "lon": 36.8313723 },
+    { "lat": -1.2939584, "lon": 36.8318929 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495412,
+  "bounds": {
+    "minlat": -1.2952219,
+    "minlon": 36.8289116,
+    "maxlat": -1.2946184,
+    "maxlon": 36.8300069
+  },
+  "nodes": [
+    2165044603,
+    2324373835,
+    2165044597,
+    2165044590
+  ],
+  "geometry": [
+    { "lat": -1.2952219, "lon": 36.8289116 },
+    { "lat": -1.2949817, "lon": 36.8294393 },
+    { "lat": -1.2947207, "lon": 36.8299205 },
+    { "lat": -1.2946184, "lon": 36.8300069 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495414,
+  "bounds": {
+    "minlat": -1.2952424,
+    "minlon": 36.8295739,
+    "maxlat": -1.2945276,
+    "maxlon": 36.8309498
+  },
+  "nodes": [
+    2165056048,
+    2165056040,
+    2165044604,
+    2165044593,
+    2165044586
+  ],
+  "geometry": [
+    { "lat": -1.2952424, "lon": 36.8295739 },
+    { "lat": -1.2950627, "lon": 36.8299402 },
+    { "lat": -1.2949592, "lon": 36.8301478 },
+    { "lat": -1.2946684, "lon": 36.8307362 },
+    { "lat": -1.2945276, "lon": 36.8309498 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495416,
+  "bounds": {
+    "minlat": -1.2950729,
+    "minlon": 36.8288353,
+    "maxlat": -1.2941391,
+    "maxlon": 36.8304999
+  },
+  "nodes": [
+    2165044599,
+    2324373827,
+    2165044585,
+    2165044558
+  ],
+  "geometry": [
+    { "lat": -1.2950729, "lon": 36.8288353 },
+    { "lat": -1.2948319, "lon": 36.8293644 },
+    { "lat": -1.2944821, "lon": 36.8300182 },
+    { "lat": -1.2941391, "lon": 36.8304999 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495418,
+  "bounds": {
+    "minlat": -1.2949361,
+    "minlon": 36.8287653,
+    "maxlat": -1.2942292,
+    "maxlon": 36.8301121
+  },
+  "nodes": [
+    2165044591,
+    2324373818,
+    2165044580,
+    2165044565
+  ],
+  "geometry": [
+    { "lat": -1.2949361, "lon": 36.8287653 },
+    { "lat": -1.2946949, "lon": 36.8292959 },
+    { "lat": -1.2943708, "lon": 36.8299092 },
+    { "lat": -1.2942292, "lon": 36.8301121 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495420,
+  "bounds": {
+    "minlat": -1.2949964,
+    "minlon": 36.8287961,
+    "maxlat": -1.2938562,
+    "maxlon": 36.8310092
+  },
+  "nodes": [
+    2165044596,
+    2324373821,
+    2165044573,
+    2165044556,
+    2165044539
+  ],
+  "geometry": [
+    { "lat": -1.2949964, "lon": 36.8287961 },
+    { "lat": -1.2947551, "lon": 36.8293260 },
+    { "lat": -1.2943436, "lon": 36.8301023 },
+    { "lat": -1.2941369, "lon": 36.8304295 },
+    { "lat": -1.2938562, "lon": 36.8310092 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495422,
+  "bounds": {
+    "minlat": -1.2951794,
+    "minlon": 36.8295431,
+    "maxlat": -1.2943683,
+    "maxlon": 36.8312685
+  },
+  "nodes": [
+    2165044577,
+    2165044586,
+    2165044589,
+    2165044602,
+    2165056039,
+    2165056044
+  ],
+  "geometry": [
+    { "lat": -1.2943683, "lon": 36.8312685 },
+    { "lat": -1.2945276, "lon": 36.8309498 },
+    { "lat": -1.2946139, "lon": 36.8307090 },
+    { "lat": -1.2949024, "lon": 36.8301250 },
+    { "lat": -1.2950491, "lon": 36.8298243 },
+    { "lat": -1.2951794, "lon": 36.8295431 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495423,
+  "bounds": {
+    "minlat": -1.2951890,
+    "minlon": 36.8288948,
+    "maxlat": -1.2944002,
+    "maxlon": 36.8301956
+  },
+  "nodes": [
+    2165044601,
+    2324373832,
+    2165044594,
+    2165044590,
+    2165044582
+  ],
+  "geometry": [
+    { "lat": -1.2951890, "lon": 36.8288948 },
+    { "lat": -1.2949484, "lon": 36.8294226 },
+    { "lat": -1.2946934, "lon": 36.8298887 },
+    { "lat": -1.2946184, "lon": 36.8300069 },
+    { "lat": -1.2944002, "lon": 36.8301956 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495424,
+  "bounds": {
+    "minlat": -1.2943747,
+    "minlon": 36.8314484,
+    "maxlat": -1.2933966,
+    "maxlon": 36.8334550
+  },
+  "nodes": [
+    2165044581,
+    2165045862
+  ],
+  "geometry": [
+    { "lat": -1.2943747, "lon": 36.8314484 },
+    { "lat": -1.2933966, "lon": 36.8334550 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495425,
+  "bounds": {
+    "minlat": -1.2941077,
+    "minlon": 36.8313131,
+    "maxlat": -1.2931500,
+    "maxlon": 36.8333274
+  },
+  "nodes": [
+    2165044552,
+    2165045858
+  ],
+  "geometry": [
+    { "lat": -1.2941077, "lon": 36.8313131 },
+    { "lat": -1.2931500, "lon": 36.8333274 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495426,
+  "bounds": {
+    "minlat": -1.2951564,
+    "minlon": 36.8288780,
+    "maxlat": -1.2941391,
+    "maxlon": 36.8304999
+  },
+  "nodes": [
+    2165044600,
+    2324373830,
+    2165044588,
+    2165044582,
+    2165044575,
+    2165044558
+  ],
+  "geometry": [
+    { "lat": -1.2951564, "lon": 36.8288780 },
+    { "lat": -1.2949149, "lon": 36.8294059 },
+    { "lat": -1.2946071, "lon": 36.8299614 },
+    { "lat": -1.2944002, "lon": 36.8301956 },
+    { "lat": -1.2943481, "lon": 36.8302545 },
+    { "lat": -1.2941391, "lon": 36.8304999 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495427,
+  "bounds": {
+    "minlat": -1.2950414,
+    "minlon": 36.8288192,
+    "maxlat": -1.2939042,
+    "maxlon": 36.8310335
+  },
+  "nodes": [
+    2165044541,
+    2165044558,
+    2165044583,
+    2324373825,
+    2165044598
+  ],
+  "geometry": [
+    { "lat": -1.2939042, "lon": 36.8310335 },
+    { "lat": -1.2941391, "lon": 36.8304999 },
+    { "lat": -1.2944276, "lon": 36.8300364 },
+    { "lat": -1.2947998, "lon": 36.8293483 },
+    { "lat": -1.2950414, "lon": 36.8288192 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495428,
+  "bounds": {
+    "minlat": -1.2937222,
+    "minlon": 36.8311810,
+    "maxlat": -1.2927921,
+    "maxlon": 36.8331423
+  },
+  "nodes": [
+    2165044526,
+    2165045852
+  ],
+  "geometry": [
+    { "lat": -1.2937222, "lon": 36.8311810 },
+    { "lat": -1.2927921, "lon": 36.8331423 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495582,
+  "bounds": {
+    "minlat": -1.2928394,
+    "minlon": 36.8343415,
+    "maxlat": -1.2896205,
+    "maxlon": 36.8378119
+  },
+  "nodes": [
+    292848213,
+    291534173,
+    291534174,
+    291748360,
+    2165052844,
+    2165052842,
+    291534142,
+    291534168,
+    6352261083,
+    291534143,
+    1455718299,
+    291534144,
+    291534145,
+    291534146,
+    1455714818,
+    291534147,
+    291534148,
+    2165064556,
+    2165064564,
+    2165064572,
+    2165064576
+  ],
+  "geometry": [
+    { "lat": -1.2928394, "lon": 36.8343415 },
+    { "lat": -1.2924300, "lon": 36.8344242 },
+    { "lat": -1.2919059, "lon": 36.8345378 },
+    { "lat": -1.2916554, "lon": 36.8345631 },
+    { "lat": -1.2914696, "lon": 36.8345818 },
+    { "lat": -1.2911491, "lon": 36.8346141 },
+    { "lat": -1.2908847, "lon": 36.8346408 },
+    { "lat": -1.2907424, "lon": 36.8346861 },
+    { "lat": -1.2905580, "lon": 36.8347418 },
+    { "lat": -1.2905072, "lon": 36.8347609 },
+    { "lat": -1.2902961, "lon": 36.8348748 },
+    { "lat": -1.2901296, "lon": 36.8350098 },
+    { "lat": -1.2898464, "lon": 36.8353789 },
+    { "lat": -1.2896577, "lon": 36.8358939 },
+    { "lat": -1.2896205, "lon": 36.8361166 },
+    { "lat": -1.2896233, "lon": 36.8363059 },
+    { "lat": -1.2896920, "lon": 36.8366921 },
+    { "lat": -1.2898283, "lon": 36.8369831 },
+    { "lat": -1.2900795, "lon": 36.8372296 },
+    { "lat": -1.2903283, "lon": 36.8374527 },
+    { "lat": -1.2907767, "lon": 36.8378119 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495584,
+  "bounds": {
+    "minlat": -1.2934147,
+    "minlon": 36.8336284,
+    "maxlat": -1.2929436,
+    "maxlon": 36.8341292
+  },
+  "nodes": [
+    2165045863,
+    2165045860,
+    2165045857,
+    292848212
+  ],
+  "geometry": [
+    { "lat": -1.2934147, "lon": 36.8336284 },
+    { "lat": -1.2932850, "lon": 36.8338491 },
+    { "lat": -1.2931374, "lon": 36.8340036 },
+    { "lat": -1.2929436, "lon": 36.8341292 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495585,
+  "bounds": {
+    "minlat": -1.2931638,
+    "minlon": 36.8334987,
+    "maxlat": -1.2926192,
+    "maxlon": 36.8342286
+  },
+  "nodes": [
+    2165045859,
+    2165045855,
+    2165045854,
+    2165045853,
+    292848291
+  ],
+  "geometry": [
+    { "lat": -1.2931638, "lon": 36.8334987 },
+    { "lat": -1.2930261, "lon": 36.8337809 },
+    { "lat": -1.2929102, "lon": 36.8339468 },
+    { "lat": -1.2928148, "lon": 36.8340672 },
+    { "lat": -1.2926192, "lon": 36.8342286 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495618,
+  "bounds": {
+    "minlat": -1.2932205,
+    "minlon": 36.8335280,
+    "maxlat": -1.2926192,
+    "maxlon": 36.8342286
+  },
+  "nodes": [
+    2165047523,
+    2165047521,
+    2165047518,
+    2165047514,
+    292848291
+  ],
+  "geometry": [
+    { "lat": -1.2932205, "lon": 36.8335280 },
+    { "lat": -1.2930767, "lon": 36.8338016 },
+    { "lat": -1.2929793, "lon": 36.8339491 },
+    { "lat": -1.2928459, "lon": 36.8340889 },
+    { "lat": -1.2926192, "lon": 36.8342286 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495619,
+  "bounds": {
+    "minlat": -1.2935073,
+    "minlon": 36.8336763,
+    "maxlat": -1.2925604,
+    "maxlon": 36.8343012
+  },
+  "nodes": [
+    2165047528,
+    2165047526,
+    2165047524,
+    2165047520,
+    2165047517,
+    2165047515,
+    2165045848
+  ],
+  "geometry": [
+    { "lat": -1.2935073, "lon": 36.8336763 },
+    { "lat": -1.2933767, "lon": 36.8339042 },
+    { "lat": -1.2932331, "lon": 36.8340478 },
+    { "lat": -1.2930716, "lon": 36.8341556 },
+    { "lat": -1.2929664, "lon": 36.8342133 },
+    { "lat": -1.2928459, "lon": 36.8342479 },
+    { "lat": -1.2925604, "lon": 36.8343012 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206495620,
+  "bounds": {
+    "minlat": -1.2934640,
+    "minlon": 36.8336539,
+    "maxlat": -1.2927171,
+    "maxlon": 36.8342603
+  },
+  "nodes": [
+    2165047527,
+    2165047525,
+    2165047522,
+    2165047519,
+    2165047516,
+    2165047513,
+    2165045850
+  ],
+  "geometry": [
+    { "lat": -1.2934640, "lon": 36.8336539 },
+    { "lat": -1.2933280, "lon": 36.8338772 },
+    { "lat": -1.2932152, "lon": 36.8340042 },
+    { "lat": -1.2930305, "lon": 36.8341337 },
+    { "lat": -1.2928844, "lon": 36.8342069 },
+    { "lat": -1.2928126, "lon": 36.8342351 },
+    { "lat": -1.2927171, "lon": 36.8342603 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496029,
+  "bounds": {
+    "minlat": -1.2929489,
+    "minlon": 36.8333875,
+    "maxlat": -1.2927299,
+    "maxlon": 36.8338165
+  },
+  "nodes": [
+    2165052887,
+    2165052881
+  ],
+  "geometry": [
+    { "lat": -1.2929489, "lon": 36.8333875 },
+    { "lat": -1.2927299, "lon": 36.8338165 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496030,
+  "bounds": {
+    "minlat": -1.2929867,
+    "minlon": 36.8334071,
+    "maxlat": -1.2927685,
+    "maxlon": 36.8338301
+  },
+  "nodes": [
+    2165052888,
+    2165052882
+  ],
+  "geometry": [
+    { "lat": -1.2929867, "lon": 36.8334071 },
+    { "lat": -1.2927685, "lon": 36.8338301 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496031,
+  "bounds": {
+    "minlat": -1.2928514,
+    "minlon": 36.8333371,
+    "maxlat": -1.2921665,
+    "maxlon": 36.8343050
+  },
+  "nodes": [
+    2165052885,
+    2165052874,
+    2165052868,
+    2165052861
+  ],
+  "geometry": [
+    { "lat": -1.2928514, "lon": 36.8333371 },
+    { "lat": -1.2924959, "lon": 36.8340278 },
+    { "lat": -1.2923369, "lon": 36.8342095 },
+    { "lat": -1.2921665, "lon": 36.8343050 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496032,
+  "bounds": {
+    "minlat": -1.2929065,
+    "minlon": 36.8333656,
+    "maxlat": -1.2921892,
+    "maxlon": 36.8343572
+  },
+  "nodes": [
+    2165052886,
+    2165052875,
+    2165052871,
+    2165052862
+  ],
+  "geometry": [
+    { "lat": -1.2929065, "lon": 36.8333656 },
+    { "lat": -1.2925845, "lon": 36.8339846 },
+    { "lat": -1.2924005, "lon": 36.8342004 },
+    { "lat": -1.2921892, "lon": 36.8343572 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496033,
+  "bounds": {
+    "minlat": -1.2928180,
+    "minlon": 36.8333198,
+    "maxlat": -1.2920793,
+    "maxlon": 36.8343448
+  },
+  "nodes": [
+    2165052884,
+    2165052873,
+    2165052865,
+    2165052861,
+    2165052857
+  ],
+  "geometry": [
+    { "lat": -1.2928180, "lon": 36.8333198 },
+    { "lat": -1.2924505, "lon": 36.8340119 },
+    { "lat": -1.2923005, "lon": 36.8342004 },
+    { "lat": -1.2921665, "lon": 36.8343050 },
+    { "lat": -1.2920793, "lon": 36.8343448 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496034,
+  "bounds": {
+    "minlat": -1.2918835,
+    "minlon": 36.8339464,
+    "maxlat": -1.2908847,
+    "maxlon": 36.8346408
+  },
+  "nodes": [
+    2165052850,
+    2165052849,
+    2165052846,
+    2165052843,
+    291534142
+  ],
+  "geometry": [
+    { "lat": -1.2918835, "lon": 36.8339464 },
+    { "lat": -1.2917719, "lon": 36.8341342 },
+    { "lat": -1.2915869, "lon": 36.8343241 },
+    { "lat": -1.2913093, "lon": 36.8344849 },
+    { "lat": -1.2908847, "lon": 36.8346408 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496035,
+  "bounds": {
+    "minlat": -1.2930875,
+    "minlon": 36.8334592,
+    "maxlat": -1.2919059,
+    "maxlon": 36.8345378
+  },
+  "nodes": [
+    2165045856,
+    292848290,
+    292848291,
+    2165045846,
+    292848292,
+    291534174
+  ],
+  "geometry": [
+    { "lat": -1.2930875, "lon": 36.8334592 },
+    { "lat": -1.2928767, "lon": 36.8339025 },
+    { "lat": -1.2926192, "lon": 36.8342286 },
+    { "lat": -1.2923091, "lon": 36.8343801 },
+    { "lat": -1.2922503, "lon": 36.8344089 },
+    { "lat": -1.2919059, "lon": 36.8345378 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496036,
+  "bounds": {
+    "minlat": -1.2933328,
+    "minlon": 36.8335861,
+    "maxlat": -1.2923091,
+    "maxlon": 36.8343801
+  },
+  "nodes": [
+    2165045861,
+    292848211,
+    292848212,
+    2165045850,
+    2165045848,
+    2165045846
+  ],
+  "geometry": [
+    { "lat": -1.2933328, "lon": 36.8335861 },
+    { "lat": -1.2932371, "lon": 36.8337823 },
+    { "lat": -1.2929436, "lon": 36.8341292 },
+    { "lat": -1.2927171, "lon": 36.8342603 },
+    { "lat": -1.2925604, "lon": 36.8343012 },
+    { "lat": -1.2923091, "lon": 36.8343801 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496037,
+  "bounds": {
+    "minlat": -1.2925907,
+    "minlon": 36.8332024,
+    "maxlat": -1.2911491,
+    "maxlon": 36.8346141
+  },
+  "nodes": [
+    2165052876,
+    2165052869,
+    2165052859,
+    2165052853,
+    2165052845,
+    2165052842
+  ],
+  "geometry": [
+    { "lat": -1.2925907, "lon": 36.8332024 },
+    { "lat": -1.2923708, "lon": 36.8336374 },
+    { "lat": -1.2921566, "lon": 36.8340270 },
+    { "lat": -1.2919569, "lon": 36.8342218 },
+    { "lat": -1.2915236, "lon": 36.8344897 },
+    { "lat": -1.2911491, "lon": 36.8346141 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496038,
+  "bounds": {
+    "minlat": -1.2926366,
+    "minlon": 36.8332260,
+    "maxlat": -1.2915236,
+    "maxlon": 36.8344897
+  },
+  "nodes": [
+    2165052878,
+    2165052866,
+    2165052863,
+    2165052855,
+    2165052848,
+    2165052845
+  ],
+  "geometry": [
+    { "lat": -1.2926366, "lon": 36.8332260 },
+    { "lat": -1.2923187, "lon": 36.8338596 },
+    { "lat": -1.2922029, "lon": 36.8340346 },
+    { "lat": -1.2920030, "lon": 36.8342391 },
+    { "lat": -1.2917167, "lon": 36.8344368 },
+    { "lat": -1.2915236, "lon": 36.8344897 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496039,
+  "bounds": {
+    "minlat": -1.2926718,
+    "minlon": 36.8332442,
+    "maxlat": -1.2917167,
+    "maxlon": 36.8344368
+  },
+  "nodes": [
+    2165052879,
+    2165052867,
+    2165052860,
+    2165052856,
+    2165052851,
+    2165052848
+  ],
+  "geometry": [
+    { "lat": -1.2926718, "lon": 36.8332442 },
+    { "lat": -1.2923278, "lon": 36.8339164 },
+    { "lat": -1.2921665, "lon": 36.8341300 },
+    { "lat": -1.2920120, "lon": 36.8342732 },
+    { "lat": -1.2918848, "lon": 36.8343527 },
+    { "lat": -1.2917167, "lon": 36.8344368 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496040,
+  "bounds": {
+    "minlat": -1.2930481,
+    "minlon": 36.8334388,
+    "maxlat": -1.2919619,
+    "maxlon": 36.8344223
+  },
+  "nodes": [
+    2165052889,
+    2165052883,
+    2165052877,
+    2165052870,
+    2165052862,
+    2165052854
+  ],
+  "geometry": [
+    { "lat": -1.2930481, "lon": 36.8334388 },
+    { "lat": -1.2928071, "lon": 36.8339142 },
+    { "lat": -1.2926117, "lon": 36.8341436 },
+    { "lat": -1.2923891, "lon": 36.8342663 },
+    { "lat": -1.2921892, "lon": 36.8343572 },
+    { "lat": -1.2919619, "lon": 36.8344223 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496041,
+  "bounds": {
+    "minlat": -1.2927034,
+    "minlon": 36.8332606,
+    "maxlat": -1.2914696,
+    "maxlon": 36.8345818
+  },
+  "nodes": [
+    2165052880,
+    2165052872,
+    2165052864,
+    2165052858,
+    2165052852,
+    2165052847,
+    2165052844
+  ],
+  "geometry": [
+    { "lat": -1.2927034, "lon": 36.8332606 },
+    { "lat": -1.2924118, "lon": 36.8338369 },
+    { "lat": -1.2922983, "lon": 36.8340391 },
+    { "lat": -1.2921438, "lon": 36.8342186 },
+    { "lat": -1.2919030, "lon": 36.8343913 },
+    { "lat": -1.2916690, "lon": 36.8345072 },
+    { "lat": -1.2914696, "lon": 36.8345818 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496042,
+  "bounds": {
+    "minlat": -1.2927294,
+    "minlon": 36.8332740,
+    "maxlat": -1.2916554,
+    "maxlon": 36.8345631
+  },
+  "nodes": [
+    2165045851,
+    291748357,
+    291748358,
+    2165052857,
+    291748359,
+    2165052854,
+    291748360
+  ],
+  "geometry": [
+    { "lat": -1.2927294, "lon": 36.8332740 },
+    { "lat": -1.2924446, "lon": 36.8338747 },
+    { "lat": -1.2922816, "lon": 36.8341494 },
+    { "lat": -1.2920793, "lon": 36.8343448 },
+    { "lat": -1.2920328, "lon": 36.8343897 },
+    { "lat": -1.2919619, "lon": 36.8344223 },
+    { "lat": -1.2916554, "lon": 36.8345631 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496256,
+  "bounds": {
+    "minlat": -1.2945143,
+    "minlon": 36.8315191,
+    "maxlat": -1.2938588,
+    "maxlon": 36.8328076
+  },
+  "nodes": [
+    2165056021,
+    2165056017
+  ],
+  "geometry": [
+    { "lat": -1.2945143, "lon": 36.8315191 },
+    { "lat": -1.2938588, "lon": 36.8328076 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496258,
+  "bounds": {
+    "minlat": -1.2953837,
+    "minlon": 36.8297819,
+    "maxlat": -1.2950226,
+    "maxlon": 36.8305453
+  },
+  "nodes": [
+    2165056056,
+    2165056049,
+    2165056041,
+    2165056036
+  ],
+  "geometry": [
+    { "lat": -1.2953837, "lon": 36.8297819 },
+    { "lat": -1.2952742, "lon": 36.8300148 },
+    { "lat": -1.2950803, "lon": 36.8304140 },
+    { "lat": -1.2950226, "lon": 36.8305453 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496260,
+  "bounds": {
+    "minlat": -1.2953217,
+    "minlon": 36.8303265,
+    "maxlat": -1.2940383,
+    "maxlon": 36.8329144
+  },
+  "nodes": [
+    2165056053,
+    2165056037,
+    2165056019
+  ],
+  "geometry": [
+    { "lat": -1.2953217, "lon": 36.8303265 },
+    { "lat": -1.2950355, "lon": 36.8309127 },
+    { "lat": -1.2940383, "lon": 36.8329144 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496261,
+  "bounds": {
+    "minlat": -1.2954007,
+    "minlon": 36.8296513,
+    "maxlat": -1.2946046,
+    "maxlon": 36.8313883
+  },
+  "nodes": [
+    2165056023,
+    2165056027,
+    2165056029,
+    2324373840,
+    2324373842,
+    2324373847
+  ],
+  "geometry": [
+    { "lat": -1.2946046, "lon": 36.8313883 },
+    { "lat": -1.2947584, "lon": 36.8311035 },
+    { "lat": -1.2948447, "lon": 36.8308581 },
+    { "lat": -1.2950416, "lon": 36.8303947 },
+    { "lat": -1.2952347, "lon": 36.8299951 },
+    { "lat": -1.2954007, "lon": 36.8296513 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496262,
+  "bounds": {
+    "minlat": -1.2951990,
+    "minlon": 36.8304696,
+    "maxlat": -1.2939906,
+    "maxlon": 36.8328985
+  },
+  "nodes": [
+    2165056045,
+    2165056034,
+    2165056018
+  ],
+  "geometry": [
+    { "lat": -1.2951990, "lon": 36.8304696 },
+    { "lat": -1.2949923, "lon": 36.8309013 },
+    { "lat": -1.2939906, "lon": 36.8328985 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496263,
+  "bounds": {
+    "minlat": -1.2955171,
+    "minlon": 36.8297083,
+    "maxlat": -1.2950468,
+    "maxlon": 36.8306536
+  },
+  "nodes": [
+    2165056038,
+    2165056047,
+    2165056059,
+    2165056060
+  ],
+  "geometry": [
+    { "lat": -1.2950468, "lon": 36.8306536 },
+    { "lat": -1.2952314, "lon": 36.8302824 },
+    { "lat": -1.2954535, "lon": 36.8298357 },
+    { "lat": -1.2955171, "lon": 36.8297083 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496264,
+  "bounds": {
+    "minlat": -1.2954305,
+    "minlon": 36.8296659,
+    "maxlat": -1.2952314,
+    "maxlon": 36.8302824
+  },
+  "nodes": [
+    2165056047,
+    2165056052,
+    2165056054,
+    2165056056,
+    2165056058
+  ],
+  "geometry": [
+    { "lat": -1.2952314, "lon": 36.8302824 },
+    { "lat": -1.2953217, "lon": 36.8300379 },
+    { "lat": -1.2953535, "lon": 36.8298766 },
+    { "lat": -1.2953837, "lon": 36.8297819 },
+    { "lat": -1.2954305, "lon": 36.8296659 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496265,
+  "bounds": {
+    "minlat": -1.2953601,
+    "minlon": 36.8296315,
+    "maxlat": -1.2945494,
+    "maxlon": 36.8313603
+  },
+  "nodes": [
+    2165056022,
+    2165056025,
+    2165056028,
+    2165056031,
+    2165056033,
+    2165056035,
+    2165056046,
+    2165056055
+  ],
+  "geometry": [
+    { "lat": -1.2945494, "lon": 36.8313603 },
+    { "lat": -1.2947356, "lon": 36.8310263 },
+    { "lat": -1.2948242, "lon": 36.8308195 },
+    { "lat": -1.2949628, "lon": 36.8304787 },
+    { "lat": -1.2949810, "lon": 36.8304378 },
+    { "lat": -1.2950094, "lon": 36.8303786 },
+    { "lat": -1.2952014, "lon": 36.8299785 },
+    { "lat": -1.2953601, "lon": 36.8296315 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496266,
+  "bounds": {
+    "minlat": -1.2959032,
+    "minlon": 36.8291949,
+    "maxlat": -1.2946563,
+    "maxlon": 36.8314144
+  },
+  "nodes": [
+    2165056024,
+    2165056030,
+    2165056038,
+    2165056045,
+    2165056053,
+    2165056057,
+    2165056061,
+    2165056062
+  ],
+  "geometry": [
+    { "lat": -1.2946563, "lon": 36.8314144 },
+    { "lat": -1.2949583, "lon": 36.8308309 },
+    { "lat": -1.2950468, "lon": 36.8306536 },
+    { "lat": -1.2951990, "lon": 36.8304696 },
+    { "lat": -1.2953217, "lon": 36.8303265 },
+    { "lat": -1.2954216, "lon": 36.8301810 },
+    { "lat": -1.2955966, "lon": 36.8298266 },
+    { "lat": -1.2959032, "lon": 36.8291949 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496932,
+  "bounds": {
+    "minlat": -1.2904738,
+    "minlon": 36.8351127,
+    "maxlat": -1.2890296,
+    "maxlon": 36.8376311
+  },
+  "nodes": [
+    292848410,
+    2165064495,
+    2165064501,
+    2165064513,
+    2165064518,
+    2165064534,
+    2165064546,
+    2165064552,
+    2165064560,
+    2165064568,
+    2165064574
+  ],
+  "geometry": [
+    { "lat": -1.2890296, "lon": 36.8351127 },
+    { "lat": -1.2890677, "lon": 36.8354334 },
+    { "lat": -1.2891335, "lon": 36.8357316 },
+    { "lat": -1.2892133, "lon": 36.8360063 },
+    { "lat": -1.2893025, "lon": 36.8362200 },
+    { "lat": -1.2893729, "lon": 36.8363773 },
+    { "lat": -1.2895302, "lon": 36.8366614 },
+    { "lat": -1.2897062, "lon": 36.8368962 },
+    { "lat": -1.2899058, "lon": 36.8371146 },
+    { "lat": -1.2901992, "lon": 36.8373940 },
+    { "lat": -1.2904738, "lon": 36.8376311 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496934,
+  "bounds": {
+    "minlat": -1.2894504,
+    "minlon": 36.8361941,
+    "maxlat": -1.2893635,
+    "maxlon": 36.8364454
+  },
+  "nodes": [
+    2165064532,
+    2165064544
+  ],
+  "geometry": [
+    { "lat": -1.2893635, "lon": 36.8361941 },
+    { "lat": -1.2894504, "lon": 36.8364454 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496935,
+  "bounds": {
+    "minlat": -1.2894452,
+    "minlon": 36.8346261,
+    "maxlat": -1.2891828,
+    "maxlon": 36.8362059
+  },
+  "nodes": [
+    2165064524,
+    2165064514,
+    2165064511,
+    2165064505,
+    2165064507,
+    2165067115,
+    2165067118,
+    2165067127,
+    2165067136
+  ],
+  "geometry": [
+    { "lat": -1.2893377, "lon": 36.8362059 },
+    { "lat": -1.2892415, "lon": 36.8359617 },
+    { "lat": -1.2892062, "lon": 36.8358067 },
+    { "lat": -1.2891828, "lon": 36.8356494 },
+    { "lat": -1.2891898, "lon": 36.8354123 },
+    { "lat": -1.2891970, "lon": 36.8353080 },
+    { "lat": -1.2892455, "lon": 36.8351187 },
+    { "lat": -1.2893061, "lon": 36.8349634 },
+    { "lat": -1.2894452, "lon": 36.8346261 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496936,
+  "bounds": {
+    "minlat": -1.2898283,
+    "minlon": 36.8360196,
+    "maxlat": -1.2892904,
+    "maxlon": 36.8369831
+  },
+  "nodes": [
+    2165064556,
+    2165064550,
+    2165064544,
+    2165064524,
+    1455718300
+  ],
+  "geometry": [
+    { "lat": -1.2898283, "lon": 36.8369831 },
+    { "lat": -1.2896076, "lon": 36.8366966 },
+    { "lat": -1.2894504, "lon": 36.8364454 },
+    { "lat": -1.2893377, "lon": 36.8362059 },
+    { "lat": -1.2892904, "lon": 36.8360196 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206496937,
+  "bounds": {
+    "minlat": -1.2896533,
+    "minlon": 36.8347290,
+    "maxlat": -1.2893307,
+    "maxlon": 36.8361941
+  },
+  "nodes": [
+    2165067144,
+    2165067138,
+    2165064536,
+    2165064528,
+    2165064520,
+    2165064522,
+    2165064530,
+    2165064532
+  ],
+  "geometry": [
+    { "lat": -1.2896533, "lon": 36.8347290 },
+    { "lat": -1.2894541, "lon": 36.8351818 },
+    { "lat": -1.2893870, "lon": 36.8353747 },
+    { "lat": -1.2893471, "lon": 36.8355649 },
+    { "lat": -1.2893307, "lon": 36.8357785 },
+    { "lat": -1.2893330, "lon": 36.8359734 },
+    { "lat": -1.2893541, "lon": 36.8361261 },
+    { "lat": -1.2893635, "lon": 36.8361941 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497539,
+  "bounds": {
+    "minlat": -1.2902711,
+    "minlon": 36.8321756,
+    "maxlat": -1.2891666,
+    "maxlon": 36.8343403
+  },
+  "nodes": [
+    2165072277,
+    2165071172,
+    2165067137,
+    2165067113
+  ],
+  "geometry": [
+    { "lat": -1.2902711, "lon": 36.8321756 },
+    { "lat": -1.2897420, "lon": 36.8332356 },
+    { "lat": -1.2894493, "lon": 36.8338109 },
+    { "lat": -1.2891666, "lon": 36.8343403 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497540,
+  "bounds": {
+    "minlat": -1.2901793,
+    "minlon": 36.8321770,
+    "maxlat": -1.2891121,
+    "maxlon": 36.8343399
+  },
+  "nodes": [
+    2165072274,
+    2165071170,
+    2165067132,
+    2165067109
+  ],
+  "geometry": [
+    { "lat": -1.2901793, "lon": 36.8321770 },
+    { "lat": -1.2896533, "lon": 36.8332166 },
+    { "lat": -1.2893547, "lon": 36.8338085 },
+    { "lat": -1.2891121, "lon": 36.8343399 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497541,
+  "bounds": {
+    "minlat": -1.2903615,
+    "minlon": 36.8321800,
+    "maxlat": -1.2894148,
+    "maxlon": 36.8340521
+  },
+  "nodes": [
+    2165067135,
+    2165067141,
+    2165071169,
+    2165071173,
+    2165072280
+  ],
+  "geometry": [
+    { "lat": -1.2894148, "lon": 36.8340521 },
+    { "lat": -1.2895342, "lon": 36.8338061 },
+    { "lat": -1.2895897, "lon": 36.8336981 },
+    { "lat": -1.2897447, "lon": 36.8333967 },
+    { "lat": -1.2903615, "lon": 36.8321800 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497542,
+  "bounds": {
+    "minlat": -1.2903105,
+    "minlon": 36.8321785,
+    "maxlat": -1.2892197,
+    "maxlon": 36.8343706
+  },
+  "nodes": [
+    2165067117,
+    2165067130,
+    2165067139,
+    2165071174,
+    2165072279
+  ],
+  "geometry": [
+    { "lat": -1.2892197, "lon": 36.8343706 },
+    { "lat": -1.2893304, "lon": 36.8341239 },
+    { "lat": -1.2894929, "lon": 36.8338037 },
+    { "lat": -1.2897483, "lon": 36.8333044 },
+    { "lat": -1.2903105, "lon": 36.8321785 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497543,
+  "bounds": {
+    "minlat": -1.2895142,
+    "minlon": 36.8346603,
+    "maxlat": -1.2892506,
+    "maxlon": 36.8355680
+  },
+  "nodes": [
+    2165067140,
+    2165067129,
+    2165067123,
+    2165067121
+  ],
+  "geometry": [
+    { "lat": -1.2895142, "lon": 36.8346603 },
+    { "lat": -1.2893207, "lon": 36.8351090 },
+    { "lat": -1.2892576, "lon": 36.8353420 },
+    { "lat": -1.2892506, "lon": 36.8355680 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497544,
+  "bounds": {
+    "minlat": -1.2902245,
+    "minlon": 36.8321727,
+    "maxlat": -1.2890514,
+    "maxlon": 36.8346941
+  },
+  "nodes": [
+    2165072276,
+    2165071171,
+    2165067134,
+    2165067122,
+    2165067113,
+    2165067111,
+    2165067108
+  ],
+  "geometry": [
+    { "lat": -1.2902245, "lon": 36.8321727 },
+    { "lat": -1.2897012, "lon": 36.8332211 },
+    { "lat": -1.2894032, "lon": 36.8338061 },
+    { "lat": -1.2892552, "lon": 36.8340948 },
+    { "lat": -1.2891666, "lon": 36.8343403 },
+    { "lat": -1.2891388, "lon": 36.8344175 },
+    { "lat": -1.2890514, "lon": 36.8346941 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497545,
+  "bounds": {
+    "minlat": -1.2894141,
+    "minlon": 36.8346108,
+    "maxlat": -1.2891970,
+    "maxlon": 36.8353080
+  },
+  "nodes": [
+    2165067115,
+    2165067116,
+    2165067125,
+    2165067128,
+    2165067133
+  ],
+  "geometry": [
+    { "lat": -1.2891970, "lon": 36.8353080 },
+    { "lat": -1.2892140, "lon": 36.8351090 },
+    { "lat": -1.2892649, "lon": 36.8349683 },
+    { "lat": -1.2893110, "lon": 36.8348591 },
+    { "lat": -1.2894141, "lon": 36.8346108 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497546,
+  "bounds": {
+    "minlat": -1.2895502,
+    "minlon": 36.8346780,
+    "maxlat": -1.2892455,
+    "maxlon": 36.8360196
+  },
+  "nodes": [
+    2165067142,
+    2165067131,
+    2165067124,
+    2165067121,
+    2165067119,
+    2165067120,
+    1455718300
+  ],
+  "geometry": [
+    { "lat": -1.2895502, "lon": 36.8346780 },
+    { "lat": -1.2893352, "lon": 36.8351745 },
+    { "lat": -1.2892576, "lon": 36.8354293 },
+    { "lat": -1.2892506, "lon": 36.8355680 },
+    { "lat": -1.2892455, "lon": 36.8356695 },
+    { "lat": -1.2892455, "lon": 36.8358248 },
+    { "lat": -1.2892904, "lon": 36.8360196 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497547,
+  "bounds": {
+    "minlat": -1.2900860,
+    "minlon": 36.8321829,
+    "maxlat": -1.2889932,
+    "maxlon": 36.8355421
+  },
+  "nodes": [
+    2165072272,
+    2165071168,
+    2165067126,
+    2165067112,
+    2165067107,
+    2165067106,
+    2165067104,
+    2165067105,
+    292848428
+  ],
+  "geometry": [
+    { "lat": -1.2900860, "lon": 36.8321829 },
+    { "lat": -1.2895673, "lon": 36.8332193 },
+    { "lat": -1.2892673, "lon": 36.8338109 },
+    { "lat": -1.2891557, "lon": 36.8340560 },
+    { "lat": -1.2890514, "lon": 36.8343957 },
+    { "lat": -1.2890054, "lon": 36.8347014 },
+    { "lat": -1.2889932, "lon": 36.8350095 },
+    { "lat": -1.2889981, "lon": 36.8351842 },
+    { "lat": -1.2890433, "lon": 36.8355421 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206497549,
+  "bounds": {
+    "minlat": -1.2920742,
+    "minlon": 36.8285556,
+    "maxlat": -1.2890379,
+    "maxlon": 36.8349145
+  },
+  "nodes": [
+    292848407,
+    2165067108,
+    2165067109,
+    2165067114,
+    1455714797,
+    1455714795,
+    1455714803,
+    1455714798,
+    1455714796
+  ],
+  "geometry": [
+    { "lat": -1.2890379, "lon": 36.8349145 },
+    { "lat": -1.2890514, "lon": 36.8346941 },
+    { "lat": -1.2891121, "lon": 36.8343399 },
+    { "lat": -1.2891970, "lon": 36.8340633 },
+    { "lat": -1.2893004, "lon": 36.8338280 },
+    { "lat": -1.2903952, "lon": 36.8316181 },
+    { "lat": -1.2907813, "lon": 36.8310280 },
+    { "lat": -1.2910441, "lon": 36.8306525 },
+    { "lat": -1.2920742, "lon": 36.8285556 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "passenger_lines": "1",
+    "railway": "rail",
+    "usage": "main"
+  }
+},
+{
+  "type": "way",
+  "id": 206498087,
+  "bounds": {
+    "minlat": -1.2898043,
+    "minlon": 36.8333772,
+    "maxlat": -1.2895897,
+    "maxlon": 36.8336981
+  },
+  "nodes": [
+    2165071169,
+    2165071175
+  ],
+  "geometry": [
+    { "lat": -1.2895897, "lon": 36.8336981 },
+    { "lat": -1.2898043, "lon": 36.8333772 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206498175,
+  "bounds": {
+    "minlat": -1.2904111,
+    "minlon": 36.8323534,
+    "maxlat": -1.2899286,
+    "maxlon": 36.8331946
+  },
+  "nodes": [
+    2165072283,
+    2165072273,
+    2165072270
+  ],
+  "geometry": [
+    { "lat": -1.2904111, "lon": 36.8323534 },
+    { "lat": -1.2901633, "lon": 36.8328403 },
+    { "lat": -1.2899286, "lon": 36.8331946 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 206498176,
+  "bounds": {
+    "minlat": -1.2904096,
+    "minlon": 36.8322529,
+    "maxlat": -1.2898043,
+    "maxlon": 36.8333772
+  },
+  "nodes": [
+    2165072282,
+    2165072271,
+    2165072270,
+    2165071175
+  ],
+  "geometry": [
+    { "lat": -1.2904096, "lon": 36.8322529 },
+    { "lat": -1.2899797, "lon": 36.8331042 },
+    { "lat": -1.2899286, "lon": 36.8331946 },
+    { "lat": -1.2898043, "lon": 36.8333772 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 228964153,
+  "bounds": {
+    "minlat": -1.2904140,
+    "minlon": 36.8325532,
+    "maxlat": -1.2895846,
+    "maxlon": 36.8338107
+  },
+  "nodes": [
+    2165067143,
+    2165071176,
+    2165072275,
+    2165072284
+  ],
+  "geometry": [
+    { "lat": -1.2895846, "lon": 36.8338107 },
+    { "lat": -1.2899094, "lon": 36.8333252 },
+    { "lat": -1.2902041, "lon": 36.8328695 },
+    { "lat": -1.2904140, "lon": 36.8325532 }
+  ],
+  "tags": {
+    "gauge": "1000",
+    "railway": "rail",
+    "service": "siding"
+  }
+},
+{
+  "type": "way",
+  "id": 239430637,
+  "bounds": {
+    "minlat": -1.2756528,
+    "minlon": 36.8121722,
+    "maxlat": -1.2743620,
+    "maxlon": 36.8152266
+  },
+  "nodes": [
+    30215729,
+    30215730,
+    30215731,
+    30215732,
+    968553512,
+    968553513,
+    1414541831,
+    968553514,
+    968553515,
+    968553516,
+    968553524,
+    291694433
+  ],
+  "geometry": [
+    { "lat": -1.2744457, "lon": 36.8121722 },
+    { "lat": -1.2744367, "lon": 36.8121946 },
+    { "lat": -1.2744662, "lon": 36.8125666 },
+    { "lat": -1.2743620, "lon": 36.8128179 },
+    { "lat": -1.2743987, "lon": 36.8130142 },
+    { "lat": -1.2745083, "lon": 36.8133178 },
+    { "lat": -1.2746372, "lon": 36.8134755 },
+    { "lat": -1.2747857, "lon": 36.8136523 },
+    { "lat": -1.2750416, "lon": 36.8139508 },
+    { "lat": -1.2753276, "lon": 36.8143779 },
+    { "lat": -1.2755247, "lon": 36.8148413 },
+    { "lat": -1.2756528, "lon": 36.8152266 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "waterway": "river"
+  }
+},
+{
+  "type": "way",
+  "id": 239430640,
+  "bounds": {
+    "minlat": -1.2746011,
+    "minlon": 36.8107272,
+    "maxlat": -1.2742074,
+    "maxlon": 36.8118502
+  },
+  "nodes": [
+    2472078158,
+    1667938262
+  ],
+  "geometry": [
+    { "lat": -1.2742074, "lon": 36.8107272 },
+    { "lat": -1.2746011, "lon": 36.8118502 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 239430642,
+  "bounds": {
+    "minlat": -1.2742112,
+    "minlon": 36.8105927,
+    "maxlat": -1.2742074,
+    "maxlon": 36.8107272
+  },
+  "nodes": [
+    2472078160,
+    2472078158
+  ],
+  "geometry": [
+    { "lat": -1.2742112, "lon": 36.8105927 },
+    { "lat": -1.2742074, "lon": 36.8107272 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 239430644,
+  "bounds": {
+    "minlat": -1.2742131,
+    "minlon": 36.8104203,
+    "maxlat": -1.2742112,
+    "maxlon": 36.8105927
+  },
+  "nodes": [
+    2472078162,
+    2472078160
+  ],
+  "geometry": [
+    { "lat": -1.2742131, "lon": 36.8104203 },
+    { "lat": -1.2742112, "lon": 36.8105927 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 241570344,
+  "bounds": {
+    "minlat": -1.2751609,
+    "minlon": 36.8232983,
+    "maxlat": -1.2739519,
+    "maxlon": 36.8241420
+  },
+  "nodes": [
+    2491800369,
+    8321059242,
+    2491800370,
+    5347057106,
+    9473075381,
+    2491800371,
+    6142804123,
+    2491800372,
+    9473075380,
+    6142804120,
+    6142804121,
+    6142804122,
+    2491800369
+  ],
+  "geometry": [
+    { "lat": -1.2739519, "lon": 36.8235847 },
+    { "lat": -1.2740867, "lon": 36.8238053 },
+    { "lat": -1.2742671, "lon": 36.8241420 },
+    { "lat": -1.2745268, "lon": 36.8239984 },
+    { "lat": -1.2746539, "lon": 36.8239425 },
+    { "lat": -1.2746640, "lon": 36.8239381 },
+    { "lat": -1.2751609, "lon": 36.8233393 },
+    { "lat": -1.2751200, "lon": 36.8232983 },
+    { "lat": -1.2743093, "lon": 36.8233823 },
+    { "lat": -1.2742659, "lon": 36.8233868 },
+    { "lat": -1.2741376, "lon": 36.8234104 },
+    { "lat": -1.2741072, "lon": 36.8234610 },
+    { "lat": -1.2739519, "lon": 36.8235847 }
+  ],
+  "tags": {
+    "addr:city": "Nairobi",
+    "addr:street": "Murang'a Road",
+    "amenity": "bus_station",
+    "bus": "yes",
+    "check_date": "2023-05-11",
+    "name": "Ngara Bus Terminus",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 499873616,
+  "bounds": {
+    "minlat": -1.2920321,
+    "minlon": 36.8279118,
+    "maxlat": -1.2912671,
+    "maxlon": 36.8292070
+  },
+  "nodes": [
+    4910685839,
+    4910685837,
+    4910685836,
+    4910685838,
+    4910685839
+  ],
+  "geometry": [
+    { "lat": -1.2920321, "lon": 36.8279855 },
+    { "lat": -1.2918870, "lon": 36.8279118 },
+    { "lat": -1.2912671, "lon": 36.8291333 },
+    { "lat": -1.2914122, "lon": 36.8292070 },
+    { "lat": -1.2920321, "lon": 36.8279855 }
+  ],
+  "tags": {
+    "building": "train_station",
+    "name": "Nairobi Central Railway Station",
+    "public_transport": "station",
+    "railway": "station",
+    "toilets:wheelchair": "no",
+    "train": "yes",
+    "wheelchair": "yes",
+    "wikidata": "Q6959799",
+    "wikipedia": "en:Nairobi railway station"
+  }
+},
+{
+  "type": "way",
+  "id": 499873617,
+  "bounds": {
+    "minlat": -1.2926721,
+    "minlon": 36.8271160,
+    "maxlat": -1.2908273,
+    "maxlon": 36.8307236
+  },
+  "nodes": [
+    4910685845,
+    4910685844,
+    4910685843,
+    4910685842,
+    4910685841,
+    4910685840,
+    4910685845
+  ],
+  "geometry": [
+    { "lat": -1.2926319, "lon": 36.8271160 },
+    { "lat": -1.2926721, "lon": 36.8271375 },
+    { "lat": -1.2924335, "lon": 36.8277866 },
+    { "lat": -1.2911330, "lon": 36.8303078 },
+    { "lat": -1.2908568, "lon": 36.8307236 },
+    { "lat": -1.2908273, "lon": 36.8307095 },
+    { "lat": -1.2926319, "lon": 36.8271160 }
+  ],
+  "tags": {
+    "area": "yes",
+    "public_transport": "platform",
+    "railway": "platform",
+    "train": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 499873618,
+  "bounds": {
+    "minlat": -1.2928250,
+    "minlon": 36.8265501,
+    "maxlat": -1.2911738,
+    "maxlon": 36.8298224
+  },
+  "nodes": [
+    4910685850,
+    4910685849,
+    4910685848,
+    4910685847,
+    4910685838,
+    4910685839,
+    4910685846,
+    4910685850
+  ],
+  "geometry": [
+    { "lat": -1.2928250, "lon": 36.8265876 },
+    { "lat": -1.2911973, "lon": 36.8298224 },
+    { "lat": -1.2911738, "lon": 36.8298069 },
+    { "lat": -1.2912456, "lon": 36.8295354 },
+    { "lat": -1.2914122, "lon": 36.8292070 },
+    { "lat": -1.2920321, "lon": 36.8279855 },
+    { "lat": -1.2927606, "lon": 36.8265501 },
+    { "lat": -1.2928250, "lon": 36.8265876 }
+  ],
+  "tags": {
+    "area": "yes",
+    "public_transport": "platform",
+    "railway": "platform",
+    "train": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 645535089,
+  "bounds": {
+    "minlat": -1.2839448,
+    "minlon": 36.7867162,
+    "maxlat": -1.2745747,
+    "maxlon": 36.8009891
+  },
+  "nodes": [
+    245285181,
+    245285180,
+    245285177,
+    245285176,
+    245285175,
+    245285174,
+    245285171,
+    245285138,
+    245285135,
+    245285134,
+    245285132,
+    245285131,
+    245285130,
+    245285127,
+    245285126,
+    245285125,
+    245285124,
+    245285123,
+    245285120,
+    245285119,
+    245285118,
+    245285117,
+    245281712,
+    245281715,
+    245281716,
+    245281717,
+    245281719,
+    245281721,
+    245281723,
+    245281724,
+    245281726,
+    245281728,
+    245281729,
+    245281731,
+    245281732,
+    245281867,
+    245281869,
+    245281870,
+    245281871,
+    245281873,
+    245281874,
+    245281876,
+    245281878,
+    245281879,
+    245281881,
+    245281882,
+    245281883,
+    245281885,
+    245281886,
+    245281888,
+    245281889,
+    245281891,
+    245281892,
+    245281893,
+    245281894,
+    245281895,
+    245281897,
+    245281898,
+    245281900,
+    245281901,
+    245281902,
+    245281904,
+    245281905,
+    245281907,
+    245281908,
+    245281909,
+    245281911,
+    245281912,
+    245281914,
+    245281915,
+    245281916,
+    245281918,
+    245281919,
+    245281922,
+    245282067,
+    245282068,
+    245282069,
+    245282070,
+    245282071,
+    245282075,
+    245282076,
+    245282077,
+    245282078,
+    245282081,
+    1667938520,
+    1667938420,
+    1667938558,
+    1667938508,
+    1667938387,
+    5516909767,
+    1667938615,
+    5516909766,
+    1667938345,
+    1667938474,
+    1667938178,
+    1667937976,
+    1667938293,
+    1667938463,
+    9412863380
+  ],
+  "geometry": [
+    { "lat": -1.2839448, "lon": 36.7867162 },
+    { "lat": -1.2838659, "lon": 36.7868656 },
+    { "lat": -1.2838125, "lon": 36.7870150 },
+    { "lat": -1.2837530, "lon": 36.7870787 },
+    { "lat": -1.2837033, "lon": 36.7871499 },
+    { "lat": -1.2835620, "lon": 36.7871692 },
+    { "lat": -1.2832987, "lon": 36.7872848 },
+    { "lat": -1.2831767, "lon": 36.7873619 },
+    { "lat": -1.2830097, "lon": 36.7875161 },
+    { "lat": -1.2828106, "lon": 36.7877217 },
+    { "lat": -1.2827207, "lon": 36.7878759 },
+    { "lat": -1.2826436, "lon": 36.7881585 },
+    { "lat": -1.2825794, "lon": 36.7882549 },
+    { "lat": -1.2825987, "lon": 36.7884733 },
+    { "lat": -1.2826757, "lon": 36.7885953 },
+    { "lat": -1.2827014, "lon": 36.7887045 },
+    { "lat": -1.2826051, "lon": 36.7888266 },
+    { "lat": -1.2824253, "lon": 36.7890322 },
+    { "lat": -1.2822519, "lon": 36.7892827 },
+    { "lat": -1.2820014, "lon": 36.7895268 },
+    { "lat": -1.2820335, "lon": 36.7898159 },
+    { "lat": -1.2820206, "lon": 36.7901178 },
+    { "lat": -1.2819656, "lon": 36.7904335 },
+    { "lat": -1.2818988, "lon": 36.7907074 },
+    { "lat": -1.2816391, "lon": 36.7909022 },
+    { "lat": -1.2816529, "lon": 36.7909936 },
+    { "lat": -1.2817806, "lon": 36.7909905 },
+    { "lat": -1.2818839, "lon": 36.7911151 },
+    { "lat": -1.2819416, "lon": 36.7911607 },
+    { "lat": -1.2820054, "lon": 36.7912823 },
+    { "lat": -1.2821240, "lon": 36.7914130 },
+    { "lat": -1.2822668, "lon": 36.7915224 },
+    { "lat": -1.2823002, "lon": 36.7916106 },
+    { "lat": -1.2823458, "lon": 36.7916805 },
+    { "lat": -1.2824066, "lon": 36.7917413 },
+    { "lat": -1.2824005, "lon": 36.7918933 },
+    { "lat": -1.2823640, "lon": 36.7920757 },
+    { "lat": -1.2823762, "lon": 36.7923097 },
+    { "lat": -1.2823853, "lon": 36.7926137 },
+    { "lat": -1.2823336, "lon": 36.7927444 },
+    { "lat": -1.2822455, "lon": 36.7928629 },
+    { "lat": -1.2822516, "lon": 36.7931152 },
+    { "lat": -1.2822881, "lon": 36.7932033 },
+    { "lat": -1.2823397, "lon": 36.7932155 },
+    { "lat": -1.2823488, "lon": 36.7932732 },
+    { "lat": -1.2823883, "lon": 36.7933006 },
+    { "lat": -1.2824309, "lon": 36.7933644 },
+    { "lat": -1.2825008, "lon": 36.7934830 },
+    { "lat": -1.2825312, "lon": 36.7936653 },
+    { "lat": -1.2825160, "lon": 36.7938204 },
+    { "lat": -1.2824096, "lon": 36.7939754 },
+    { "lat": -1.2822729, "lon": 36.7940970 },
+    { "lat": -1.2821118, "lon": 36.7940818 },
+    { "lat": -1.2819416, "lon": 36.7941304 },
+    { "lat": -1.2818049, "lon": 36.7941486 },
+    { "lat": -1.2817228, "lon": 36.7941365 },
+    { "lat": -1.2816317, "lon": 36.7942064 },
+    { "lat": -1.2815709, "lon": 36.7944161 },
+    { "lat": -1.2815739, "lon": 36.7946046 },
+    { "lat": -1.2815861, "lon": 36.7948629 },
+    { "lat": -1.2815192, "lon": 36.7949936 },
+    { "lat": -1.2813734, "lon": 36.7950301 },
+    { "lat": -1.2813126, "lon": 36.7951456 },
+    { "lat": -1.2812275, "lon": 36.7952824 },
+    { "lat": -1.2812427, "lon": 36.7953675 },
+    { "lat": -1.2812852, "lon": 36.7954313 },
+    { "lat": -1.2812974, "lon": 36.7956441 },
+    { "lat": -1.2812093, "lon": 36.7957687 },
+    { "lat": -1.2810968, "lon": 36.7957930 },
+    { "lat": -1.2810057, "lon": 36.7958538 },
+    { "lat": -1.2809358, "lon": 36.7958599 },
+    { "lat": -1.2808021, "lon": 36.7959237 },
+    { "lat": -1.2806927, "lon": 36.7959937 },
+    { "lat": -1.2804952, "lon": 36.7961548 },
+    { "lat": -1.2802277, "lon": 36.7962855 },
+    { "lat": -1.2798783, "lon": 36.7962520 },
+    { "lat": -1.2796777, "lon": 36.7962855 },
+    { "lat": -1.2793313, "lon": 36.7962611 },
+    { "lat": -1.2791247, "lon": 36.7961639 },
+    { "lat": -1.2789909, "lon": 36.7960696 },
+    { "lat": -1.2787235, "lon": 36.7961517 },
+    { "lat": -1.2784257, "lon": 36.7962794 },
+    { "lat": -1.2781492, "lon": 36.7964040 },
+    { "lat": -1.2780216, "lon": 36.7964070 },
+    { "lat": -1.2776381, "lon": 36.7964774 },
+    { "lat": -1.2768661, "lon": 36.7968313 },
+    { "lat": -1.2765314, "lon": 36.7970633 },
+    { "lat": -1.2762366, "lon": 36.7973860 },
+    { "lat": -1.2758785, "lon": 36.7980320 },
+    { "lat": -1.2757766, "lon": 36.7982502 },
+    { "lat": -1.2757577, "lon": 36.7984625 },
+    { "lat": -1.2757366, "lon": 36.7987643 },
+    { "lat": -1.2755498, "lon": 36.7990661 },
+    { "lat": -1.2753124, "lon": 36.7994737 },
+    { "lat": -1.2750774, "lon": 36.7997066 },
+    { "lat": -1.2749702, "lon": 36.8002831 },
+    { "lat": -1.2749506, "lon": 36.8005842 },
+    { "lat": -1.2747528, "lon": 36.8009084 },
+    { "lat": -1.2745747, "lon": 36.8009891 }
+  ],
+  "tags": {
+    "intermittent": "no",
+    "name": "Kirichwa Kubwa River",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 687438824,
+  "bounds": {
+    "minlat": -1.2810098,
+    "minlon": 36.8306194,
+    "maxlat": -1.2809585,
+    "maxlon": 36.8312129
+  },
+  "nodes": [
+    6443920105,
+    6443920106,
+    6443920107,
+    6443920108,
+    290885289
+  ],
+  "geometry": [
+    { "lat": -1.2810098, "lon": 36.8306194 },
+    { "lat": -1.2809840, "lon": 36.8307853 },
+    { "lat": -1.2809666, "lon": 36.8309770 },
+    { "lat": -1.2809585, "lon": 36.8311661 },
+    { "lat": -1.2809717, "lon": 36.8312129 }
+  ],
+  "tags": {
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 737651448,
+  "bounds": {
+    "minlat": -1.3152432,
+    "minlon": 36.7897952,
+    "maxlat": -1.2917476,
+    "maxlon": 36.8288275
+  },
+  "nodes": [
+    612010806,
+    612011140,
+    5398195377,
+    612003824,
+    612003825,
+    5398195378,
+    612003826,
+    5398195381,
+    612003827,
+    5398195379,
+    612010818,
+    612003828,
+    5398195383,
+    5223370889,
+    612003830,
+    612003831,
+    5223474511,
+    5227733837,
+    5398195386,
+    612003840,
+    612003841,
+    612011348,
+    612003842,
+    612003843,
+    612003844,
+    5398195456,
+    5398195387,
+    612003845,
+    612011377,
+    612011376,
+    5398195445,
+    612011605,
+    612003851,
+    5398195443,
+    612003852,
+    612011609,
+    612011596,
+    612003833,
+    5398195409,
+    612003834,
+    2024699607,
+    2024699610,
+    612003835,
+    5398195433,
+    612003836,
+    612003837,
+    5398195432,
+    612003838,
+    612003839,
+    5398195431,
+    1884975331,
+    5398195430,
+    5398195429,
+    5398195412,
+    612004181,
+    5398195428,
+    1884975330,
+    612004193,
+    612004198,
+    5398195417,
+    612004200,
+    5398195420,
+    612011617,
+    5398195421,
+    5398195422,
+    5398195423,
+    612004214,
+    5398195424,
+    612004215,
+    5398195425,
+    612004218,
+    612004216,
+    242163432,
+    242163431,
+    6906519652,
+    242163430,
+    242163429,
+    242163428,
+    2491442892,
+    242163427,
+    2491442889,
+    242163426,
+    242163425,
+    6906519658,
+    6906519653,
+    6906519655,
+    242163424,
+    242163423,
+    242163422,
+    242163421,
+    242163420,
+    242163419,
+    242163418,
+    1213090175,
+    242163417,
+    1213090177,
+    242163416,
+    242163415,
+    242163414,
+    13426916796,
+    242163413,
+    6906519659,
+    242163412,
+    6906519656,
+    242163411,
+    6906519654,
+    6164222330,
+    242163410,
+    6164222329,
+    242163409,
+    6164222328,
+    242163408,
+    6164222327,
+    242163407,
+    6164222326,
+    6164222325,
+    242163406,
+    3797229639,
+    6906519660,
+    242163404,
+    3797229638,
+    242163403,
+    3797229637,
+    242163402,
+    3797229636,
+    242163401,
+    291746815,
+    242163400,
+    292848380,
+    6906519661,
+    1540074566
+  ],
+  "geometry": [
+    { "lat": -1.3100218, "lon": 36.7897952 },
+    { "lat": -1.3100051, "lon": 36.7898367 },
+    { "lat": -1.3099720, "lon": 36.7899064 },
+    { "lat": -1.3099462, "lon": 36.7899742 },
+    { "lat": -1.3097904, "lon": 36.7903944 },
+    { "lat": -1.3097065, "lon": 36.7906346 },
+    { "lat": -1.3096513, "lon": 36.7908767 },
+    { "lat": -1.3095972, "lon": 36.7911114 },
+    { "lat": -1.3095575, "lon": 36.7913394 },
+    { "lat": -1.3095107, "lon": 36.7915083 },
+    { "lat": -1.3094899, "lon": 36.7916895 },
+    { "lat": -1.3094748, "lon": 36.7917938 },
+    { "lat": -1.3094618, "lon": 36.7919375 },
+    { "lat": -1.3094567, "lon": 36.7920943 },
+    { "lat": -1.3094594, "lon": 36.7922733 },
+    { "lat": -1.3094572, "lon": 36.7925457 },
+    { "lat": -1.3094567, "lon": 36.7926992 },
+    { "lat": -1.3094848, "lon": 36.7929998 },
+    { "lat": -1.3094940, "lon": 36.7930734 },
+    { "lat": -1.3095191, "lon": 36.7932728 },
+    { "lat": -1.3095597, "lon": 36.7935748 },
+    { "lat": -1.3096329, "lon": 36.7938702 },
+    { "lat": -1.3096558, "lon": 36.7939742 },
+    { "lat": -1.3097489, "lon": 36.7942635 },
+    { "lat": -1.3098181, "lon": 36.7944776 },
+    { "lat": -1.3099445, "lon": 36.7948021 },
+    { "lat": -1.3100283, "lon": 36.7949791 },
+    { "lat": -1.3101173, "lon": 36.7951753 },
+    { "lat": -1.3106096, "lon": 36.7961067 },
+    { "lat": -1.3112319, "lon": 36.7973194 },
+    { "lat": -1.3122036, "lon": 36.7991885 },
+    { "lat": -1.3122942, "lon": 36.7993519 },
+    { "lat": -1.3123823, "lon": 36.7994722 },
+    { "lat": -1.3125348, "lon": 36.7996643 },
+    { "lat": -1.3126711, "lon": 36.7998288 },
+    { "lat": -1.3127991, "lon": 36.7999754 },
+    { "lat": -1.3128231, "lon": 36.7999998 },
+    { "lat": -1.3145439, "lon": 36.8017546 },
+    { "lat": -1.3146726, "lon": 36.8018825 },
+    { "lat": -1.3147827, "lon": 36.8020247 },
+    { "lat": -1.3148765, "lon": 36.8021724 },
+    { "lat": -1.3149239, "lon": 36.8022541 },
+    { "lat": -1.3149677, "lon": 36.8023311 },
+    { "lat": -1.3150390, "lon": 36.8024677 },
+    { "lat": -1.3150859, "lon": 36.8025831 },
+    { "lat": -1.3151921, "lon": 36.8028593 },
+    { "lat": -1.3152163, "lon": 36.8030043 },
+    { "lat": -1.3152432, "lon": 36.8032464 },
+    { "lat": -1.3152298, "lon": 36.8033991 },
+    { "lat": -1.3152197, "lon": 36.8036004 },
+    { "lat": -1.3151910, "lon": 36.8038060 },
+    { "lat": -1.3151600, "lon": 36.8039840 },
+    { "lat": -1.3150769, "lon": 36.8041871 },
+    { "lat": -1.3150293, "lon": 36.8043199 },
+    { "lat": -1.3149536, "lon": 36.8044765 },
+    { "lat": -1.3148657, "lon": 36.8046170 },
+    { "lat": -1.3147229, "lon": 36.8047978 },
+    { "lat": -1.3142773, "lon": 36.8051911 },
+    { "lat": -1.3141278, "lon": 36.8052997 },
+    { "lat": -1.3140110, "lon": 36.8053553 },
+    { "lat": -1.3138776, "lon": 36.8054184 },
+    { "lat": -1.3137723, "lon": 36.8054625 },
+    { "lat": -1.3136606, "lon": 36.8055118 },
+    { "lat": -1.3135900, "lon": 36.8055437 },
+    { "lat": -1.3134418, "lon": 36.8055819 },
+    { "lat": -1.3132092, "lon": 36.8056422 },
+    { "lat": -1.3128051, "lon": 36.8057399 },
+    { "lat": -1.3126085, "lon": 36.8057951 },
+    { "lat": -1.3123650, "lon": 36.8058654 },
+    { "lat": -1.3122305, "lon": 36.8059011 },
+    { "lat": -1.3120087, "lon": 36.8059458 },
+    { "lat": -1.3118197, "lon": 36.8059926 },
+    { "lat": -1.3101235, "lon": 36.8061481 },
+    { "lat": -1.3097595, "lon": 36.8062376 },
+    { "lat": -1.3094973, "lon": 36.8063376 },
+    { "lat": -1.3091538, "lon": 36.8065036 },
+    { "lat": -1.3088277, "lon": 36.8068040 },
+    { "lat": -1.3085838, "lon": 36.8070958 },
+    { "lat": -1.3084346, "lon": 36.8073974 },
+    { "lat": -1.3083145, "lon": 36.8077141 },
+    { "lat": -1.3082477, "lon": 36.8080167 },
+    { "lat": -1.3082171, "lon": 36.8082118 },
+    { "lat": -1.3081120, "lon": 36.8093442 },
+    { "lat": -1.3080517, "lon": 36.8096947 },
+    { "lat": -1.3079620, "lon": 36.8099993 },
+    { "lat": -1.3078542, "lon": 36.8103034 },
+    { "lat": -1.3077342, "lon": 36.8105684 },
+    { "lat": -1.3054222, "lon": 36.8149209 },
+    { "lat": -1.3052152, "lon": 36.8154643 },
+    { "lat": -1.3051723, "lon": 36.8162368 },
+    { "lat": -1.3052838, "lon": 36.8167518 },
+    { "lat": -1.3056013, "lon": 36.8173869 },
+    { "lat": -1.3059188, "lon": 36.8179534 },
+    { "lat": -1.3060415, "lon": 36.8183268 },
+    { "lat": -1.3061029, "lon": 36.8187212 },
+    { "lat": -1.3060876, "lon": 36.8191804 },
+    { "lat": -1.3060172, "lon": 36.8195232 },
+    { "lat": -1.3058158, "lon": 36.8201421 },
+    { "lat": -1.3054898, "lon": 36.8210776 },
+    { "lat": -1.3054138, "lon": 36.8212374 },
+    { "lat": -1.3048205, "lon": 36.8224853 },
+    { "lat": -1.3045367, "lon": 36.8227953 },
+    { "lat": -1.3043096, "lon": 36.8230091 },
+    { "lat": -1.3040322, "lon": 36.8232205 },
+    { "lat": -1.3038193, "lon": 36.8233487 },
+    { "lat": -1.3034903, "lon": 36.8235100 },
+    { "lat": -1.3031625, "lon": 36.8236120 },
+    { "lat": -1.3028602, "lon": 36.8236910 },
+    { "lat": -1.3025908, "lon": 36.8237211 },
+    { "lat": -1.3023403, "lon": 36.8237398 },
+    { "lat": -1.3020786, "lon": 36.8237360 },
+    { "lat": -1.3017962, "lon": 36.8237021 },
+    { "lat": -1.3015589, "lon": 36.8236562 },
+    { "lat": -1.3013164, "lon": 36.8235983 },
+    { "lat": -1.3010944, "lon": 36.8235208 },
+    { "lat": -1.3008529, "lon": 36.8234092 },
+    { "lat": -1.3006757, "lon": 36.8233085 },
+    { "lat": -1.2974688, "lon": 36.8214078 },
+    { "lat": -1.2972146, "lon": 36.8212905 },
+    { "lat": -1.2969390, "lon": 36.8212005 },
+    { "lat": -1.2966627, "lon": 36.8211591 },
+    { "lat": -1.2963804, "lon": 36.8211818 },
+    { "lat": -1.2961329, "lon": 36.8212441 },
+    { "lat": -1.2959568, "lon": 36.8213050 },
+    { "lat": -1.2957154, "lon": 36.8214277 },
+    { "lat": -1.2955114, "lon": 36.8215711 },
+    { "lat": -1.2953936, "lon": 36.8217048 },
+    { "lat": -1.2951636, "lon": 36.8220638 },
+    { "lat": -1.2933394, "lon": 36.8256757 },
+    { "lat": -1.2932459, "lon": 36.8258609 },
+    { "lat": -1.2917476, "lon": 36.8288275 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "layer": "-1",
+    "name": "Nairobi-Nakuru MGR",
+    "note": "features already on OSM. They have been traced from more accurate aerial imagery here",
+    "operator": "KRC",
+    "passenger_lines": "1",
+    "railway": "rail",
+    "source": "aerial.maps.jsintl.org",
+    "usage": "main"
+  }
+},
+{
+  "type": "way",
+  "id": 828051716,
+  "bounds": {
+    "minlat": -1.2862178,
+    "minlon": 36.8372382,
+    "maxlat": -1.2860945,
+    "maxlon": 36.8373861
+  },
+  "nodes": [
+    290887325,
+    290887324
+  ],
+  "geometry": [
+    { "lat": -1.2860945, "lon": 36.8372382 },
+    { "lat": -1.2862178, "lon": 36.8373861 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 828051717,
+  "bounds": {
+    "minlat": -1.2860945,
+    "minlon": 36.8361005,
+    "maxlat": -1.2854177,
+    "maxlon": 36.8372382
+  },
+  "nodes": [
+    290887332,
+    290887331,
+    290887330,
+    290887328,
+    290887327,
+    290887326,
+    290887325
+  ],
+  "geometry": [
+    { "lat": -1.2854177, "lon": 36.8361005 },
+    { "lat": -1.2858543, "lon": 36.8363456 },
+    { "lat": -1.2860173, "lon": 36.8365602 },
+    { "lat": -1.2860602, "lon": 36.8366889 },
+    { "lat": -1.2860602, "lon": 36.8368692 },
+    { "lat": -1.2860087, "lon": 36.8370580 },
+    { "lat": -1.2860945, "lon": 36.8372382 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 828051718,
+  "bounds": {
+    "minlat": -1.2854177,
+    "minlon": 36.8360028,
+    "maxlat": -1.2851378,
+    "maxlon": 36.8361005
+  },
+  "nodes": [
+    290887334,
+    290887332
+  ],
+  "geometry": [
+    { "lat": -1.2851378, "lon": 36.8360028 },
+    { "lat": -1.2854177, "lon": 36.8361005 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 828051719,
+  "bounds": {
+    "minlat": -1.2851378,
+    "minlon": 36.8323341,
+    "maxlat": -1.2812680,
+    "maxlon": 36.8360028
+  },
+  "nodes": [
+    290887363,
+    290887362,
+    290887361,
+    290887360,
+    290887359,
+    290887358,
+    290887357,
+    290887356,
+    290887355,
+    290887354,
+    290887353,
+    290887352,
+    290887351,
+    290887350,
+    290887349,
+    290887348,
+    290887346,
+    290887344,
+    290887342,
+    290887341,
+    290887340,
+    290887339,
+    290887337,
+    290887336,
+    290887335,
+    290887334
+  ],
+  "geometry": [
+    { "lat": -1.2812680, "lon": 36.8323341 },
+    { "lat": -1.2814427, "lon": 36.8326324 },
+    { "lat": -1.2816668, "lon": 36.8328008 },
+    { "lat": -1.2818727, "lon": 36.8329639 },
+    { "lat": -1.2821645, "lon": 36.8330754 },
+    { "lat": -1.2823275, "lon": 36.8331269 },
+    { "lat": -1.2823876, "lon": 36.8331956 },
+    { "lat": -1.2826536, "lon": 36.8335990 },
+    { "lat": -1.2827995, "lon": 36.8337106 },
+    { "lat": -1.2829711, "lon": 36.8337707 },
+    { "lat": -1.2830226, "lon": 36.8338565 },
+    { "lat": -1.2831856, "lon": 36.8339767 },
+    { "lat": -1.2833486, "lon": 36.8339852 },
+    { "lat": -1.2834859, "lon": 36.8340367 },
+    { "lat": -1.2835975, "lon": 36.8341741 },
+    { "lat": -1.2836576, "lon": 36.8343629 },
+    { "lat": -1.2837605, "lon": 36.8346204 },
+    { "lat": -1.2838991, "lon": 36.8347266 },
+    { "lat": -1.2840807, "lon": 36.8348382 },
+    { "lat": -1.2842426, "lon": 36.8349190 },
+    { "lat": -1.2844456, "lon": 36.8350584 },
+    { "lat": -1.2845901, "lon": 36.8351777 },
+    { "lat": -1.2847431, "lon": 36.8353849 },
+    { "lat": -1.2847902, "lon": 36.8355645 },
+    { "lat": -1.2849790, "lon": 36.8358564 },
+    { "lat": -1.2851378, "lon": 36.8360028 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi-Fluss",
+    "name:fr": "Rivière Nairobi",
+    "name:sw": "Mto Nairobi",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 828051720,
+  "bounds": {
+    "minlat": -1.2812680,
+    "minlon": 36.8319339,
+    "maxlat": -1.2811862,
+    "maxlon": 36.8323341
+  },
+  "nodes": [
+    290885287,
+    5496667745,
+    290887363
+  ],
+  "geometry": [
+    { "lat": -1.2811862, "lon": 36.8319339 },
+    { "lat": -1.2812297, "lon": 36.8321087 },
+    { "lat": -1.2812680, "lon": 36.8323341 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi-Fluss",
+    "name:fr": "Rivière Nairobi",
+    "name:sw": "Mto Nairobi",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 828051721,
+  "bounds": {
+    "minlat": -1.2811862,
+    "minlon": 36.8193730,
+    "maxlat": -1.2773348,
+    "maxlon": 36.8319339
+  },
+  "nodes": [
+    271329226,
+    10249802897,
+    271329225,
+    271329224,
+    271329223,
+    271329222,
+    271329220,
+    271329215,
+    271329214,
+    3393511905,
+    11700063966,
+    271329213,
+    271329212,
+    271329211,
+    271329210,
+    271329209,
+    271329208,
+    271329207,
+    271329206,
+    271329205,
+    271329204,
+    271329203,
+    271329202,
+    1405889662,
+    271329201,
+    271329200,
+    271329199,
+    271329198,
+    11841480829,
+    271329197,
+    271329196,
+    271329195,
+    271329194,
+    271329193,
+    6443920105,
+    290885292,
+    290885291,
+    290885290,
+    290885289,
+    290885288,
+    290885287
+  ],
+  "geometry": [
+    { "lat": -1.2774089, "lon": 36.8193730 },
+    { "lat": -1.2774987, "lon": 36.8194217 },
+    { "lat": -1.2775525, "lon": 36.8195330 },
+    { "lat": -1.2774812, "lon": 36.8196712 },
+    { "lat": -1.2773912, "lon": 36.8197533 },
+    { "lat": -1.2773348, "lon": 36.8199652 },
+    { "lat": -1.2774094, "lon": 36.8202017 },
+    { "lat": -1.2778730, "lon": 36.8204802 },
+    { "lat": -1.2780017, "lon": 36.8205660 },
+    { "lat": -1.2780874, "lon": 36.8205974 },
+    { "lat": -1.2781268, "lon": 36.8206604 },
+    { "lat": -1.2783020, "lon": 36.8208664 },
+    { "lat": -1.2783878, "lon": 36.8209951 },
+    { "lat": -1.2784651, "lon": 36.8211411 },
+    { "lat": -1.2785166, "lon": 36.8212355 },
+    { "lat": -1.2785938, "lon": 36.8213985 },
+    { "lat": -1.2786882, "lon": 36.8215015 },
+    { "lat": -1.2787913, "lon": 36.8215930 },
+    { "lat": -1.2789027, "lon": 36.8217590 },
+    { "lat": -1.2789284, "lon": 36.8218964 },
+    { "lat": -1.2790314, "lon": 36.8222826 },
+    { "lat": -1.2789456, "lon": 36.8228062 },
+    { "lat": -1.2788083, "lon": 36.8235271 },
+    { "lat": -1.2787302, "lon": 36.8238175 },
+    { "lat": -1.2786968, "lon": 36.8240421 },
+    { "lat": -1.2786710, "lon": 36.8246944 },
+    { "lat": -1.2787568, "lon": 36.8255442 },
+    { "lat": -1.2788684, "lon": 36.8262480 },
+    { "lat": -1.2789212, "lon": 36.8263998 },
+    { "lat": -1.2790743, "lon": 36.8268402 },
+    { "lat": -1.2795549, "lon": 36.8278616 },
+    { "lat": -1.2799753, "lon": 36.8287113 },
+    { "lat": -1.2803958, "lon": 36.8295010 },
+    { "lat": -1.2809621, "lon": 36.8305309 },
+    { "lat": -1.2810098, "lon": 36.8306194 },
+    { "lat": -1.2810661, "lon": 36.8307237 },
+    { "lat": -1.2811090, "lon": 36.8309125 },
+    { "lat": -1.2810146, "lon": 36.8310498 },
+    { "lat": -1.2809717, "lon": 36.8312129 },
+    { "lat": -1.2810232, "lon": 36.8314532 },
+    { "lat": -1.2811862, "lon": 36.8319339 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Nairobi River",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi-Fluss",
+    "name:fr": "Rivière Nairobi",
+    "name:sw": "Mto Nairobi",
+    "waterway": "river"
+  }
+},
+{
+  "type": "way",
+  "id": 871358458,
+  "bounds": {
+    "minlat": -1.3040306,
+    "minlon": 36.8232608,
+    "maxlat": -1.2962610,
+    "maxlon": 36.8279411
+  },
+  "nodes": [
+    279104974,
+    279104975,
+    279104976,
+    279104977,
+    6330678289,
+    6330678290,
+    279104978,
+    279104979,
+    6819685079,
+    279104980,
+    279104981,
+    279104982,
+    279104983
+  ],
+  "geometry": [
+    { "lat": -1.2962610, "lon": 36.8232608 },
+    { "lat": -1.2963507, "lon": 36.8235122 },
+    { "lat": -1.2965653, "lon": 36.8237869 },
+    { "lat": -1.2989679, "lon": 36.8257953 },
+    { "lat": -1.2992533, "lon": 36.8260096 },
+    { "lat": -1.2993135, "lon": 36.8260578 },
+    { "lat": -1.3010359, "lon": 36.8273575 },
+    { "lat": -1.3012418, "lon": 36.8274862 },
+    { "lat": -1.3020548, "lon": 36.8278888 },
+    { "lat": -1.3021085, "lon": 36.8279154 },
+    { "lat": -1.3023144, "lon": 36.8279411 },
+    { "lat": -1.3034729, "lon": 36.8278467 },
+    { "lat": -1.3040306, "lon": 36.8278295 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Uhuru park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 881457072,
+  "bounds": {
+    "minlat": -1.3013724,
+    "minlon": 36.8368591,
+    "maxlat": -1.2895757,
+    "maxlon": 36.8651395
+  },
+  "nodes": [
+    30498672,
+    1455718293,
+    30498673,
+    1455718292,
+    242166234,
+    242166235,
+    291532672,
+    9071578347,
+    9071578348,
+    9071578349,
+    9071578350,
+    9071578351,
+    9071578385,
+    9071578386,
+    9071578387,
+    9071578388,
+    9071578389,
+    8197733110,
+    9071578371,
+    8197733107,
+    8197733108,
+    8197733106,
+    8197733105,
+    8197733104,
+    8197733103,
+    8197733100,
+    8197733099,
+    8197733097,
+    11822694583,
+    8197733096,
+    8197733095,
+    8197733093,
+    8197733069,
+    8197733067
+  ],
+  "geometry": [
+    { "lat": -1.2895757, "lon": 36.8368591 },
+    { "lat": -1.2897563, "lon": 36.8370834 },
+    { "lat": -1.2898588, "lon": 36.8371891 },
+    { "lat": -1.2900798, "lon": 36.8373918 },
+    { "lat": -1.2903276, "lon": 36.8375905 },
+    { "lat": -1.2907321, "lon": 36.8378494 },
+    { "lat": -1.2913742, "lon": 36.8382365 },
+    { "lat": -1.2919388, "lon": 36.8385744 },
+    { "lat": -1.2945170, "lon": 36.8401636 },
+    { "lat": -1.2960804, "lon": 36.8411198 },
+    { "lat": -1.2972254, "lon": 36.8418172 },
+    { "lat": -1.2991373, "lon": 36.8429813 },
+    { "lat": -1.2995275, "lon": 36.8432415 },
+    { "lat": -1.2998546, "lon": 36.8434963 },
+    { "lat": -1.3001214, "lon": 36.8437658 },
+    { "lat": -1.3004861, "lon": 36.8441842 },
+    { "lat": -1.3009125, "lon": 36.8448159 },
+    { "lat": -1.3010773, "lon": 36.8452235 },
+    { "lat": -1.3011833, "lon": 36.8455374 },
+    { "lat": -1.3012469, "lon": 36.8457762 },
+    { "lat": -1.3012870, "lon": 36.8459237 },
+    { "lat": -1.3013322, "lon": 36.8461259 },
+    { "lat": -1.3013647, "lon": 36.8464919 },
+    { "lat": -1.3013724, "lon": 36.8468826 },
+    { "lat": -1.3013630, "lon": 36.8472854 },
+    { "lat": -1.3013019, "lon": 36.8477352 },
+    { "lat": -1.3010246, "lon": 36.8497102 },
+    { "lat": -1.3003663, "lon": 36.8544993 },
+    { "lat": -1.3002238, "lon": 36.8555259 },
+    { "lat": -1.3001152, "lon": 36.8563082 },
+    { "lat": -1.2999066, "lon": 36.8578831 },
+    { "lat": -1.2994038, "lon": 36.8615818 },
+    { "lat": -1.2991432, "lon": 36.8634045 },
+    { "lat": -1.2989105, "lon": 36.8651395 }
+  ],
+  "tags": {
+    "electrified": "no",
+    "gauge": "1000",
+    "passenger_lines": "1",
+    "railway": "rail",
+    "source": "survey",
+    "usage": "main"
+  }
+},
+{
+  "type": "way",
+  "id": 965592276,
+  "bounds": {
+    "minlat": -1.2746011,
+    "minlon": 36.8118502,
+    "maxlat": -1.2744457,
+    "maxlon": 36.8121722
+  },
+  "nodes": [
+    1667938262,
+    30215729
+  ],
+  "geometry": [
+    { "lat": -1.2746011, "lon": 36.8118502 },
+    { "lat": -1.2744457, "lon": 36.8121722 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Mto Nairobi",
+    "name:ar": "نهر نيروبي",
+    "name:de": "Nairobi",
+    "name:en": "Nairobi River",
+    "name:et": "Nairobi jõgi",
+    "name:fr": "Nairobi",
+    "name:grc": "Ποταμὸς Ναϊροβίου",
+    "name:ka": "ნაირობი",
+    "name:sv": "Nairobifloden",
+    "name:sw": "Mto Nairobi",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1020569659,
+  "bounds": {
+    "minlat": -1.2740985,
+    "minlon": 36.8008783,
+    "maxlat": -1.2738158,
+    "maxlon": 36.8012839
+  },
+  "nodes": [
+    1667938034,
+    1667938329
+  ],
+  "geometry": [
+    { "lat": -1.2738158, "lon": 36.8008783 },
+    { "lat": -1.2740985, "lon": 36.8012839 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Kirichwa Dogo River",
+    "source": "yahoo",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1020569660,
+  "bounds": {
+    "minlat": -1.2738158,
+    "minlon": 36.8007021,
+    "maxlat": -1.2733497,
+    "maxlon": 36.8008783
+  },
+  "nodes": [
+    9412863379,
+    1667938034
+  ],
+  "geometry": [
+    { "lat": -1.2733497, "lon": 36.8007021 },
+    { "lat": -1.2738158, "lon": 36.8008783 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Kirichwa Dogo River",
+    "source": "yahoo",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1020569661,
+  "bounds": {
+    "minlat": -1.2741843,
+    "minlon": 36.8011659,
+    "maxlat": -1.2740985,
+    "maxlon": 36.8012839
+  },
+  "nodes": [
+    1667938485,
+    1667938329
+  ],
+  "geometry": [
+    { "lat": -1.2741843, "lon": 36.8011659 },
+    { "lat": -1.2740985, "lon": 36.8012839 }
+  ],
+  "tags": {
+    "intermittent": "no",
+    "name": "Kirichwa Kubwa River",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1020569662,
+  "bounds": {
+    "minlat": -1.2745747,
+    "minlon": 36.8009891,
+    "maxlat": -1.2741843,
+    "maxlon": 36.8011659
+  },
+  "nodes": [
+    9412863380,
+    1667938485
+  ],
+  "geometry": [
+    { "lat": -1.2745747, "lon": 36.8009891 },
+    { "lat": -1.2741843, "lon": 36.8011659 }
+  ],
+  "tags": {
+    "intermittent": "no",
+    "layer": "-1",
+    "name": "Kirichwa Kubwa River",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1068834405,
+  "bounds": {
+    "minlat": -1.3043717,
+    "minlon": 36.8278295,
+    "maxlat": -1.3040306,
+    "maxlon": 36.8279811
+  },
+  "nodes": [
+    279104983,
+    279104984
+  ],
+  "geometry": [
+    { "lat": -1.3040306, "lon": 36.8278295 },
+    { "lat": -1.3043717, "lon": 36.8279811 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "name": "Ngong River",
+    "tunnel": "yes",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1068834406,
+  "bounds": {
+    "minlat": -1.3061415,
+    "minlon": 36.8279811,
+    "maxlat": -1.3043717,
+    "maxlon": 36.8310224
+  },
+  "nodes": [
+    279104984,
+    279104985,
+    279104986,
+    3690328573,
+    279104987,
+    279104988,
+    279104989,
+    880339093,
+    6819685080,
+    279092847,
+    279092848,
+    279092849,
+    279092850
+  ],
+  "geometry": [
+    { "lat": -1.3043717, "lon": 36.8279811 },
+    { "lat": -1.3049831, "lon": 36.8282072 },
+    { "lat": -1.3051633, "lon": 36.8284303 },
+    { "lat": -1.3053646, "lon": 36.8287155 },
+    { "lat": -1.3055494, "lon": 36.8289797 },
+    { "lat": -1.3056352, "lon": 36.8291857 },
+    { "lat": -1.3057811, "lon": 36.8296749 },
+    { "lat": -1.3058298, "lon": 36.8298634 },
+    { "lat": -1.3059266, "lon": 36.8302381 },
+    { "lat": -1.3059785, "lon": 36.8304388 },
+    { "lat": -1.3060385, "lon": 36.8306019 },
+    { "lat": -1.3060728, "lon": 36.8307993 },
+    { "lat": -1.3061415, "lon": 36.8310224 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Uhuru Park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1144808344,
+  "bounds": {
+    "minlat": -1.2982841,
+    "minlon": 36.7963431,
+    "maxlat": -1.2958476,
+    "maxlon": 36.8012451
+  },
+  "nodes": [
+    4192413282,
+    4192413281,
+    4192413280,
+    4192413279,
+    4192413278,
+    4192413277,
+    4192413276,
+    4192413275,
+    4192413274,
+    4192413273,
+    4192413272,
+    4192413271,
+    4192413270,
+    4192413269,
+    4192413268,
+    4192413267,
+    4192413266,
+    4192413265,
+    4192413264,
+    4192413263,
+    4192413262,
+    4192413261,
+    4192413260,
+    4192413259,
+    4192413258,
+    4192413257,
+    4192413256,
+    4192413255,
+    4192413254,
+    4192413253,
+    4192413252,
+    4192413251,
+    4192413250,
+    4192413249,
+    4192413248,
+    4192413247,
+    4192413246,
+    4192413245,
+    4192413244,
+    4192413243,
+    4192413242,
+    4192413241,
+    4192413240,
+    4192413239,
+    4192413238,
+    4192413237,
+    4192413236,
+    4192413235,
+    4192413234,
+    4192413233,
+    4192413232,
+    4192413231,
+    4192413230,
+    4192413229,
+    10655219048
+  ],
+  "geometry": [
+    { "lat": -1.2958476, "lon": 36.7963431 },
+    { "lat": -1.2959364, "lon": 36.7963898 },
+    { "lat": -1.2959947, "lon": 36.7964388 },
+    { "lat": -1.2959971, "lon": 36.7965089 },
+    { "lat": -1.2959760, "lon": 36.7966000 },
+    { "lat": -1.2959457, "lon": 36.7966443 },
+    { "lat": -1.2959130, "lon": 36.7967120 },
+    { "lat": -1.2958967, "lon": 36.7967774 },
+    { "lat": -1.2959294, "lon": 36.7968405 },
+    { "lat": -1.2960111, "lon": 36.7969432 },
+    { "lat": -1.2960624, "lon": 36.7970716 },
+    { "lat": -1.2960694, "lon": 36.7971837 },
+    { "lat": -1.2960671, "lon": 36.7972678 },
+    { "lat": -1.2960624, "lon": 36.7973191 },
+    { "lat": -1.2960834, "lon": 36.7973472 },
+    { "lat": -1.2961091, "lon": 36.7973588 },
+    { "lat": -1.2961838, "lon": 36.7973658 },
+    { "lat": -1.2962725, "lon": 36.7974125 },
+    { "lat": -1.2964527, "lon": 36.7975080 },
+    { "lat": -1.2964966, "lon": 36.7976437 },
+    { "lat": -1.2965480, "lon": 36.7977978 },
+    { "lat": -1.2965666, "lon": 36.7979706 },
+    { "lat": -1.2965690, "lon": 36.7980920 },
+    { "lat": -1.2965503, "lon": 36.7981504 },
+    { "lat": -1.2965200, "lon": 36.7982088 },
+    { "lat": -1.2965200, "lon": 36.7982672 },
+    { "lat": -1.2965410, "lon": 36.7983185 },
+    { "lat": -1.2965760, "lon": 36.7983559 },
+    { "lat": -1.2966063, "lon": 36.7984189 },
+    { "lat": -1.2966297, "lon": 36.7985053 },
+    { "lat": -1.2966390, "lon": 36.7985800 },
+    { "lat": -1.2966320, "lon": 36.7986968 },
+    { "lat": -1.2966297, "lon": 36.7987809 },
+    { "lat": -1.2966787, "lon": 36.7988859 },
+    { "lat": -1.2966950, "lon": 36.7989653 },
+    { "lat": -1.2966880, "lon": 36.7990354 },
+    { "lat": -1.2966740, "lon": 36.7991311 },
+    { "lat": -1.2966554, "lon": 36.7992479 },
+    { "lat": -1.2966694, "lon": 36.7993202 },
+    { "lat": -1.2966950, "lon": 36.7993973 },
+    { "lat": -1.2967511, "lon": 36.7995164 },
+    { "lat": -1.2968620, "lon": 36.7996407 },
+    { "lat": -1.2969284, "lon": 36.7997985 },
+    { "lat": -1.2969753, "lon": 36.7999273 },
+    { "lat": -1.2969836, "lon": 36.8000375 },
+    { "lat": -1.2970054, "lon": 36.8001605 },
+    { "lat": -1.2970722, "lon": 36.8002580 },
+    { "lat": -1.2971996, "lon": 36.8004350 },
+    { "lat": -1.2973752, "lon": 36.8005946 },
+    { "lat": -1.2976016, "lon": 36.8008305 },
+    { "lat": -1.2977890, "lon": 36.8009286 },
+    { "lat": -1.2980170, "lon": 36.8010589 },
+    { "lat": -1.2980974, "lon": 36.8011278 },
+    { "lat": -1.2982581, "lon": 36.8012247 },
+    { "lat": -1.2982841, "lon": 36.8012451 }
+  ],
+  "tags": {
+    "boat": "no",
+    "name": "Kirimiri stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1144808345,
+  "bounds": {
+    "minlat": -1.2983529,
+    "minlon": 36.8012451,
+    "maxlat": -1.2982841,
+    "maxlon": 36.8012989
+  },
+  "nodes": [
+    10655219048,
+    10655219047
+  ],
+  "geometry": [
+    { "lat": -1.2982841, "lon": 36.8012451 },
+    { "lat": -1.2983529, "lon": 36.8012989 }
+  ],
+  "tags": {
+    "boat": "no",
+    "layer": "-1",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1414162898,
+  "bounds": {
+    "minlat": -1.2868018,
+    "minlon": 36.8341926,
+    "maxlat": -1.2855254,
+    "maxlon": 36.8364654
+  },
+  "nodes": [
+    12994961133,
+    12994961134,
+    12994961135,
+    12994961136,
+    12994961137,
+    12994961138,
+    12994961139,
+    12994961140,
+    12994961133
+  ],
+  "geometry": [
+    { "lat": -1.2856219, "lon": 36.8342445 },
+    { "lat": -1.2860134, "lon": 36.8341926 },
+    { "lat": -1.2868018, "lon": 36.8362168 },
+    { "lat": -1.2862172, "lon": 36.8364654 },
+    { "lat": -1.2860045, "lon": 36.8363777 },
+    { "lat": -1.2857506, "lon": 36.8361042 },
+    { "lat": -1.2855736, "lon": 36.8360165 },
+    { "lat": -1.2855254, "lon": 36.8358878 },
+    { "lat": -1.2856219, "lon": 36.8342445 }
+  ],
+  "tags": {
+    "amenity": "bus_station",
+    "bus": "yes",
+    "name": "Country Bus",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009822,
+  "bounds": {
+    "minlat": -1.2964089,
+    "minlon": 36.8217092,
+    "maxlat": -1.2957366,
+    "maxlon": 36.8225514
+  },
+  "nodes": [
+    14097722442,
+    14097722443,
+    14097722444,
+    14097722446
+  ],
+  "geometry": [
+    { "lat": -1.2957366, "lon": 36.8217092 },
+    { "lat": -1.2961506, "lon": 36.8219521 },
+    { "lat": -1.2964089, "lon": 36.8221544 },
+    { "lat": -1.2963559, "lon": 36.8225514 }
+  ],
+  "tags": {
+    "name": "Uhuru park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009823,
+  "bounds": {
+    "minlat": -1.2963334,
+    "minlon": 36.8227195,
+    "maxlat": -1.2962610,
+    "maxlon": 36.8232608
+  },
+  "nodes": [
+    14097722445,
+    279104974
+  ],
+  "geometry": [
+    { "lat": -1.2963334, "lon": 36.8227195 },
+    { "lat": -1.2962610, "lon": 36.8232608 }
+  ],
+  "tags": {
+    "name": "Uhuru park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009824,
+  "bounds": {
+    "minlat": -1.2963559,
+    "minlon": 36.8225514,
+    "maxlat": -1.2963334,
+    "maxlon": 36.8227195
+  },
+  "nodes": [
+    14097722446,
+    14097722445
+  ],
+  "geometry": [
+    { "lat": -1.2963559, "lon": 36.8225514 },
+    { "lat": -1.2963334, "lon": 36.8227195 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "name": "Uhuru park stream",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009825,
+  "bounds": {
+    "minlat": -1.2957366,
+    "minlon": 36.8200643,
+    "maxlat": -1.2928560,
+    "maxlon": 36.8217092
+  },
+  "nodes": [
+    14097722462,
+    14097722453,
+    14097722452,
+    14097722451,
+    14097722450,
+    14097722449,
+    14097722448,
+    14097722447,
+    14097722442
+  ],
+  "geometry": [
+    { "lat": -1.2928560, "lon": 36.8200643 },
+    { "lat": -1.2929909, "lon": 36.8201423 },
+    { "lat": -1.2932620, "lon": 36.8203867 },
+    { "lat": -1.2934899, "lon": 36.8205018 },
+    { "lat": -1.2939253, "lon": 36.8207359 },
+    { "lat": -1.2942682, "lon": 36.8209085 },
+    { "lat": -1.2946789, "lon": 36.8211734 },
+    { "lat": -1.2950075, "lon": 36.8213480 },
+    { "lat": -1.2957366, "lon": 36.8217092 }
+  ],
+  "tags": {
+    "name": "Uhuru park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009826,
+  "bounds": {
+    "minlat": -1.2927312,
+    "minlon": 36.8185071,
+    "maxlat": -1.2903900,
+    "maxlon": 36.8199921
+  },
+  "nodes": [
+    14097722460,
+    14097722459,
+    14097722458,
+    14097722457,
+    14097722456,
+    14097722455,
+    14097722454,
+    14097722461
+  ],
+  "geometry": [
+    { "lat": -1.2903900, "lon": 36.8185071 },
+    { "lat": -1.2907449, "lon": 36.8187808 },
+    { "lat": -1.2909509, "lon": 36.8189705 },
+    { "lat": -1.2915124, "lon": 36.8192817 },
+    { "lat": -1.2919067, "lon": 36.8194994 },
+    { "lat": -1.2921551, "lon": 36.8196267 },
+    { "lat": -1.2925576, "lon": 36.8198917 },
+    { "lat": -1.2927312, "lon": 36.8199921 }
+  ],
+  "tags": {
+    "name": "Uhuru park stream",
+    "waterway": "stream"
+  }
+},
+{
+  "type": "way",
+  "id": 1550009827,
+  "bounds": {
+    "minlat": -1.2928560,
+    "minlon": 36.8199921,
+    "maxlat": -1.2927312,
+    "maxlon": 36.8200643
+  },
+  "nodes": [
+    14097722461,
+    14097722462
+  ],
+  "geometry": [
+    { "lat": -1.2927312, "lon": 36.8199921 },
+    { "lat": -1.2928560, "lon": 36.8200643 }
+  ],
+  "tags": {
+    "layer": "-1",
+    "tunnel": "culvert",
+    "waterway": "stream"
+  }
+}
+
+  ]
+}
