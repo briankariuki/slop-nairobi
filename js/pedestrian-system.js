@@ -16,7 +16,11 @@ const PED_SPAWN_DISTANCE = 150;
 const PED_AVOID_INTERVAL = 0.12;
 const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
 
-function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCross, walkOn, visible, nearView }) {
+const JAYWALK_EVERY = 40; // s between a pedestrian's thoughts of crossing mid-block (on average, at random)
+const JAYWALK_CHANCE = 0.3; // ...and how often they do, where it's possible
+const JAYWALK_RUN = 1.9; // their speed over the road, against their walking speed
+
+function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCross, walkOn, visible, nearView, zebras, crossingOver, addCrossing, removeCrossing }) {
   let clock = 0;
   let focusX = 0, focusZ = 140;
   let hasView = false;
@@ -42,6 +46,7 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     peds.push({
       placed: false,
       crossesStreets: i % 6 === 0, // some start near crossings; everyone can use them along their route
+      jayTime: hash(i, 9) * JAYWALK_EVERY * 2,
       x: 0,
       z: 0,
       ax: 0, // track: start, direction, length; position along it and walking direction
@@ -92,6 +97,7 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     });
   }
 
+  const nearZebras = [];
   const KERB = 1.6; // how far along a crosswalk track pedestrians wait to cross (the curb is 2 m along)
   const pedRoutes = createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance });
   const track = { ax: 0, az: 0, ux: 0, uz: 1, len: 1, node: null, side: 0, line: 0, route: null };
@@ -132,9 +138,11 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
   // Try crosswalks first for crossing pedestrians, then fall back to sidewalks if no suitable crossing fits.
   function spawnPed(p, rMin, rMax, protectView) {
     for (let attempt = 0; attempt < 10; attempt++) {
-      const crosswalk = p.crossesStreets && nearSignals.length > 0 && attempt < 5;
+      const crossings = nearSignals.length + nearZebras.length;
+      const crosswalk = p.crossesStreets && crossings > 0 && attempt < 5;
+      const k = Math.floor(Math.random() * crossings);
       const ok = crosswalk
-        ? crosswalkTrack(nearSignals[Math.floor(Math.random() * nearSignals.length)])
+        ? crosswalkTrack(k < nearSignals.length ? nearSignals[k] : nearZebras[k - nearSignals.length])
         : nearEdges.length > 0 && sidewalkTrack(nearEdges[Math.floor(Math.random() * nearEdges.length)]);
       if (!ok) continue;
       const along = (focusX - track.ax) * track.ux + (focusZ - track.az) * track.uz;
@@ -359,6 +367,48 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     p.socialTime = Math.max(p.socialTime, clock + 5);
   }
 
+  // Jaywalking: now and then, someone walking along a road crosses it there and then, waiting at the kerb for a gap
+  // and running over (the crossing is theirs alone, made for the moment: traffic.js brakes for them once they're out)
+  const jays = new Set();
+  function jaywalk(p) {
+    p.jayTime = clock + JAYWALK_EVERY * (0.5 + Math.random());
+    if (Math.random() > JAYWALK_CHANCE || p.node || !p.route?.edge || p.nextRoute || p.conversation || p.pause > 0) return;
+    if ((p.dir > 0 ? p.t : p.len - p.t) < 5 || (p.dir > 0 ? p.len - p.t : p.t) < 5) return;
+    let made = null;
+    const legs = pedRoutes.jaywalk(p, (e, x, z, a, b) => {
+      made = crossingOver(e, x, z, { jay: true, owner: p }, a, b);
+      return made.edges.length ? made : null;
+    }, p.goalX, p.goalZ);
+    if (!legs) return;
+    addCrossing(made);
+    jays.add(made);
+    p.jayFrom = { track: p.route, dir: p.dir }; // to walk on along, if they give up
+    // turn to the road where p is (a short step towards it), then over
+    const turn = { x: p.x + p.ux * p.dir * 0.3, z: p.z + p.uz * p.dir * 0.3 };
+    const len = 0.3;
+    Object.assign(p, { ax: p.x, az: p.z, ux: (turn.x - p.x) / len, uz: (turn.z - p.z) / len, len, t: 0, dir: 1, node: null });
+    p.route = { ...p.route, ax: p.ax, az: p.az, ux: p.ux, uz: p.uz, len, after: null, before: null, cross: null, then: null };
+    p.nextRoute = legs;
+    p.nextLeg = 0;
+  }
+  function giveUp(p) {
+    const { track, dir } = p.jayFrom;
+    const back = pedRoutes.rejoin(track, { x: p.ax, z: p.az }, dir);
+    if (!back) return;
+    turnPed(p, -1); // back to the sidewalk the way it came
+    p.nextRoute = [{ track: back, dir: 1 }];
+    p.nextLeg = 0;
+    p.jayWait = 0;
+  }
+  function dropJays() {
+    for (const c of jays) {
+      const p = c.owner;
+      if (p.node === c || p.nextRoute?.some((leg, i) => i >= p.nextLeg && leg.track.node === c)) continue;
+      removeCrossing(c);
+      jays.delete(c);
+    }
+  }
+
   const walkedNodes = [];
   function walk(p, dt) {
     const avoiding = clock < p.avoidUntil;
@@ -382,7 +432,9 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
       p.pause = 1.5 + Math.random() * 3;
       p.restTime = clock + 35 + Math.random() * 55;
     }
+    if (clock >= p.jayTime && !avoiding) jaywalk(p);
     let vMax = avoiding ? p.avoidSpeed : p.pause > 0 || p.conversation ? 0 : p.speed;
+    if (p.node?.jay && curbProgress(p) > KERB) vMax *= JAYWALK_RUN;
     if (dodging || diving) p.v = vMax = 0;
     if (!p.nextRoute) vMax = Math.min(vMax, Math.sqrt(2 * brake * ahead));
     let room = Infinity;
@@ -450,6 +502,13 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     let t = p.t + p.dir * movement;
     const reachesCurb = !!p.node && curbProgress(p) <= KERB + 1e-6 && (p.dir > 0 ? t : p.len - t) >= KERB - 1e-6;
     p.waiting = !diving && reachesCurb && !canCross;
+    // a jaywalker kept waiting long enough at the kerb gets waved over: drivers stop for them as at a zebra
+    // ...or gives up and walks on along the sidewalk
+    if (p.waiting && p.node.jay) {
+      if (!p.jayWait) p.jayWait = clock;
+      else if (clock - p.jayWait > 45) giveUp(p);
+      else if (clock - p.jayWait > 20) p.node.courtesy = true;
+    } else p.jayWait = 0;
     if (p.waiting) {
       t = p.dir > 0 ? Math.min(t, KERB) : Math.max(t, p.len - KERB);
       p.v = 0;
@@ -565,6 +624,8 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
 
     for (const n of walkedNodes) n.walkers.length = 0;
     walkedNodes.length = 0;
+    nearZebras.length = 0;
+    for (const c of zebras) if (Math.hypot(c.x - x, c.z - z) < NEAR_RADIUS) nearZebras.push(c);
     let pedBudget = jump ? NUM_PEDS : 6;
     for (let scanned = 0; scanned < NUM_PEDS && pedBudget > 0; scanned++) {
       const p = peds[pedCursor];
@@ -585,6 +646,7 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
       renderPed(p, dt);
     }
     pedCrowd.end();
+    dropJays();
   }
 
   return { peds, meshes: pedCrowd.meshes, update };

@@ -6,6 +6,7 @@ import { signalPhase, walkSignal } from './city-config.js';
 import { cityUniforms, createContactShadowMaterial } from './tsl-materials.js';
 import { heightAt } from './terrain.js';
 import { roadHeight } from './elevation.js';
+import { GEO } from './nairobi-geodata.js';
 import { HEADLIGHTS, createVehicleHeadlight, placeVehicleHeadlight } from './vehicle-lights.js';
 import {
   BODY_SPECS,
@@ -127,6 +128,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     n.road = new Array(n.sideCount).fill(null); // an edge arriving or leaving over each side's crosswalk: the road it spans
   }
   for (const e of edges) {
+    e.zebras = []; // crossings over it between its ends: { z, s } (s: metres along it from its stop line at e.from)
     e.occ = e.lanes.map(() => []); // vehicles in each lane, sorted by position
     // e.inSide / e.outSide: the crosswalks crossed on the way into e.to / out of e.from; e.axisIndex: its group at e.to;
     // e.opposite: the oncoming edge of its road there (road-network.js)
@@ -137,6 +139,73 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     e.b0 = (e.sx - e.x0) * e.dx + (e.sz - e.z0) * e.dz; // its stop line, metres from e.from
     e.speedScale = clamp(e.vmax / 13.9, 0.6, 1.8); // drivers' speeds there, against a 50 km/h street
   }
+  // Crossings between junctions: OSM's mapped pedestrian crossings (zebras and other marked or uncontrolled ones) and
+  // the moment's jaywalkers (pedestrian-system.js). Each is a one-sided junction of its own for the pedestrians (curb
+  // queue, walkers, crossing tracks) over the edges of one road, both directions, at `s` along each. Nobody may step
+  // off while a vehicle is on it or too close to stop; drivers who can stop comfortably do, for anyone on a zebra or
+  // waiting at it, and brake as hard as they must for anyone out in the road.
+  const CROSSING_HALF = 2.5; // m either side of a crossing's centre line that vehicles keep clear of
+  const ZEBRA_TURN = 15; // s a vehicle stands at a zebra before its turn comes: the people waiting wait for it
+  // A crossing over road e centred at (x, z) on its centreline, from kerb point a to kerb point b (by default straight
+  // over e, a step onto the sidewalk each side), over every edge at ground level whose centreline the line a-b crosses
+  // between its stop lines: both directions of a two-way road (whichever nodes they run between) and anything else
+  // in the way
+  function crossingOver(e, x, z, extra, a = null, b = null) {
+    const half = e.half + 2;
+    a ||= { x: x - e.rx * half, z: z - e.rz * half };
+    b ||= { x: x + e.rx * half, z: z + e.rz * half };
+    const c = { zebra: true, x, z, road: e, edges: [], curb: [], walkers: [], sideGroups: [1], ...extra };
+    const ux = b.x - a.x;
+    const uz = b.z - a.z;
+    for (const f of edges) {
+      if (f.from.lift > 0.5 || f.to.lift > 0.5) continue;
+      const den = f.dx * uz - f.dz * ux;
+      if (Math.abs(den) < 1e-6) continue;
+      // f.s + f.d·s = a + u·k
+      const wx = a.x - f.sx;
+      const wz = a.z - f.sz;
+      const s = (wx * uz - wz * ux) / den;
+      const k = (wx * f.dz - wz * f.dx) / den;
+      if (k > 0 && k < 1 && s > CROSSING_HALF + 1 && s < f.len - CROSSING_HALF - 1) c.edges.push({ e: f, s });
+    }
+    return c;
+  }
+  function addCrossing(c) {
+    for (const { e, s } of c.edges) e.zebras.push({ z: c, s });
+  }
+  function removeCrossing(c) {
+    for (const { e } of c.edges) e.zebras = e.zebras.filter((k) => k.z !== c);
+  }
+  const zebras = [];
+  {
+    const signals = nodes.filter((n) => n.signal);
+    for (const k of GEO.crossings) {
+      if (k.kind === 'traffic_signals') continue;
+      const [x, z] = k.pts ? [(k.pts[0] + k.pts[k.pts.length - 2]) / 2, (k.pts[1] + k.pts[k.pts.length - 1]) / 2] : [k.x, k.z];
+      if (signals.some((n) => Math.hypot(n.x - x, n.z - z) < 25)) continue; // at a signalised junction: its crosswalks
+      // on the road's centreline, where the mapped node sits on its way: one mapped in the mouth of a junction, a few
+      // metres past the stop line, moves back out to just short of it
+      const END = CROSSING_HALF + 1.1;
+      let best = null;
+      let bd = Infinity;
+      let s = 0;
+      for (const e of edges) {
+        if (e.from.lift > 0.5 || e.to.lift > 0.5 || e.len < 2 * END + 1) continue;
+        const se = (x - e.sx) * e.dx + (z - e.sz) * e.dz;
+        const off = Math.abs((x - e.sx) * e.rx + (z - e.sz) * e.rz);
+        if (se < -8 || se > e.len + 8 || off > e.half + 2 || off >= bd) continue;
+        best = e;
+        bd = off;
+        s = clamp(se, END, e.len - END);
+      }
+      if (!best) continue;
+      const c = crossingOver(best, best.sx + best.dx * s, best.sz + best.dz * s, { kind: k.kind });
+      if (zebras.some((o) => Math.hypot(o.x - c.x, o.z - c.z) < 8)) continue;
+      zebras.push(c);
+      addCrossing(c);
+    }
+  }
+
   // Is the intersection box held by vehicles of any road but group g's?
   const boxBusy = (n, g) => {
     for (let k = 0; k < n.box.length; k++) if (k !== g && n.box[k] > 0) return true;
@@ -378,7 +447,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   const nearEdges = [];
   const nearSignals = [];
   const pedestrianSystem = createPedestrianSystem(network, {
-    player, nearEdges, nearSignals, mayCross, walkOn, visible, nearView
+    player, nearEdges, nearSignals, mayCross, walkOn, visible, nearView, zebras, crossingOver, addCrossing, removeCrossing
   });
   if (pedestrianSystem.meshes.length) group.add(...pedestrianSystem.meshes); // none yet: add() with nothing logs an error
 
@@ -760,13 +829,14 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   // Do people on crosswalk `side` of node n have the WALK? Across the main road with the other roads' traffic, across
   // the others with the main road's.
   function walkOn(n, side) {
-    return walkSignal(clock, n.sideGroups[side] !== 0, n.signalOffset || 0);
+    return n.zebra || walkSignal(clock, n.sideGroups[side] !== 0, n.signalOffset || 0);
   }
 
   // May p step off the curb onto its crosswalk? On the WALK (early in the parallel traffic's green, so red for the
   // traffic arriving over it), once no vehicle is crossing it or committed to, and none is too close to stop
   function mayCross(p) {
     const n = p.node;
+    if (n.zebra) return crossingClear(n);
     if (!walkOn(n, p.side) || n.crossing[p.side] > 0) return false;
     const e = n.approach[p.side];
     if (!e) return true;
@@ -775,6 +845,40 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
       if (lead && !canStop(lead, e, true)) return false;
     }
     return true;
+  }
+
+  // ...a crossing between junctions: nobody on it, and every vehicle coming able to stop short of it easily (for a
+  // jaywalker: at least 3 s and 8 m off, since they run, until drivers wave them over: `courtesy`)
+  function crossingClear(c) {
+    for (const { e, s } of c.edges) {
+      for (const list of e.occ) {
+        for (const o of list) {
+          const front = o.s + o.v.half;
+          if (o.s - o.v.half < s + CROSSING_HALF && front > s - CROSSING_HALF) return false;
+          const d = s - CROSSING_HALF - front;
+          if (d >= 0 && d < 6 && o.v.wait > ZEBRA_TURN) return false; // its turn
+          if (d < 0 || o.v.speed < 0.5 || d > LOOKAHEAD) continue;
+          if (c.jay && !c.courtesy ? d < o.v.speed * 3 + 8 : d < (o.v.speed * o.v.speed) / 5 + o.v.speed + 3) return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  // Braking for crossings on edge e, v's front d0 metres before e's start (negative: past it): a stop short of the
+  // nearest one with people on it, or at a zebra people wait at, if v can stop comfortably
+  function crossingAhead(v, e, d0) {
+    let worst = 0;
+    for (const { z, s } of e.zebras) {
+      const d = d0 + s - CROSSING_HALF;
+      if (d < 0 || d > LOOKAHEAD) continue;
+      const out = z.walkers.some((p) => !p.waiting);
+      if (!out && ((z.jay && !z.courtesy) || !z.walkers.length)) continue;
+      if (out) worst = Math.min(worst, stopAt(v, d)); // someone out in the road: as hard as it takes
+      else if (v.wait > ZEBRA_TURN && d < 6) continue; // its turn: the people at the kerb wait
+      else if (canStopBefore(v, d) || v.speed < 1) worst = Math.min(worst, stopAt(v, d));
+    }
+    return worst;
   }
 
   // Will anyone on crosswalk `side` of n be within reach of the lane meeting it at `coord` between t0 and t1
@@ -1006,7 +1110,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     let cap = Infinity;
     v.gap = Infinity;
     if (!v.conn) {
-      worst = follow(v, e.occ[v.lane], v.s);
+      worst = Math.min(follow(v, e.occ[v.lane], v.s), crossingAhead(v, e, -v.s - v.half));
       const side = straddle(v);
       if (side) worst = Math.min(worst, follow(v, e.occ[v.lane + side], v.s));
       const d = e.len - v.s - v.half;
@@ -1019,7 +1123,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
         if (!go) {
           worst = Math.min(worst, stopAt(v, d));
         } else {
-          worst = Math.min(worst, follow(v, f.occ[j], vs), signalAhead(v, f, f.len - vs - v.half));
+          worst = Math.min(worst, follow(v, f.occ[j], vs), signalAhead(v, f, f.len - vs - v.half), crossingAhead(v, f, -vs - v.half));
           // pulling in to wait inside: slow down for that spot already if it will have to wait there
           if (v.yielding && holdsOn(v, pedsOut(v, d + c.len - 3))) worst = Math.min(worst, stopAt(v, d + v.half + v.yieldAt, 0.5));
         }
@@ -1035,7 +1139,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     } else {
       const f = v.move.to;
       const vs = v.cs - v.conn.len;
-      worst = Math.min(follow(v, f.occ[v.out], vs), follow(v, e.occ[v.lane], e.len + v.cs), signalAhead(v, f, f.len - vs - v.half));
+      worst = Math.min(follow(v, f.occ[v.out], vs), follow(v, e.occ[v.lane], e.len + v.cs), signalAhead(v, f, f.len - vs - v.half), crossingAhead(v, f, -vs - v.half));
       // someone crossing the way out: wait for them inside the intersection, short of the 2.5 m crosswalk
       const d = v.conn.len - 3 - v.cs - v.half;
       const peds = pedsOut(v, d);
@@ -1877,6 +1981,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     cars,
     buses,
     bodas,
+    zebras,
     peds: pedestrianSystem.peds,
     network
   };

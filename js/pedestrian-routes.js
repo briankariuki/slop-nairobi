@@ -47,10 +47,24 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
         const block = blockAt(a.x, a.z);
         if (!block || blockAt(b.x, b.z) !== block) continue;
         if (!onSidewalk(a.x, a.z) || !onSidewalk(b.x, b.z)) continue;
-        const points = clear(a, b, block) ? [a, b] : detour(a, b, block);
+        let points = clear(a, b, block) ? [a, b] : detour(a, b, block);
+        // a straight line breaks where a crossing over the road meets it (from there, on or over)
+        const at = points.length === 2 ? e.zebras.filter((k) => k.z.edges.some((o) => o.e === e)).sort((p, q) => p.s - q.s) : [];
+        const cross = new Map(); // point -> the crossing there
+        if (at.length) {
+          points = [a, ...at.map((k) => {
+            const pt = { x: a.x + e.dx * k.s, z: a.z + e.dz * k.s };
+            cross.set(pt, k.z);
+            return pt;
+          }), b];
+        }
         for (let i = 1, previous = null; i < points.length; i++) {
-          const track = segment(points[i - 1], points[i], { edge: e, from: e.from, to: e.to, block });
+          const track = segment(points[i - 1], points[i], { edge: e, from: e.from, to: e.to, block, cross: [cross.get(points[i - 1]), cross.get(points[i])] });
           if (previous) { previous.after = track; track.before = previous; }
+          for (const end of [0, 1]) {
+            const z = track.cross[end];
+            if (z) (z.ports ||= []).push({ track, end });
+          }
           result.push(track);
           previous = track;
         }
@@ -66,6 +80,20 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
     if (crossings.has(n)) return crossings.get(n);
     const result = [];
     crossings.set(n, result);
+    if (n.zebra) {
+      // a crossing between junctions: two walking lines over its road there
+      const road = n.road;
+      const half = road.half + 2;
+      for (const line of [-0.75, 0.75]) {
+        const ox = n.x + road.dx * line;
+        const oz = n.z + road.dz * line;
+        const p = { x: ox - road.rx * half, z: oz - road.rz * half };
+        const q = { x: ox + road.rx * half, z: oz + road.rz * half };
+        if (!onSidewalk(p.x, p.z) || !onSidewalk(q.x, q.z) || !clear(p, q)) continue;
+        result.push(segment(p, q, { node: n, side: 0, line, road, from: n, to: n }));
+      }
+      return result;
+    }
     if (!n.signal || n.lift > 0.5) return result;
     for (const a of n.arms) {
       const side = a.side;
@@ -88,6 +116,10 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
   }
 
   function ports(n) {
+    if (n.zebra) {
+      along(n.road); // where its road's sidewalks break for it
+      return n.ports || [];
+    }
     if (junctions.has(n)) return junctions.get(n);
     const result = [], seen = new Set();
     junctions.set(n, result);
@@ -177,8 +209,23 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
     const end = dir > 0 ? 1 : 0;
     if (ends[end]) return ends[end];
     const result = ends[end] = [];
+    if (track.then) { result.push([track.then]); return result; } // a jaywalker's way on (see jaywalk)
     const continuation = end ? track.after : track.before;
-    if (continuation) { result.push([{ track: continuation, dir }]); return result; }
+    if (continuation) {
+      result.push([{ track: continuation, dir }]);
+      // ...or over the road, where a crossing meets the sidewalk
+      const z = track.cross?.[end];
+      const a = point(track, end);
+      for (const ct of z ? across(z) : []) {
+        const ce = Math.hypot(ct.ax - a.x, ct.az - a.z) < Math.hypot(ct.ax + ct.ux * ct.len - a.x, ct.az + ct.uz * ct.len - a.z) ? 0 : 1;
+        const b = point(ct, ce);
+        if (Math.hypot(b.x - a.x, b.z - a.z) > 6 || blockAt(b.x, b.z) !== track.block || !cornerClear(a, b, track.block)) continue;
+        const path = Math.hypot(b.x - a.x, b.z - a.z) > 0.01 ? [{ track: segment(a, b), dir: 1 }] : [];
+        path.push({ track: ct, dir: ce ? -1 : 1 });
+        result.push(path);
+      }
+      return result;
+    }
     const n = end ? track.to : track.from;
     if (!n) return result;
     const a = point(track, end), block = blockAt(a.x, a.z);
@@ -219,10 +266,50 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
       const last = path[path.length - 1], target = last.track;
       const ux = target.ux * last.dir, uz = target.uz * last.dir;
       const back = ux * track.ux * dir + uz * track.uz * dir < -0.8;
-      const score = (ux * gx + uz * gz) / distance + Math.random() * 0.7 - (back ? 2 : 0);
+      // (a crossing between junctions is taken mostly when the goal lies over the road)
+      const score = (ux * gx + uz * gz) / distance + Math.random() * 0.7 - (back ? 2 : 0) - (target.node?.zebra ? 0.5 : 0);
       if (score > bestScore) { best = path; bestScore = score; }
     }
     return best;
+  }
+
+  // A way straight over the road from where p walks along it, and on along the sidewalk opposite, towards the goal:
+  // [{ track, dir }...], the first over the road (its `node` is the crossing c, made by the caller from the road, the
+  // point on its centreline and the kerb-to-kerb line), or null where the far side isn't sidewalk or a building is in the way
+  function jaywalk(p, makeCrossing, goalX, goalZ) {
+    const e = p.route?.edge;
+    if (!e) return null;
+    const off = (p.x - e.sx) * e.rx + (p.z - e.sz) * e.rz;
+    if (Math.abs(off) < e.half + 1) return null;
+    const a = { x: p.x, z: p.z };
+    const b = { x: p.x - e.rx * 2 * off, z: p.z - e.rz * 2 * off };
+    if (!onSidewalk(b.x, b.z) || !clear(a, b)) return null;
+    // the sidewalk track opposite, under b
+    let opposite = null;
+    let tt = 0;
+    for (const t of along(e)) {
+      const u = (b.x - t.ax) * t.ux + (b.z - t.az) * t.uz;
+      const side = Math.abs((b.x - t.ax) * t.uz - (b.z - t.az) * t.ux);
+      if (u > 0.3 && u < t.len - 0.3 && side < 0.6) [opposite, tt] = [t, u];
+    }
+    if (!opposite) return null;
+    const s = (p.x - e.sx) * e.dx + (p.z - e.sz) * e.dz;
+    const c = makeCrossing(e, e.sx + e.dx * s, e.sz + e.dz * s, a, b);
+    if (!c) return null;
+    const over = segment(a, b, { node: c, side: 0, line: 0, road: e, from: c, to: c });
+    const on = rejoin(opposite, b, (goalX - b.x) * opposite.ux + (goalZ - b.z) * opposite.uz >= 0 ? 1 : -1);
+    return on && [{ track: over, dir: 1 }, { track: on, dir: 1 }];
+  }
+
+  // A way from point b (beside sidewalk track t) along t in direction dir to its end, and on from there as t would go:
+  // a track walked forwards, or null if b is already there
+  function rejoin(t, b, dir) {
+    const end = dir > 0 ? 1 : 0;
+    const on = segment(b, point(t, end), { edge: t.edge, block: t.block, from: t.from, to: t.to });
+    const next = end ? t.after : t.before;
+    if (next) on.then = { track: next, dir };
+    else if (end === 0) [on.from, on.to] = [t.to, t.from]; // walked forwards, it ends at t's start
+    return on.len < 0.05 ? null : on;
   }
 
   function canDodge(p, offset) {
@@ -231,7 +318,7 @@ function createPedestrianRoutes({ walkable, onSidewalk, blockAt, roadDistance })
     return !!block && onSidewalk(target.x, target.z) && cornerClear(p, target, block);
   }
 
-  return { along, across, next, canDodge };
+  return { along, across, next, canDodge, jaywalk, rejoin };
 }
 
 export { createPedestrianRoutes };
