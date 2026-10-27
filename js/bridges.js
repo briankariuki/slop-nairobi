@@ -1,36 +1,51 @@
 import * as THREE from 'three/webgpu';
 import { GEO } from './nairobi-geodata.js';
 import { heightAt } from './terrain.js';
-import { isElevated } from './ground.js';
+import { isElevated, liftAlong, liftBreaks, linkLength, roadHeight, LAYER_LIFT } from './elevation.js';
 
-// Elevated roads — the Nairobi Expressway and the CBD flyovers — as 3D decks on pillars. OSM says only that they are
-// raised (layer), not by how much, so each layer lifts the deck LAYER_LIFT m over the ground under it. A slip road
-// climbs from the street to the deck: its end that meets an elevated mainline is at full height, the other at ground.
+// Elevated roads — the Nairobi Expressway and the CBD flyovers — as 3D decks on pillars, as high as elevation.js says:
+// the same rule the traffic drives by, so cars run on the decks. Drivable ones are built from the road graph's links
+// (slip roads ramping from the street up to the deck, decks ramping down where they meet the street); footbridges and
+// other raised ways the graph doesn't carry stand level at LAYER_LIFT m per layer. The deck surface follows the
+// ground's cross slope (each edge at roadHeight() over its own point), like the traffic's wheels.
 
-const LAYER_LIFT = 8;
 const STEP = 8; // m between deck samples, so decks follow the terrain
 const DECK = 1.4; // deck thickness
 const PIER_EVERY = 32;
 const PIER = 1.8;
 
-const key = (x, z) => `${Math.round(x)},${Math.round(z)}`;
-
-function resample(f) {
+// Points along a flat [x, z, ...] polyline every STEP m or less, at its vertices and at the distances in `extra`, each
+// as [x, z, distance along it]
+function resample(f, extra = []) {
   const out = [];
+  let d0 = 0;
   for (let i = 0; i < f.length - 2; i += 2) {
     const [ax, az, bx, bz] = [f[i], f[i + 1], f[i + 2], f[i + 3]];
-    const n = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az) / STEP));
-    for (let k = 0; k < n; k++) out.push([ax + ((bx - ax) * k) / n, az + ((bz - az) * k) / n]);
+    const len = Math.hypot(bx - ax, bz - az);
+    const n = Math.max(1, Math.ceil(len / STEP));
+    const at = [];
+    for (let k = 0; k < n; k++) at.push(k / n);
+    for (const d of extra) if (d > d0 && d < d0 + len) at.push((d - d0) / len);
+    at.sort((p, q) => p - q);
+    for (const t of at) out.push([ax + (bx - ax) * t, az + (bz - az) * t, d0 + len * t]);
+    d0 += len;
   }
-  out.push([f[f.length - 2], f[f.length - 1]]);
+  out.push([f[f.length - 2], f[f.length - 1], d0]);
   return out;
 }
 
 export function buildBridges() {
-  const elevated = GEO.roads.filter(isElevated);
-  // vertices of elevated mainlines, to tell which end of a slip road joins the deck
-  const onDeck = new Set();
-  for (const r of elevated) if (!r.link) for (let i = 0; i < r.pts.length; i += 2) onDeck.add(key(r.pts[i], r.pts[i + 1]));
+  // { pts, w, lift(d), breaks } for every elevated link of the road graph, and every elevated way it doesn't carry
+  const links = GEO.roadGraph.links.filter(isElevated);
+  const inGraph = new Set(links.map((l) => l.way));
+  const others = GEO.roads.filter((r) => isElevated(r) && !inGraph.has(r.id));
+  const decks = [
+    ...links.map((l) => {
+      const total = linkLength(l);
+      return { pts: l.pts, w: l.w, lift: (d) => liftAlong(l, d, total), breaks: liftBreaks(l, total) };
+    }),
+    ...others.map((r) => ({ pts: r.pts, w: r.w, lift: () => r.layer * LAYER_LIFT, breaks: [] }))
+  ];
 
   const pos = [];
   const nrm = [];
@@ -64,51 +79,38 @@ export function buildBridges() {
   };
 
   let piers = 0;
-  for (const r of elevated) {
-    const pts = resample(r.pts);
-    const full = r.layer * LAYER_LIFT;
-    let lift0 = full;
-    let lift1 = full;
-    if (r.link) {
-      const n = r.pts.length;
-      lift0 = onDeck.has(key(r.pts[0], r.pts[1])) ? full : 0;
-      lift1 = onDeck.has(key(r.pts[n - 2], r.pts[n - 1])) ? full : 0;
-      if (!lift0 && !lift1) lift0 = lift1 = full; // a raised slip road between two other ramps
-    }
-    // cumulative distance, for the ramp profile
-    const dist = [0];
-    for (let i = 1; i < pts.length; i++) dist.push(dist[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
-    const total = dist[dist.length - 1] || 1;
-    const top = pts.map(([x, z], i) => heightAt(x, z) + lift0 + (lift1 - lift0) * (dist[i] / total) + 0.2);
+  for (const r of decks) {
+    const pts = resample(r.pts, r.breaks).map(([x, z, d]) => [x, z, r.lift(d)]);
     const half = r.w / 2 + 0.6; // carriageway plus a parapet
-
     let sincePier = PIER_EVERY / 2;
     for (let i = 0; i < pts.length - 1; i++) {
-      const [ax, az] = pts[i];
-      const [bx, bz] = pts[i + 1];
+      const [ax, az, la] = pts[i];
+      const [bx, bz, lb] = pts[i + 1];
       const len = Math.hypot(bx - ax, bz - az);
       if (len < 1e-3) continue;
       // left/right offsets of the deck edges
       const ox = (-(bz - az) / len) * half;
       const oz = ((bx - ax) / len) * half;
-      const ya = top[i];
-      const yb = top[i + 1];
       const L = [ax + ox, az + oz, bx + ox, bz + oz];
       const R = [ax - ox, az - oz, bx - ox, bz - oz];
+      // deck surface heights at the four corners (a few cm proud of the ground at the foot of a ramp, so it doesn't flicker
+      // through the terrain there)
+      const top = (x, z, l) => roadHeight(x, z, l) + 0.12 * Math.max(0, 1 - l);
+      const yL = [top(L[0], L[1], la), top(L[2], L[3], lb)];
+      const yR = [top(R[0], R[1], la), top(R[2], R[3], lb)];
       // road surface, both deck sides, underside
-      quad([L[0], ya, L[1]], [L[2], yb, L[3]], [R[2], yb, R[3]], [R[0], ya, R[1]], asphalt);
-      quad([L[0], ya - DECK, L[1]], [L[2], yb - DECK, L[3]], [L[2], yb, L[3]], [L[0], ya, L[1]], concrete);
-      quad([R[0], ya, R[1]], [R[2], yb, R[3]], [R[2], yb - DECK, R[3]], [R[0], ya - DECK, R[1]], concrete);
-      quad([R[0], ya - DECK, R[1]], [R[2], yb - DECK, R[3]], [L[2], yb - DECK, L[3]], [L[0], ya - DECK, L[1]], concrete);
+      quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], asphalt);
+      quad([L[0], yL[0] - DECK, L[1]], [L[2], yL[1] - DECK, L[3]], [L[2], yL[1], L[3]], [L[0], yL[0], L[1]], concrete);
+      quad([R[0], yR[0], R[1]], [R[2], yR[1], R[3]], [R[2], yR[1] - DECK, R[3]], [R[0], yR[0] - DECK, R[1]], concrete);
+      quad([R[0], yR[0] - DECK, R[1]], [R[2], yR[1] - DECK, R[3]], [L[2], yL[1] - DECK, L[3]], [L[0], yL[0] - DECK, L[1]], concrete);
       // parapets
-      for (const [E, s] of [[L, 1], [R, -1]]) {
-        const lip = 0.9;
-        if (s > 0) quad([E[0], ya, E[1]], [E[2], yb, E[3]], [E[2], yb + lip, E[3]], [E[0], ya + lip, E[1]], concrete);
-        else quad([E[0], ya + lip, E[1]], [E[2], yb + lip, E[3]], [E[2], yb, E[3]], [E[0], ya, E[1]], concrete);
-      }
+      const lip = 0.9;
+      quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [L[2], yL[1] + lip, L[3]], [L[0], yL[0] + lip, L[1]], concrete);
+      quad([R[0], yR[0] + lip, R[1]], [R[2], yR[1] + lip, R[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], concrete);
       // piers wherever the deck is high enough to stand on one
       sincePier += len;
       const g = heightAt(ax, az);
+      const ya = Math.min(yL[0], yR[0]);
       if (sincePier >= PIER_EVERY && ya - DECK - g > 2.5) {
         box(ax, az, g - 1, ya - DECK, PIER / 2, concrete);
         sincePier = 0;
@@ -124,6 +126,6 @@ export function buildBridges() {
   geo.computeBoundingSphere();
   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9, side: THREE.DoubleSide }));
   mesh.name = 'bridges';
-  mesh.userData = { roads: elevated.length, piers };
+  mesh.userData = { roads: decks.length, piers };
   return mesh;
 }

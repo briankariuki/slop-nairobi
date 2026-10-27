@@ -1,5 +1,6 @@
 import * as THREE from 'three/webgpu';
 import { GEO } from './nairobi-geodata.js';
+import { isElevated } from './elevation.js';
 
 // The ground: GEO.terrain's 25 m height grid as one mesh, with everything flat on it (parks, water, rivers, rail, roads,
 // footways) painted onto a map texture draped over it, so they follow the slopes exactly. Elevated roads (layer ≥ 1
@@ -11,7 +12,6 @@ const H = (T.nz - 1) * T.cell;
 const TEX_W = 4096;
 const TEX_H = Math.round((TEX_W * H) / W);
 
-export const isElevated = (r) => r.bridge && (r.layer || 0) >= 1;
 
 const AREA_FILL = {
   parking: '#8d8a84',

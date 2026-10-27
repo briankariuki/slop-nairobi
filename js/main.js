@@ -5,6 +5,8 @@ import { buildGround } from './ground.js';
 import { buildBuildings } from './buildings.js';
 import { buildBridges } from './bridges.js';
 import { FlyCamera } from './fly-camera.js';
+import { createTrafficSystem } from './traffic.js';
+import { SIGNALS } from './city-config.js';
 
 // Nairobi Tour: the CBD at 1:1 on its real terrain. World frame: 1 unit = 1 m, x = east, y = up, z = south, origin at
 // KICC's ground (GEO.terrain.base m above sea level).
@@ -41,9 +43,13 @@ const bridges = buildBridges();
 scene.add(bridges);
 console.log(`[nairobi] scene built in ${Math.round(performance.now() - t0)} ms: ${GEO.buildings.length} buildings, ${bridges.userData.roads} elevated road pieces, ${bridges.userData.piers} piers`);
 
+// Traffic on the road graph (no sidewalks or obstacles yet: every lane is open), signalised at city-config's SIGNALS
+const traffic = createTrafficSystem(scene, [], [], SIGNALS);
+console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${traffic.network.nodes.filter((n) => n.signal).length} signalised junctions, ${traffic.cars.length} cars, ${traffic.buses.length} buses`);
+
 const fly = new FlyCamera(camera, renderer.domElement);
 fly.lookFrom(...START.from, ...START.at);
-window.nairobi = { scene, camera, fly, GEO }; // for poking at from the console
+window.nairobi = { scene, camera, fly, GEO, traffic }; // for poking at from the console
 
 // 1–9 fly to the tallest towers, 0 back to the start
 const TOWERS = GEO.landmarks.filter((l) => l.kind === 'building' && l.h).slice(0, 9);
@@ -86,6 +92,7 @@ renderer.setAnimationLoop((time) => {
   timer.update(time);
   const dt = Math.min(timer.getDelta(), 0.1);
   fly.update(dt);
+  traffic.update(dt, timer.getElapsed(), camera.position, null, 'fly', camera);
   renderer.render(scene, camera);
 
   frames++;
@@ -97,6 +104,6 @@ renderer.setAnimationLoop((time) => {
     const p = camera.position;
     const ground = heightAt(p.x, p.z);
     place.textContent = nearestName(p.x, p.z);
-    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s`;
+    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s · ${traffic.cars.filter((v) => v.edge).length + traffic.buses.filter((v) => v.edge).length} vehicles`;
   }
 });

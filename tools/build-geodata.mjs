@@ -518,7 +518,9 @@ function buildTerrain() {
 // 8. ROAD GRAPH — drivable ways split at the OSM nodes they share, for the traffic network (js/road-network.js)
 // =====================================================================================================================
 // GEO.roadGraph.nodes: junctions and dead ends { x, z, signal?, roundabout?, deg }. GEO.roadGraph.links: the road between
-// two nodes { a, b, pts, kind, lanes, oneway (+1 a→b, -1 b→a, 0 both), w, name?, layer?, bridge?, link?, roundabout? }.
+// two nodes { a, b, way, pts, kind, lanes, oneway (+1 a→b, -1 b→a, 0 both), w, name?, layer?, bridge?, tunnel?, link?,
+// roundabout?, maxspeed? }: way is the OSM way id (GEO.roads[].id) it is part of, pts its flat [x, z, ...] centreline from
+// node a to node b inclusive, lanes per carriageway as in GEO.roads.
 const DRIVABLE = new Set(['motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'living_street', 'service']);
 function buildRoadGraph() {
   const ways = load('osm_roads.json').filter((el) => {
@@ -557,7 +559,7 @@ function buildRoadGraph() {
       const a = nodeOf(w.nodes[start], w.geometry[start]);
       const b = nodeOf(id, w.geometry[i]);
       const pts = flat(rdp(geomToWorld(w.geometry.slice(start, i + 1)), 0.4));
-      const link = { a, b, pts, kind: r.kind, lanes: r.lanes, oneway: r.oneway, w: r.w };
+      const link = { a, b, way: w.id, pts, kind: r.kind, lanes: r.lanes, oneway: r.oneway, w: r.w };
       for (const k of ['name', 'layer', 'bridge', 'tunnel', 'link', 'roundabout', 'maxspeed']) if (r[k] !== undefined) link[k] = r[k];
       nodes[a].deg++;
       nodes[b].deg++;
