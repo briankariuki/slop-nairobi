@@ -537,10 +537,21 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
 
   // Paint describes the physical streets, including dead ends and roads AI traffic cannot circulate through.
   // Snapshot their geometry before routing moves stop lines, drops edges and renumbers the surviving junctions.
-  const paintNodes = new Map(nodes.map((n, id) => [n, { id, x: n.x, z: n.z, shape: n.shape }]));
+  const paintNodes = new Map(nodes.map((n, id) => [n, { id, x: n.x, z: n.z, lift: n.lift, shape: n.shape }]));
   const paintEdges = edges.map(({ from, to, axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes }) => ({
     from: paintNodes.get(from), to: paintNodes.get(to), axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes
   }));
+  // ...and the streets as built (streets.js lays their asphalt, junctions and sidewalks): every edge, short ones too,
+  // centre to centre, with each node's lift and the roads meeting it
+  const streetNodes = new Map(nodes.map((n) => [n, {
+    x: n.x, z: n.z, lift: n.lift, shape: !!n.shape, arms: (n.arms || []).map(({ ux, uz, half }) => ({ ux, uz, half }))
+  }]));
+  const streets = {
+    nodes: [...streetNodes.values()],
+    edges: placed.map(({ from, to, x0, z0, dx, dz, rx, rz, span, half, rank, ring }) => ({
+      from: streetNodes.get(from), to: streetNodes.get(to), x0, z0, dx, dz, rx, rz, span, half, rank, ring
+    }))
+  };
 
   // 4. Movements at each intersection (no U-turns) and the lane each lane leads to, along obstacle-free curves:
   //    straight on, lane i keeps to lane i + k ahead, k chosen to use as many lanes there as possible with the least
@@ -841,7 +852,7 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
   }
 
   const isRoadClear = (x, z, clear = 0.15) => !blockedOnStreet(x, z, clear);
-  return { nodes, edges, paintEdges, connector, curvePoint, walkable, onSidewalk, isRoadClear };
+  return { nodes, edges, paintEdges, streets, connector, curvePoint, walkable, onSidewalk, isRoadClear };
 }
 
 // The largest strongly connected set of `list` (a Set), going on from item e to the items next(e)

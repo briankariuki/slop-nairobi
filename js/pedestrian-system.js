@@ -2,6 +2,7 @@ import { createPedestrianRoutes } from './pedestrian-routes.js';
 import { PersonCrowd, PersonRig, PEDESTRIAN_DIVE_DURATION } from './pedestrians.js';
 import { blockAt, walkable, onSidewalk, roadDistance } from './walk-grid.js';
 import { heightAt } from './terrain.js';
+import { pavementLift } from './street-geometry.js';
 
 // Local pedestrian population: connected walks, curb queues, conversations and player avoidance.
 // Traffic supplies crossing permissions and view checks; this system owns the crowd and its animation.
@@ -592,10 +593,10 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     }
   }
 
-  // Walking surface: the terrain (Nairobi's footpaths are level with the road, painted on the same ground), a couple of
-  // centimetres up so feet don't sink into its triangles
+  // Walking surface: the sidewalks (raised a kerb's height over the road), the asphalt or footpaths (streets.js), or the
+  // bare terrain, a centimetre or two up so feet don't sink into it
   function pedGround(p, x, z) {
-    return heightAt(x, z) + 0.02;
+    return heightAt(x, z) + Math.max(0.02, pavementLift(x, z) + 0.01);
   }
 
   // Every rig's gait advances every frame; only those the camera may see (or whose shadow it may see) solve their

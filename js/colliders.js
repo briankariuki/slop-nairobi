@@ -1,5 +1,6 @@
 import { GEO } from './nairobi-geodata.js';
 import { heightAt } from './terrain.js';
+import { pavementLift } from './street-geometry.js';
 import { footings } from './buildings.js';
 import { deckPieces, deckTop, DECK, PARAPET } from './bridges.js';
 
@@ -8,8 +9,8 @@ import { deckPieces, deckTop, DECK, PARAPET } from './bridges.js';
 // that ends up inside a footprint all the same is pushed back out through its nearest wall. The Expressway's parapets
 // (where the deck is high enough to fall off) and its piers are segment colliders as well.
 //
-// Surfaces: the terrain, the decks (so the player can drive up the slip roads, along the Expressway and under it) and,
-// for the helicopter, the roofs. surfaceAt(x, z, y) is the highest one at (x, z) that a body at height y can step onto.
+// Surfaces: the terrain with the streets on it (sidewalks a kerb's height over the asphalt, streets.js), the decks (so
+// the player can drive up the slip roads, along the Expressway and under it) and, for the helicopter, the roofs. surfaceAt(x, z, y) is the highest one at (x, z) that a body at height y can step onto.
 
 const CELL = 24;
 const STEP_UP = 0.7; // highest step onto a surface (m)
@@ -151,7 +152,7 @@ export function buildColliders(pierBoxes = []) {
     walls: wallCount,
     // Surface under a body at (x, z, y): the terrain, a deck it can step onto, or (roofs = true) a roof
     surfaceAt(x, z, y = Infinity, roofs = false) {
-      let h = heightAt(x, z);
+      let h = heightAt(x, z) + pavementLift(x, z); // the terrain, or the streets on it
       h = Math.max(h, deckAt(x, z, y));
       if (roofs) h = Math.max(h, roofAt(x, z, y));
       return h;

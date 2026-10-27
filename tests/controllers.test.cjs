@@ -28,6 +28,7 @@ function buildWorld(boxes = [], { ground = 0, decks = [] } = {}) {
     imports: {
       './nairobi-geodata.js': { GEO: { buildings } },
       './terrain.js': { heightAt: () => ground },
+      './street-geometry.js': { pavementLift: () => 0 },
       './buildings.js': { footings: () => new Map(buildings.map((b) => [b, 0])) },
       './bridges.js': { deckPieces: () => decks, deckTop: (x, z, l) => ground + l, DECK: 1.4, PARAPET: 0.9 }
     }

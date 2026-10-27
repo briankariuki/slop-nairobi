@@ -4,6 +4,7 @@ import { heightAt } from './terrain.js';
 import { buildGround } from './ground.js';
 import { buildBuildings } from './buildings.js';
 import { buildBridges } from './bridges.js';
+import { buildStreets } from './streets.js';
 import { buildColliders } from './colliders.js';
 import { ThirdPersonControllerManager, roadSpawn } from './controllers.js';
 import { TouchControls } from './touch-controls.js';
@@ -20,7 +21,8 @@ import { SIGNALS, TELEPORT_LOCATIONS, getLocation, getLocationLabel, isTypingInF
 const START = { from: [-980, 130, 560], at: [0, 50, -80] }; // free camera: over Uhuru Park's south-west corner, looking at KICC and the CBD
 
 const loadingOverlay = document.getElementById('loading-overlay');
-const renderer = new THREE.WebGPURenderer({ antialias: true });
+// (a reversed depth buffer, as Slop New York's: the streets lie centimetres over the terrain, and their paint over them)
+const renderer = new THREE.WebGPURenderer({ antialias: true, reversedDepthBuffer: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -43,6 +45,7 @@ console.log(`[nairobi] scene built in ${Math.round(performance.now() - t0)} ms: 
 
 // Traffic on the road graph (no sidewalks or obstacles yet: every lane is open), signalised at city-config's SIGNALS
 const traffic = createTrafficSystem(scene, [], [], SIGNALS);
+const streets = buildStreets(scene, traffic.network, traffic.zebras);
 console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${traffic.network.nodes.filter((n) => n.signal).length} signalised junctions, ${traffic.cars.filter((c) => !c.isMatatu).length} cars, ${traffic.cars.filter((c) => c.isMatatu).length} matatus, ${traffic.bodas.length} boda bodas, ${traffic.buses.length} buses`);
 
 // The player: on foot, in a car, on a bicycle or in a helicopter, and the cameras that follow them
@@ -443,7 +446,7 @@ selectCamera('chase', true);
 selectTime('midday');
 // the web fonts change the buttons' widths once they arrive
 if (document.fonts) document.fonts.ready.then(placeModeIndicator);
-window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, map: mapSystem }; // for poking at from the console
+window.nairobi = { scene, camera, cameras, controllers, world, GEO, traffic, lighting, map: mapSystem, streets: streets.userData.layout }; // for poking at from the console
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Frame loop

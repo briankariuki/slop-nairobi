@@ -1,10 +1,10 @@
 import * as THREE from 'three/webgpu';
 import { GEO } from './nairobi-geodata.js';
-import { isElevated } from './elevation.js';
+import { terrainGridNormals } from './terrain.js';
 
-// The ground: GEO.terrain's 25 m height grid as one mesh, with everything flat on it (parks, water, rivers, rail, roads,
-// footways) painted onto a map texture draped over it, so they follow the slopes exactly. Elevated roads (layer ≥ 1
-// bridges, the Expressway) and tunnels are left out here: bridges.js builds the decks in 3D.
+// The ground: GEO.terrain's 25 m height grid as one mesh, with what lies flat on it (parks, water, rivers, rail and
+// the footprints of buildings) painted onto a map texture draped over it, so they follow the slopes exactly. The
+// streets are geometry of their own on top (streets.js), and bridges.js builds the decks in 3D.
 
 const T = GEO.terrain;
 const W = (T.nx - 1) * T.cell; // terrain extent, m
@@ -30,8 +30,6 @@ const AREA_FILL = {
 };
 // drawn in this order, so small detailed areas end up on top of the big ones they sit in
 const AREA_ORDER = ['parking', 'cemetery', 'grassland', 'grass', 'recreation_ground', 'park', 'scrub', 'wood', 'forest', 'garden', 'stadium', 'pitch', 'water'];
-const FOOT = new Set(['footway', 'path', 'pedestrian', 'steps', 'cycleway']);
-const ROAD_RANK = { service: 1, living_street: 1, residential: 2, unclassified: 2, tertiary: 3, secondary: 4, primary: 5, trunk: 6, motorway: 7 };
 
 function paintMap() {
   const canvas = document.createElement('canvas');
@@ -85,17 +83,6 @@ function paintMap() {
     }
   }
 
-  const ground = GEO.roads.filter((r) => !isElevated(r) && !r.tunnel);
-  for (const r of ground) if (FOOT.has(r.kind)) line(r.pts, r.w, r.kind === 'steps' ? '#a8a091' : '#cdc3ac');
-  const roads = ground.filter((r) => !FOOT.has(r.kind)).sort((a, b) => (ROAD_RANK[a.kind] || 0) - (ROAD_RANK[b.kind] || 0));
-  // kerbs first (a pale casing), then the asphalt over it, then markings
-  for (const r of roads) line(r.pts, r.w + 1.6, '#cfc6b4');
-  for (const r of roads) line(r.pts, r.w, ROAD_RANK[r.kind] >= 4 ? '#3c3b39' : '#4a4845');
-  for (const r of roads) {
-    if ((r.lanes || 0) < 2 || r.kind === 'service') continue;
-    // two-way roads get a centre line, one-way roads lane dashes
-    line(r.pts, 0.15, r.oneway ? '#e8e4da' : '#e2c44d', r.oneway ? [3, 6] : []);
-  }
   return canvas;
 }
 
@@ -123,7 +110,8 @@ export function buildGround(renderer) {
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   geo.setIndex(index);
-  geo.computeVertexNormals();
+  // the same normals the streets lying on it shade with (terrain.js)
+  geo.setAttribute('normal', new THREE.BufferAttribute(terrainGridNormals(), 3));
 
   const map = new THREE.CanvasTexture(paintMap());
   map.colorSpace = THREE.SRGBColorSpace;

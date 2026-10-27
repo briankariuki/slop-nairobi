@@ -2,6 +2,7 @@ import * as THREE from 'three/webgpu';
 import { GEO } from './nairobi-geodata.js';
 import { heightAt } from './terrain.js';
 import { isElevated, liftAlong, liftBreaks, linkLength, roadHeight, LAYER_LIFT } from './elevation.js';
+import { createRoadSurfaceMaterial } from './tsl-materials.js';
 
 // Elevated roads — the Nairobi Expressway and the CBD flyovers — as 3D decks on pillars, as high as elevation.js says:
 // the same rule the traffic drives by, so cars run on the decks. Drivable ones are built from the road graph's links
@@ -73,14 +74,17 @@ export function buildBridges() {
   const pos = [];
   const nrm = [];
   const col = [];
-  const asphalt = new THREE.Color('#3b3a38');
+  // the road surface on top, in the streets' asphalt (tsl-materials.js)
+  const roadPos = [];
+  const roadNrm = [];
+  const asphalt = null;
   const concrete = new THREE.Color('#bdb7aa');
   const tri = (a, b, c, color) => {
     const n = new THREE.Vector3().subVectors(new THREE.Vector3(...b), new THREE.Vector3(...a)).cross(new THREE.Vector3().subVectors(new THREE.Vector3(...c), new THREE.Vector3(...a))).normalize();
     for (const p of [a, b, c]) {
-      pos.push(...p);
-      nrm.push(n.x, n.y, n.z);
-      col.push(color.r, color.g, color.b);
+      (color ? pos : roadPos).push(...p);
+      (color ? nrm : roadNrm).push(n.x, n.y, n.z);
+      if (color) col.push(color.r, color.g, color.b);
     }
   };
   const quad = (a, b, c, d, color) => {
@@ -142,6 +146,13 @@ export function buildBridges() {
   geo.computeBoundingSphere();
   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9, side: THREE.DoubleSide }));
   mesh.name = 'bridges';
+  const roadGeo = new THREE.BufferGeometry();
+  roadGeo.setAttribute('position', new THREE.Float32BufferAttribute(roadPos, 3));
+  roadGeo.setAttribute('normal', new THREE.Float32BufferAttribute(roadNrm, 3));
+  roadGeo.computeBoundingSphere();
+  const road = new THREE.Mesh(roadGeo, createRoadSurfaceMaterial());
+  road.name = 'deck asphalt';
+  mesh.add(road);
   mesh.userData = { roads: deckPieces().decks, piers };
   return mesh;
 }

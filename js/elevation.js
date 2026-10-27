@@ -14,10 +14,11 @@ import { heightAt } from './terrain.js';
 //   a short one doesn't reach full height;
 // - any other link stays on the ground.
 //
-// Road surface height at (x, z) with lift l: roadHeight(x, z, l) = ground + l, plus the deck's DECK_TOP over its
-// structure once it is raised a metre or more (easing in from the street end of a ramp).
+// Road surface height at (x, z) with lift l: roadHeight(x, z, l) = ground + the asphalt + l, plus the deck's DECK_TOP
+// over its structure once it is raised a metre or more (easing in from the street end of a ramp).
 
 export const LAYER_LIFT = 8;
+export const ROAD_Y = 0.03; // the asphalt's thickness over the terrain (streets.js lays it there)
 const RAMP_GRADE = 0.08;
 const DECK_TOP = 0.2;
 
@@ -36,7 +37,7 @@ export const nodeLift = (() => {
 })();
 
 export function roadHeight(x, z, lift) {
-  return heightAt(x, z) + lift + DECK_TOP * Math.min(1, lift);
+  return heightAt(x, z) + ROAD_Y + lift + DECK_TOP * Math.min(1, lift);
 }
 
 // Lift d m along road graph link `link` (total m long) from node a
