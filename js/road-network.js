@@ -1,4 +1,5 @@
 import { GEO } from './nairobi-geodata.js';
+import { SIGNAL_TIMING } from './city-config.js';
 import { nodeLift, liftAlong, liftBreaks } from './elevation.js';
 
 // Drivable road graph for the traffic, built from OpenStreetMap's street centrelines (GEO.roadGraph,
@@ -827,6 +828,7 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
   for (const e of edges) {
     e.opposite = e.to.in.find((o) => o !== e && o.axisIndex === e.axisIndex && o.dx * e.dx + o.dz * e.dz < -0.7) || null;
   }
+  greenWave(nodes);
 
   // Lane-to-lane curves are built on first use and cached (key: under 16 lanes, any number of edges)
   const curves = new Map();
@@ -960,6 +962,69 @@ function curvePoint(c, s, out) {
   out.dx = dx / l;
   out.dz = dz / l;
   return out;
+}
+
+// Green waves. Signals on random offsets a block apart waste each other's greens: the short link between them fills on
+// the far one's red and the near one's green has nowhere to send anyone. So each signal is linked to the next one
+// straight on down each road out of it (within WAVE_REACH m), and offsets are set over a spanning tree of those links,
+// the most important roads first: along each tree link the far signal turns green for the road arriving there one
+// travel time (at WAVE_SPEED of the limit) after the near one turns green for traffic leaving onto it. Signals that
+// city-config.js groups (within its SIGNAL_CLEAR m, sharing an offset) stay together.
+const WAVE_REACH = 400;
+const WAVE_SPEED = 0.7;
+function greenWave(nodes) {
+  const { cycle, mainRed } = SIGNAL_TIMING;
+  const signals = nodes.filter((n) => n.signal);
+  const start = (g) => (g === 0 ? 0 : mainRed); // when group g's green starts in the cycle
+  // union-find with each node's offset relative to its root
+  const parent = new Map(signals.map((n) => [n, n]));
+  const rel = new Map(signals.map((n) => [n, 0]));
+  const find = (n) => {
+    const p = parent.get(n);
+    if (p === n) return n;
+    const r = find(p);
+    rel.set(n, rel.get(n) + rel.get(p));
+    parent.set(n, r);
+    return r;
+  };
+  // join b to a so that offset(b) = offset(a) + shift
+  const join = (a, b, shift) => {
+    const ra = find(a);
+    const rb = find(b);
+    if (ra === rb) return;
+    parent.set(rb, ra);
+    rel.set(rb, rel.get(a) + shift - rel.get(b));
+  };
+  for (const a of signals) {
+    for (const b of signals) if (a !== b && a.signalOffset === b.signalOffset && Math.hypot(a.x - b.x, a.z - b.z) < 60) join(a, b, 0);
+  }
+  const links = [];
+  for (const a of signals) {
+    for (const first of a.out) {
+      let e = first;
+      let t = 0;
+      let dist = 0;
+      const seen = new Set();
+      while (e && !seen.has(e) && dist < WAVE_REACH) {
+        seen.add(e);
+        t += e.len / (WAVE_SPEED * e.vmax);
+        dist += e.len;
+        if (e.to.signal) {
+          if (e.to !== a) links.push({ a, b: e.to, shift: start(first.outArm.group) + t - start(e.axisIndex), rank: first.rank, dist });
+          break;
+        }
+        let next = null;
+        for (const f of e.to.out) if (f.dx * e.dx + f.dz * e.dz > 0.85 && (!next || f.rank > next.rank)) next = f;
+        e = next;
+      }
+    }
+  }
+  links.sort((p, q) => q.rank - p.rank || p.dist - q.dist);
+  for (const l of links) join(l.a, l.b, l.shift);
+  for (const n of signals) {
+    const r = find(n);
+    n.signalOffset = (((r.signalOffset + rel.get(n)) % cycle) + cycle) % cycle;
+  }
 }
 
 export { buildRoadNetwork, CROSSWALK };

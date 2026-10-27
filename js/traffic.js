@@ -739,6 +739,13 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   // Mostly straight on, sometimes a turn (buses keep to wide roads). Routes don't follow the camera;
   // distant vehicles are recycled instead. With `fromLane`, only moves the current lane allows.
   const weights = [];
+  // How full of queued vehicles edge e is, from 0 to 1 (bumper to bumper)
+  function fullness(e) {
+    let used = 0;
+    for (const list of e.occ) for (const o of list) if (o.s - o.v.half < e.len && o.v.speed < 3) used += 2 * o.v.half + o.v.driver.s0;
+    return Math.min(1, used / (e.len * e.lanes.length));
+  }
+
   function chooseMove(v, fromLane) {
     const e = v.edge;
     let total = 0;
@@ -746,6 +753,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
       const m = e.moves[k];
       let w = m.turn === 'S' ? (v.bus ? 8 : 3) : 1;
       if (v.bus && m.turn !== 'S' && m.to.lanes.length < 2) w *= 0.05;
+      w *= 1 - 0.9 * fullness(m.to); // drivers who can see a street is jammed turn somewhere else
       if (fromLane) {
         if (m.out[v.lane] < 0) w = 0;
       } else if (Math.abs(nearestLane(m, v.lane) - v.lane) * 22 > e.len - v.s) {
