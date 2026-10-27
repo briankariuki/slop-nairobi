@@ -24,6 +24,7 @@ const loadingOverlay = document.getElementById('loading-overlay');
 // (a reversed depth buffer, as Slop New York's: the streets lie centimetres over the terrain, and their paint over them)
 const renderer = new THREE.WebGPURenderer({ antialias: true, reversedDepthBuffer: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 document.getElementById('canvas-container').appendChild(renderer.domElement);
@@ -35,10 +36,13 @@ const scene = new THREE.Scene();
 const lighting = new LightingSystem(scene, renderer);
 
 const t0 = performance.now();
-scene.add(buildGround(renderer));
+const ground = buildGround(renderer);
+ground.receiveShadow = true;
+scene.add(ground);
 const buildings = buildBuildings();
 scene.add(buildings);
 const bridges = buildBridges();
+bridges.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
 scene.add(bridges);
 const world = buildColliders(bridges.userData.piers);
 console.log(`[nairobi] scene built in ${Math.round(performance.now() - t0)} ms: ${GEO.buildings.length} buildings, ${bridges.userData.roads} elevated road pieces, ${bridges.userData.piers.length} piers, ${world.walls} wall colliders`);
@@ -46,6 +50,9 @@ console.log(`[nairobi] scene built in ${Math.round(performance.now() - t0)} ms: 
 // Traffic on the road graph (no sidewalks or obstacles yet: every lane is open), signalised at city-config's SIGNALS
 const traffic = createTrafficSystem(scene, [], [], SIGNALS);
 const streets = buildStreets(scene, traffic.network, traffic.zebras);
+streets.traverse((o) => { if (o.isMesh) o.receiveShadow = true; });
+// vehicles and people throw shadows too
+traffic.group.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
 console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${traffic.network.nodes.filter((n) => n.signal).length} signalised junctions, ${traffic.cars.filter((c) => !c.isMatatu).length} cars, ${traffic.cars.filter((c) => c.isMatatu).length} matatus, ${traffic.bodas.length} boda bodas, ${traffic.buses.length} buses`);
 
 // The player: on foot, in a car, on a bicycle or in a helicopter, and the cameras that follow them
@@ -465,6 +472,8 @@ renderer.setAnimationLoop((time) => {
   gamepadControls.update(dt);
   controllers.update(dt, elapsed);
   cameras.update(dt, elapsed);
+  camera.groundY = heightAt(camera.position.x, camera.position.z); // (for the shadow map's reach)
+  lighting.update(camera);
   const player = controllers.getActiveEntity();
   const parked = Object.values(controllers.entities).filter((e) => e !== player);
   traffic.update(dt, elapsed, cameras.currentPos, player, controllers.activeMode, camera, parked);

@@ -1,8 +1,8 @@
 import * as THREE from 'three/webgpu';
 import {
   Fn, float, vec2, vec3, vec4, color, uniform, uv, attribute, varying, abs, floor, fract, sin, dot, min, max, clamp, mix,
-  step, smoothstep, length, fwidth, positionGeometry, positionWorld, positionView, normalView, cameraPosition,
-  cameraProjectionMatrix, cameraViewMatrix, screenSize
+  step, smoothstep, length, fwidth, normalize, reflect, pow, positionGeometry, positionWorld, positionView, normalView,
+  normalWorldGeometry, cameraPosition, cameraProjectionMatrix, cameraViewMatrix, screenSize
 } from 'three/tsl';
 
 // Pieces of Slop New York's tsl-materials.js (MIT, © 2026 Mr.doob): the shared time-of-day uniforms its vehicle
@@ -10,10 +10,13 @@ import {
 // paving, kerbs) with the noise, bump and anti-aliased line helpers they use. New York's wet roads (puddles, the rain
 // film, screen-space reflections) and its street-canyon sky occlusion are left out: Nairobi's streets are dry.
 
-// Shared live uniforms controlled by lighting / time-of-day presets. Nairobi has no time of day yet: a bright midday
-// (uInteriorGlow 0.24 keeps headlamps off).
+// Shared live uniforms controlled by the lighting / time-of-day presets (lighting.js): the sun's colour and direction,
+// the sky's colours (what glass reflects) and how brightly windows and headlamps are lit (0.24 at midday: off)
 const cityUniforms = {
   uSunColor: uniform(new THREE.Color(0xfff4e0)),
+  uSunDir: uniform(new THREE.Vector3(0.37, 0.9, -0.25)),
+  uSkyTopColor: uniform(new THREE.Color(0x4f88c6)),
+  uSkyHorizonColor: uniform(new THREE.Color(0xb4d1ec)),
   uInteriorGlow: uniform(0.24)
 };
 
@@ -45,6 +48,18 @@ const bumpNormal = Fn(([height]) => {
   const det = dpdx.dot(r1);
   const grad = det.sign().mul(h.dFdx().mul(r1).add(h.dFdy().mul(r2)));
   return det.abs().mul(normalView).sub(grad).normalize();
+});
+
+// Box-filtered periodic pulse: fraction of a footprint `w` wide around `x` where fract() lies in [a, b]. Exact
+// anti-aliasing that settles to the mean coverage (b - a) once a period shrinks below a pixel, so facade grids don't
+// shimmer at distance or grazing angles. Pass the in-cell coordinate (fract) for precision.
+const filteredPulse = Fn(([x, a, b, w]) => {
+  const p = float(x).toVar();
+  const lo = float(a).toVar();
+  const hi = float(b).toVar();
+  const hw = max(float(w), 0.0001).mul(0.5).toVar();
+  const integral = (t) => floor(t).mul(hi.sub(lo)).add(clamp(fract(t), lo, hi).sub(lo));
+  return integral(p.add(hw)).sub(integral(p.sub(hw))).div(hw.mul(2.0));
 });
 
 // Filter-width anti-aliased repeating grid line
@@ -113,13 +128,13 @@ function createRoadSurfaceMaterial() {
     const microAggregate = mix(float(0.5), noise2D(vec2(wx.mul(16.0), wz.mul(16.0))), smoothstep(0.06, 0.02, pixelSize));
     const fineGrain = mix(float(0.5), noise2D(vec2(wx.mul(3.2), wz.mul(3.2))), smoothstep(0.4, 0.12, pixelSize));
     const patchNoise = noise2D(vec2(wx.mul(0.18), wz.mul(0.18)));
-    const oilyStain = smoothstep(0.52, 0.84, noise2D(vec2(wx.mul(0.42), wz.mul(0.42)))).mul(detail);
-    const tarSeam = float(1.0).sub(smoothstep(0.0, 0.04, abs(patchNoise.sub(0.52)))).mul(0.42).mul(detail);
-    // dust settling towards the kerbs and in the quiet corners: a pale wash in broad patches
-    const dust = smoothstep(0.45, 0.85, noise2D(vec2(wx.mul(0.06), wz.mul(0.06)))).mul(0.12);
+    // faint wear stains and tar seams (New York's are bolder) and a little dust in broad patches
+    const oilyStain = smoothstep(0.6, 0.9, noise2D(vec2(wx.mul(0.42), wz.mul(0.42)))).mul(detail);
+    const tarSeam = float(1.0).sub(smoothstep(0.0, 0.03, abs(patchNoise.sub(0.52)))).mul(0.14).mul(detail);
+    const dust = smoothstep(0.55, 0.9, noise2D(vec2(wx.mul(0.06), wz.mul(0.06)))).mul(0.06);
 
-    const baseAsphalt = mix(cAsphaltDark, cAsphaltLight, fineGrain.mul(0.36).add(microAggregate.mul(0.22)).add(patchNoise.mul(0.26)))
-      .mul(float(1.0).sub(oilyStain.mul(0.28)))
+    const baseAsphalt = mix(cAsphaltDark, cAsphaltLight, fineGrain.mul(0.36).add(microAggregate.mul(0.22)).add(patchNoise.mul(0.12).add(0.07)))
+      .mul(float(1.0).sub(oilyStain.mul(0.1)))
       .mul(float(1.0).sub(tarSeam))
       .add(dust.mul(vec3(0.62, 0.56, 0.46)));
 
@@ -251,7 +266,144 @@ function createCurbMaterial() {
   return mat;
 }
 
+/**
+ * Building facades (buildings.js): windows on a grid of bays and storeys, with a taller shopfront ground floor, drawn
+ * from each wall's own frame (`wuv`: metres along it and up it; `wall`: its width, height, style and seed; `dims`: the
+ * building's storey height and bay width; `tint`: its colour). Styles (buildings.js STYLE): painted render with punched
+ * windows and sills, concrete offices with piers and ribbon windows between floor bands, glass curtain walls with
+ * mullions and spandrels, roofs, and plain walls. Glass reflects the sky and the sun; at night (cityUniforms.uInteriorGlow)
+ * a share of the windows light up warm. Windows are recessed with bumpNormal; grids are box-filtered so they settle to
+ * their mean at distance instead of shimmering.
+ */
+function createFacadeMaterial() {
+  const mat = new THREE.MeshStandardNodeMaterial({ metalness: 0.0, roughness: 0.85 });
+  const tint = attribute('tint', 'vec3');
+  const wuv = attribute('wuv', 'vec2');
+  const wall = attribute('wall', 'vec4');
+  const dims = attribute('dims', 'vec2');
+  const cWarmLight = color(0xffe1a6);
+  const cGlassDark = color(0x26323d);
+
+  const kind = wall.z;
+  const is = (k) => step(k - 0.5, kind).mul(float(1.0).sub(step(k + 0.5, kind)));
+  const isRender = is(0);
+  const isConcrete = is(1);
+  const isRoof = is(3);
+  const isPlain = is(4);
+  const isRibbon = is(5);
+  const isFins = is(6);
+  const isGlass = max(is(2), isFins); // the finned towers are glass between their fins
+  const wallW = wall.x;
+  const wallH = wall.y;
+  const seed = wall.w;
+  const floorH = dims.x;
+  const bayW0 = dims.y;
+  const s = wuv.x;
+  const v = wuv.y;
+
+  // Bays: a whole number along each wall, between corner piers (wider on the concrete offices, none on glass or
+  // ribbon windows)
+  const pier = mix(mix(float(0.45), min(float(1.2), wallW.mul(0.15)), isConcrete), float(0.0), max(isGlass, isRibbon));
+  const inner = max(wallW.sub(pier.mul(2.0)), 0.5);
+  const bays = max(floor(inner.div(bayW0).add(0.5)), 1.0);
+  const bayW = inner.div(bays);
+  const gridU = s.sub(pier).div(bayW).add(seed);
+  const inPier = float(1.0).sub(step(pier, s).mul(step(s, wallW.sub(pier))));
+  // Storeys: the ground floor a shopfront, a metre taller than the rest
+  const groundH = floorH.add(1.0);
+  const gridV = v.lessThan(groundH).select(v.div(groundH), v.sub(groundH).div(floorH).add(1.0));
+  const floorIdx = floor(gridV);
+  const isGround = float(1.0).sub(step(1.0, gridV));
+  const cellId = vec2(floor(gridU), floorIdx);
+  const cellUV = vec2(fract(gridU), fract(gridV));
+  const fw = vec2(fwidth(gridU), fwidth(gridV));
+  // No windows in the parapet (the top 0.8 m), in a storey the wall cuts short, in the piers, or on plain walls
+  const top = wallH.sub(0.8);
+  const floorTop = floorIdx.lessThan(1.0).select(groundH, groundH.add(floorIdx.mul(floorH)));
+  const solid = max(max(step(top, v), step(top.add(0.01), floorTop)), max(inPier.mul(float(1.0).sub(isGround)), isPlain));
+
+  // The window in its cell, by style (x0, x1, y0, y1 of the cell), the shopfront on the ground floor: punched windows
+  // in render, wide ones between the concrete piers, panes between mullions (or fins) on glass, and continuous strips
+  // between the ribbon bands
+  const wx0 = mix(mix(mix(float(0.28), float(0.1), isConcrete), float(0.04), isGlass), float(0.0), isRibbon).add(isFins.mul(0.1));
+  const wx1 = mix(float(1.0).sub(wx0), float(1.0), isRibbon);
+  const wy0 = mix(mix(mix(float(0.24), float(0.3), isConcrete), float(0.3), isGlass), float(0.4), isRibbon);
+  const wy1 = mix(mix(mix(float(0.78), float(0.84), isConcrete), float(0.95), isGlass), float(0.85), isRibbon);
+  const gx0 = mix(float(0.08), float(0.04), isGlass), gx1 = float(1.0).sub(gx0);
+  const x0 = mix(wx0, gx0, isGround), x1 = mix(wx1, gx1, isGround);
+  const y0 = mix(wy0, float(0.08), isGround), y1 = mix(wy1, float(0.86), isGround);
+  // (the ribbon's strip runs on through the bays, broken only by a slim mullion)
+  const ribbonMullion = filteredPulse(cellUV.x, 0.0, 0.03, fw.x).mul(isRibbon);
+  const windowMask = filteredPulse(cellUV.x, x0, x1, fw.x).mul(filteredPulse(cellUV.y, y0, y1, fw.y))
+    .mul(float(1.0).sub(ribbonMullion)).mul(float(1.0).sub(solid)).mul(float(1.0).sub(isRoof));
+
+  // Lit windows at night: a share of the apartments and offices, the shops more often
+  const litProb = mix(float(0.3), float(0.6), isGround);
+  const lit = step(float(1.0).sub(litProb), hash2D(cellId.add(vec2(seed.mul(0.37), 5.1))));
+  const warmth = hash2D(cellId.add(vec2(2.3, seed)));
+
+  mat.colorNode = Fn(() => {
+    const viewDir = normalize(cameraPosition.sub(positionWorld));
+    const n = normalWorldGeometry;
+    const reflectDir = reflect(viewDir.negate(), n);
+    const fresnel = pow(clamp(float(1.0).sub(abs(dot(viewDir, n))), 0.0, 1.0), 2.0);
+    const skyReflect = mix(cityUniforms.uSkyHorizonColor, cityUniforms.uSkyTopColor, clamp(reflectDir.y.mul(1.2).add(0.2), 0.0, 1.0));
+    const sunSpec = pow(max(dot(reflectDir, normalize(cityUniforms.uSunDir)), 0.0), 40.0).mul(0.6);
+    // glass: the building's tint on the curtain walls, dark glazing on the others, the sky over it at grazing angles
+    const paneBase = mix(mix(cGlassDark, tint.mul(mix(float(0.8), float(1.05), isFins)), isGlass), color(0x4f6c82), isRibbon);
+    const glass = mix(paneBase, skyReflect, fresnel.mul(0.7).add(0.15)).add(cityUniforms.uSunColor.mul(sunSpec));
+    const shopGlass = mix(cGlassDark.mul(1.3), cWarmLight.mul(0.35), lit.mul(0.5));
+    const pane = mix(glass, shopGlass, isGround.mul(float(1.0).sub(isGlass)));
+
+    // walls: the tint, weathered (streaks of grime from the sills and the rain, darker at the foot), floor bands on the
+    // concrete offices, spandrels and mullions on the glass
+    const streak = noise2D(vec2(s.mul(1.1).add(seed), v.mul(0.07))).mul(noise2D(vec2(s.mul(0.3), v.mul(0.5)))).mul(0.3);
+    const foot = float(1.0).sub(smoothstep(0.0, 1.2, v)).mul(0.12);
+    const band = filteredPulse(cellUV.y, 0.0, 0.05, fw.y).mul(isConcrete).mul(0.18);
+    const sill = filteredPulse(cellUV.x, wx0.sub(0.03), wx1.add(0.03), fw.x).mul(filteredPulse(cellUV.y, wy0.sub(0.05), wy0, fw.y)).mul(isRender).mul(float(1.0).sub(isGround)).mul(0.1);
+    const mullion = max(filteredPulse(cellUV.x, 0.0, 0.04, fw.x), filteredPulse(cellUV.y, 0.0, 0.3, fw.y)).mul(isGlass);
+    const frame = tint.mul(0.3);
+    let surface = tint.mul(float(1.0).sub(streak).sub(foot).sub(band).add(sill));
+    surface = mix(surface, mix(tint.mul(0.5), frame, step(0.5, mullion)), isGlass);
+    // the fins and spandrels of the finned towers are pale concrete, whatever the glass's tint
+    const fin = filteredPulse(cellUV.x, 0.0, 0.14, fw.x).mul(isFins);
+    surface = mix(surface, color(0xe2e2dc).mul(float(1.0).sub(streak.mul(0.5))), max(fin, isFins.mul(float(1.0).sub(step(0.5, mullion))).mul(0.9)));
+    // the ribbon bands: the concrete, lightly weathered, with a shadow line under each strip of windows
+    const bandShade = filteredPulse(cellUV.y, 0.85, 0.9, fw.y).mul(0.15).add(filteredPulse(cellUV.y, 0.36, 0.4, fw.y).mul(0.08));
+    surface = mix(surface, tint.mul(float(1.0).sub(streak.mul(0.6)).sub(foot).sub(bandShade)), isRibbon);
+    const plain = tint.mul(0.92).mul(float(1.0).sub(foot));
+    surface = mix(surface, plain, isPlain);
+
+    // roofs: grey concrete and gravel, weathered
+    const roofNoise = noise2D(positionWorld.xz.mul(0.35));
+    const roof = mix(color(0x6d6a64), color(0x8c8984), roofNoise).mul(noise2D(positionWorld.xz.mul(6.0)).mul(0.12).add(0.94));
+
+    return mix(mix(surface, pane, windowMask), roof, isRoof);
+  })();
+
+  mat.roughnessNode = mix(mix(float(0.86), float(0.14), windowMask), float(0.92), isRoof);
+  mat.metalnessNode = windowMask.mul(mix(float(0.15), float(0.55), isGlass));
+
+  // Recessed windows (and raised mullions), fading with distance and when the grid is under a few pixels
+  mat.normalNode = Fn(() => {
+    const camDist = length(positionWorld.sub(cameraPosition));
+    const fade = float(1.0).sub(smoothstep(20.0, 160.0, camDist)).mul(float(1.0).sub(smoothstep(0.03, 0.1, max(fw.x, fw.y)))).mul(float(1.0).sub(isRoof));
+    const ramp = fw.mul(2.0).max(0.02);
+    const recess = filteredPulse(cellUV.x, x0.add(0.01), x1.sub(0.01), ramp.x).mul(filteredPulse(cellUV.y, y0.add(0.01), y1.sub(0.01), ramp.y)).mul(float(1.0).sub(solid));
+    return bumpNormal(recess.mul(mix(float(-0.05), float(0.012), isGlass)).mul(fade));
+  })();
+
+  mat.emissiveNode = Fn(() => {
+    const viewDir = normalize(cameraPosition.sub(positionWorld));
+    const transmission = float(1.0).sub(pow(clamp(float(1.0).sub(abs(dot(viewDir, normalWorldGeometry))), 0.0, 1.0), 2.0).mul(0.7));
+    const glow = mix(cWarmLight, color(0xd8e6ff), step(0.8, warmth)).mul(mix(float(0.45), float(1.0), warmth));
+    return glow.mul(lit).mul(windowMask).mul(transmission).mul(smoothstep(0.3, 1.2, cityUniforms.uInteriorGlow)).mul(0.9);
+  })();
+  return mat;
+}
+
 export {
-  cityUniforms, hash2D, noise2D, bumpNormal, gridLine,
-  createContactShadowMaterial, createRoadSurfaceMaterial, createRoadPaintMaterial, createSidewalkMaterial, createCurbMaterial
+  cityUniforms, hash2D, noise2D, bumpNormal, gridLine, filteredPulse,
+  createContactShadowMaterial, createRoadSurfaceMaterial, createRoadPaintMaterial, createSidewalkMaterial, createCurbMaterial,
+  createFacadeMaterial
 };

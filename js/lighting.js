@@ -1,13 +1,26 @@
 import * as THREE from 'three/webgpu';
 import { uniform, mix, smoothstep, positionWorldDirection } from 'three/tsl';
+import { cityUniforms } from './tsl-materials.js';
 
-// Time-of-day presets for the HUD's time switch: Slop New York's four (golden hour, midday, blue hour, night), lighting
-// Nairobi the way it is lit now, with a hemisphere light (sky and dusty ground bounce), the sun (or the moon) and a
-// gradient sky that the fog fades into. New York's physical sky, cascaded sun shadows and sky-baked environment
-// lighting come with the rest of its looks (ROADMAP.md, Phase 5).
+// Time-of-day presets for the HUD's time switch: Slop New York's four (golden hour, midday, blue hour, night): a
+// hemisphere light (sky and dusty ground bounce), the sun (or the moon) with its shadows, a gradient sky that the fog
+// fades into, and the shared uniforms the facades, glass, windows and headlamps read (tsl-materials.js cityUniforms).
+// New York's physical sky and sky-baked environment lighting are still to come.
+//
+// Shadows: one shadow map that follows the camera's focus (New York's two-cascade SunLight compiles and renders its
+// atlas on this three.js commit but shades nothing here), SHADOW_MAP px over a square 2 × SHADOW_REACH m across at
+// street level (about 7 cm a texel), widening as the camera climbs, its centre snapped to the texel grid so the shadows
+// don't shimmer as the camera moves.
 //
 // Nairobi is 1.3° south of the equator: the sun rises in the east and sets in the west at much the same time all year
 // (about 06:30 and 18:45), passing almost overhead at noon. World frame: x = east, y = up, z = south.
+
+const SHADOW_MAP = 4096;
+const SHADOW_REACH = 150; // m from the focus the shadow map covers at street level
+const SHADOW_DISTANCE = 600; // m the light stands off the focus along its rays
+const _right = new THREE.Vector3();
+const _up = new THREE.Vector3();
+const _dir = new THREE.Vector3();
 
 const TIME_PRESETS = {
   golden: {
@@ -21,7 +34,8 @@ const TIME_PRESETS = {
     skyTop: 0x3c6ca6,
     skyHorizon: 0xf0d0aa,
     fog: [900, 6500],
-    exposure: 1.0
+    exposure: 1.0,
+    interiorGlow: 0.48
   },
   midday: {
     id: 'midday',
@@ -34,7 +48,8 @@ const TIME_PRESETS = {
     skyTop: 0x4f88c6,
     skyHorizon: 0xb4d1ec,
     fog: [1200, 7000],
-    exposure: 1.0
+    exposure: 1.0,
+    interiorGlow: 0.24
   },
   twilight: {
     id: 'twilight',
@@ -47,7 +62,8 @@ const TIME_PRESETS = {
     skyTop: 0x15275a,
     skyHorizon: 0xc27a6c,
     fog: [700, 5000],
-    exposure: 1.05
+    exposure: 1.05,
+    interiorGlow: 1.25
   },
   midnight: {
     id: 'midnight',
@@ -60,7 +76,8 @@ const TIME_PRESETS = {
     skyTop: 0x050a16,
     skyHorizon: 0x172338,
     fog: [500, 4000],
-    exposure: 1.1
+    exposure: 1.1,
+    interiorGlow: 1.55
   }
 };
 
@@ -78,10 +95,48 @@ class LightingSystem {
 
     this.hemiLight = new THREE.HemisphereLight();
     scene.add(this.hemiLight);
-    this.sunLight = new THREE.DirectionalLight();
-    scene.add(this.sunLight);
+
+    this.sunLight = new THREE.DirectionalLight(0xffffff, 1);
+    this.sunLight.castShadow = true;
+    this.sunLight.shadow.mapSize.set(SHADOW_MAP, SHADOW_MAP);
+    this.sunLight.shadow.camera.near = 1;
+    this.sunLight.shadow.camera.far = SHADOW_DISTANCE + 1200; // the tallest towers upwind of the sun, and the valleys
+    this.sunLight.shadow.normalBias = 0.06; // no acne along the surface, so kerbs, cars and people keep contact shadows
+    this.sunLight.shadow.bias = -0.0002;
+    scene.add(this.sunLight, this.sunLight.target);
+    this.sunDir = new THREE.Vector3(0, 1, 0);
+    this.focus = new THREE.Vector3();
 
     this.applyPreset('midday');
+  }
+
+  // Move the shadow map with the camera: a sharp square at street level, a wider one from the air, centred ahead of
+  // the camera along its view (on what it is looking at, not on it)
+  update(camera) {
+    const altitude = camera ? Math.max(0, camera.position.y - (camera.groundY || 0)) : 0;
+    const reach = Math.min(SHADOW_REACH * 3, SHADOW_REACH + altitude * 1.2);
+    if (camera) {
+      camera.getWorldDirection(_dir);
+      this.focus.copy(camera.position).addScaledVector(_dir, reach * 0.55);
+    }
+    // the light's basis: right and up across its rays, to snap the focus to the texel grid in the map's own plane
+    const d = this.sunDir;
+    const right = _right.set(d.z, 0, -d.x).normalize();
+    const up = _up.crossVectors(right, d).normalize();
+    const texel = (2 * reach) / SHADOW_MAP;
+    const f = this.focus;
+    const r = Math.round(f.dot(right) / texel) * texel;
+    const u = Math.round(f.dot(up) / texel) * texel;
+    const along = f.dot(d);
+    f.copy(right).multiplyScalar(r).addScaledVector(up, u).addScaledVector(d, along);
+    this.sunLight.target.position.copy(f);
+    this.sunLight.position.copy(f).addScaledVector(d, SHADOW_DISTANCE);
+    const c = this.sunLight.shadow.camera;
+    if (c.right !== reach) {
+      c.left = c.bottom = -reach;
+      c.right = c.top = reach;
+      c.updateProjectionMatrix();
+    }
   }
 
   applyPreset(presetId) {
@@ -89,7 +144,13 @@ class LightingSystem {
     this.activePresetId = p.id;
     this.sunLight.color.setHex(p.sunColor);
     this.sunLight.intensity = p.sunIntensity;
-    this.sunLight.position.copy(p.sunDir).multiplyScalar(2500);
+    this.sunDir.copy(p.sunDir);
+    this.update(null);
+    cityUniforms.uSunColor.value.setHex(p.sunColor);
+    cityUniforms.uSunDir.value.copy(p.sunDir);
+    cityUniforms.uSkyTopColor.value.setHex(p.skyTop);
+    cityUniforms.uSkyHorizonColor.value.setHex(p.skyHorizon);
+    cityUniforms.uInteriorGlow.value = p.interiorGlow;
     this.hemiLight.color.setHex(p.hemiSky);
     this.hemiLight.groundColor.setHex(p.hemiGround);
     this.hemiLight.intensity = p.hemiIntensity;
