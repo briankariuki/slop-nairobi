@@ -10,7 +10,6 @@ import { isElevated, liftAlong, liftBreaks, linkLength, roadHeight, LAYER_LIFT }
 // ground's cross slope (each edge at roadHeight() over its own point), like the traffic's wheels.
 
 const STEP = 8; // m between deck samples, so decks follow the terrain
-const DECK = 1.4; // deck thickness
 const PIER_EVERY = 32;
 const PIER = 1.8;
 
@@ -34,7 +33,11 @@ function resample(f, extra = []) {
   return out;
 }
 
-export function buildBridges() {
+// Every elevated deck as straight pieces between resampled points: { ax, az, la, bx, bz, lb, half } with the lift at each
+// end and the half width to the parapets. Shared by the deck mesh and the player's colliders and surfaces (colliders.js).
+let _pieces;
+export function deckPieces() {
+  if (_pieces) return _pieces;
   // { pts, w, lift(d), breaks } for every elevated link of the road graph, and every elevated way it doesn't carry
   const links = GEO.roadGraph.links.filter(isElevated);
   const inGraph = new Set(links.map((l) => l.way));
@@ -46,7 +49,27 @@ export function buildBridges() {
     }),
     ...others.map((r) => ({ pts: r.pts, w: r.w, lift: () => r.layer * LAYER_LIFT, breaks: [] }))
   ];
+  _pieces = [];
+  for (const [deck, r] of decks.entries()) {
+    const pts = resample(r.pts, r.breaks).map(([x, z, d]) => [x, z, r.lift(d)]);
+    const half = r.w / 2 + 0.6; // carriageway plus a parapet
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [ax, az, la] = pts[i];
+      const [bx, bz, lb] = pts[i + 1];
+      if (Math.hypot(bx - ax, bz - az) >= 1e-3) _pieces.push({ deck, ax, az, la, bx, bz, lb, half });
+    }
+  }
+  _pieces.decks = decks.length;
+  return _pieces;
+}
 
+// Deck surface height at (x, z) where the lift is l: a few cm proud of the ground at the foot of a ramp, so it doesn't
+// flicker through the terrain there
+export const deckTop = (x, z, l) => roadHeight(x, z, l) + 0.12 * Math.max(0, 1 - l);
+export const DECK = 1.4; // deck thickness
+export const PARAPET = 0.9;
+
+export function buildBridges() {
   const pos = [];
   const nrm = [];
   const col = [];
@@ -78,44 +101,37 @@ export function buildBridges() {
     }
   };
 
-  let piers = 0;
-  for (const r of decks) {
-    const pts = resample(r.pts, r.breaks).map(([x, z, d]) => [x, z, r.lift(d)]);
-    const half = r.w / 2 + 0.6; // carriageway plus a parapet
-    let sincePier = PIER_EVERY / 2;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const [ax, az, la] = pts[i];
-      const [bx, bz, lb] = pts[i + 1];
-      const len = Math.hypot(bx - ax, bz - az);
-      if (len < 1e-3) continue;
-      // left/right offsets of the deck edges
-      const ox = (-(bz - az) / len) * half;
-      const oz = ((bx - ax) / len) * half;
-      const L = [ax + ox, az + oz, bx + ox, bz + oz];
-      const R = [ax - ox, az - oz, bx - ox, bz - oz];
-      // deck surface heights at the four corners (a few cm proud of the ground at the foot of a ramp, so it doesn't flicker
-      // through the terrain there)
-      const top = (x, z, l) => roadHeight(x, z, l) + 0.12 * Math.max(0, 1 - l);
-      const yL = [top(L[0], L[1], la), top(L[2], L[3], lb)];
-      const yR = [top(R[0], R[1], la), top(R[2], R[3], lb)];
-      // road surface, both deck sides, underside
-      quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], asphalt);
-      quad([L[0], yL[0] - DECK, L[1]], [L[2], yL[1] - DECK, L[3]], [L[2], yL[1], L[3]], [L[0], yL[0], L[1]], concrete);
-      quad([R[0], yR[0], R[1]], [R[2], yR[1], R[3]], [R[2], yR[1] - DECK, R[3]], [R[0], yR[0] - DECK, R[1]], concrete);
-      quad([R[0], yR[0] - DECK, R[1]], [R[2], yR[1] - DECK, R[3]], [L[2], yL[1] - DECK, L[3]], [L[0], yL[0] - DECK, L[1]], concrete);
-      // parapets
-      const lip = 0.9;
-      quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [L[2], yL[1] + lip, L[3]], [L[0], yL[0] + lip, L[1]], concrete);
-      quad([R[0], yR[0] + lip, R[1]], [R[2], yR[1] + lip, R[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], concrete);
-      // piers wherever the deck is high enough to stand on one
-      sincePier += len;
-      const g = heightAt(ax, az);
-      const ya = Math.min(yL[0], yR[0]);
-      if (sincePier >= PIER_EVERY && ya - DECK - g > 2.5) {
-        box(ax, az, g - 1, ya - DECK, PIER / 2, concrete);
-        sincePier = 0;
-        piers++;
-      }
+  // pier boxes as [x, z, bottom, top, half], for colliders.js
+  const piers = [];
+  let deck = -1;
+  let sincePier = 0;
+  for (const { deck: k, ax, az, la, bx, bz, lb, half } of deckPieces()) {
+    if (k !== deck) [deck, sincePier] = [k, PIER_EVERY / 2];
+    const len = Math.hypot(bx - ax, bz - az);
+    // left/right offsets of the deck edges
+    const ox = (-(bz - az) / len) * half;
+    const oz = ((bx - ax) / len) * half;
+    const L = [ax + ox, az + oz, bx + ox, bz + oz];
+    const R = [ax - ox, az - oz, bx - ox, bz - oz];
+    // deck surface heights at the four corners
+    const yL = [deckTop(L[0], L[1], la), deckTop(L[2], L[3], lb)];
+    const yR = [deckTop(R[0], R[1], la), deckTop(R[2], R[3], lb)];
+    // road surface, both deck sides, underside
+    quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], asphalt);
+    quad([L[0], yL[0] - DECK, L[1]], [L[2], yL[1] - DECK, L[3]], [L[2], yL[1], L[3]], [L[0], yL[0], L[1]], concrete);
+    quad([R[0], yR[0], R[1]], [R[2], yR[1], R[3]], [R[2], yR[1] - DECK, R[3]], [R[0], yR[0] - DECK, R[1]], concrete);
+    quad([R[0], yR[0] - DECK, R[1]], [R[2], yR[1] - DECK, R[3]], [L[2], yL[1] - DECK, L[3]], [L[0], yL[0] - DECK, L[1]], concrete);
+    // parapets
+    quad([L[0], yL[0], L[1]], [L[2], yL[1], L[3]], [L[2], yL[1] + PARAPET, L[3]], [L[0], yL[0] + PARAPET, L[1]], concrete);
+    quad([R[0], yR[0] + PARAPET, R[1]], [R[2], yR[1] + PARAPET, R[3]], [R[2], yR[1], R[3]], [R[0], yR[0], R[1]], concrete);
+    // piers wherever the deck is high enough to stand on one
+    sincePier += len;
+    const g = heightAt(ax, az);
+    const ya = Math.min(yL[0], yR[0]);
+    if (sincePier >= PIER_EVERY && ya - DECK - g > 2.5) {
+      box(ax, az, g - 1, ya - DECK, PIER / 2, concrete);
+      piers.push([ax, az, g - 1, ya - DECK, PIER / 2]);
+      sincePier = 0;
     }
   }
 
@@ -126,6 +142,6 @@ export function buildBridges() {
   geo.computeBoundingSphere();
   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9, side: THREE.DoubleSide }));
   mesh.name = 'bridges';
-  mesh.userData = { roads: decks.length, piers };
+  mesh.userData = { roads: deckPieces().decks, piers };
   return mesh;
 }

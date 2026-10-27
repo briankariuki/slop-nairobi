@@ -619,7 +619,8 @@ function createPedestrianSystem(network, { player, nearEdges, nearSignals, mayCr
     focusX = x;
     focusZ = z;
     hasView = view;
-    pedRange = player.active && (activeMode === 'car' || activeMode === 'cyclist') && player.entity.position.y > -1
+    // (people walk on the ground: a player driving over them on the Expressway is no danger)
+    pedRange = player.active && (activeMode === 'car' || activeMode === 'cyclist') && player.y - heightAt(player.x, player.z) < 2.6
       ? Math.hypot(player.vx, player.vz) * PED_LOOKAHEAD + player.halfL + 6 : 0;
 
     for (const n of walkedNodes) n.walkers.length = 0;

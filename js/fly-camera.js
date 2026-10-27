@@ -3,7 +3,7 @@ import { heightAt } from './terrain.js';
 
 // Free-flying camera: click to capture the mouse (pointer lock) and look around, or drag with the mouse held down.
 // WASD/arrows move along the view, Space/C rise and sink, Shift goes 4× faster, the wheel scales the base speed.
-// The camera never drops below 1.7 m over the ground.
+// The camera never drops below 1.7 m over the ground. It only listens while `enabled` (cameras.js's free camera).
 
 export class FlyCamera {
   constructor(camera, dom) {
@@ -13,25 +13,27 @@ export class FlyCamera {
     this.pitch = 0;
     this.speed = 40; // m/s
     this.keys = new Set();
+    this.enabled = true;
 
     dom.addEventListener('click', () => {
-      if (document.pointerLockElement !== dom) dom.requestPointerLock?.()?.catch?.(() => {});
+      if (this.enabled && document.pointerLockElement !== dom) dom.requestPointerLock?.()?.catch?.(() => {});
     });
     // drag-look needs a press that started on the canvas and a button still held on each move, so neither a mouseup
     // lost outside the window nor a button reported down without a press here can leave the camera turning
     this.dragging = false;
-    dom.addEventListener('mousedown', (e) => (this.dragging = e.button === 0));
+    dom.addEventListener('mousedown', (e) => (this.dragging = this.enabled && e.button === 0));
     dom.addEventListener('mousemove', (e) => {
       if (!(e.buttons & 1)) this.dragging = false;
-      if (document.pointerLockElement !== dom && !this.dragging) return;
+      if (!this.enabled || (document.pointerLockElement !== dom && !this.dragging)) return;
       this.yaw -= e.movementX * 0.0022;
       this.pitch = THREE.MathUtils.clamp(this.pitch - e.movementY * 0.0022, -1.55, 1.55);
     });
     dom.addEventListener('wheel', (e) => {
+      if (!this.enabled) return;
       e.preventDefault();
       this.speed = THREE.MathUtils.clamp(this.speed * Math.exp(-e.deltaY * 0.001), 3, 600);
     }, { passive: false });
-    window.addEventListener('keydown', (e) => this.keys.add(e.code));
+    window.addEventListener('keydown', (e) => this.enabled && this.keys.add(e.code));
     window.addEventListener('keyup', (e) => this.keys.delete(e.code));
     window.addEventListener('blur', () => this.keys.clear());
   }

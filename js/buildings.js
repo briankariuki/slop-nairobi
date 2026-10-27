@@ -38,7 +38,7 @@ function facadeColour(b) {
 }
 
 // One footing per tower: parts and podiums with the same name share the lowest base among them
-function footings() {
+export function footings() {
   const byName = new Map();
   const base = new Map();
   for (const b of GEO.buildings) {
