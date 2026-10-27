@@ -309,6 +309,56 @@ const BODY_SPECS = {
   }
 };
 BODY_SPECS.taxi = Object.assign({}, BODY_SPECS.sedan, { name: 'taxi', sign: true });
+// The matatu: a 14-seat Toyota Hiace minibus, 4.84 m long and 2.2 m tall, with a short sloped nose, a long glasshouse
+// and an upright tail. Painted in a loud base colour with a contrasting graphic and the yellow PSV band (`matatu`).
+BODY_SPECS.matatu = {
+  name: 'matatu',
+  zFront: 2.42,
+  zRear: -2.42,
+  wheelRadius: 0.34,
+  wheelZ: 1.35,
+  wheelX: 0.84,
+  archGap: 0.07,
+  archFlare: 0.02,
+  tuck: 0.06,
+  halfWidth: [[2.42, 0.9], [1.35, 0.935], [0, 0.94], [-1.35, 0.94], [-2.42, 0.935]],
+  sill: [[2.42, 0.44], [1.2, 0.4], [-1.2, 0.4], [-2.42, 0.46]],
+  shoulder: [[2.42, 0.86], [0, 0.96], [-2.42, 0.96]],
+  edge: [[2.3, 1.0], [2.1, 1.12], [1.9, 1.24], [0, 1.28], [-2.42, 1.3]],
+  crown: [[2.3, 0.03], [1.9, 0.01], [0, 0.004], [-2.42, 0.004]],
+  tumble: [[2.42, 0.08], [0, 0.07], [-2.42, 0.07]],
+  nose: { halfWidth: [0.2, 0.78, 3], edge: [0.1, 0.94, 3], crown: [0.1, 0.01, 2], sill: [0.12, 0.47, 2], shoulder: [0.18, 0.8, 2.4] },
+  tail: { halfWidth: [0.14, 0.86, 2.6], edge: [0.05, 1.28, 3], crown: [0.05, 0, 2], sill: [0.12, 0.48, 2], shoulder: [0.14, 0.92, 2.4] },
+  cabin: {
+    cowl: 1.88,
+    roofFront: 1.32,
+    roofRear: -2.3,
+    deck: -2.38,
+    roofY: [[1.32, 2.16], [-0.5, 2.2], [-2.3, 2.18]],
+    rail: [0.78, 0.8],
+    inset: 0.03,
+    bulge: 0.01,
+    roofEdge: 0.07,
+    roofCrown: 0.03,
+    roofRound: 5,
+    pillars: [1.05, 0.15, -0.75, -1.55]
+  },
+  doors: [1.85, 1.05, -0.2],
+  handles: [1.25, 0.0],
+  headlight: [0.64, 0.86, 0.2, 0.07],
+  taillight: [0.82, 1.05, 0.07, 0.18],
+  grille: [0.98, 0.42, 0.07],
+  intake: [0.52, 0.48, 0.04],
+  plates: [0.62, 0.78],
+  bumperLine: [1.0, 0.72],
+  bumpers: [[0.56, 0.05], [0.56, 0.05]],
+  chrome: false,
+  cladding: 0,
+  sign: false,
+  rails: true,
+  rearWiper: true,
+  matatu: true
+};
 for (const spec of Object.values(BODY_SPECS)) {
   // Kept for code that places lamp flares: lamp heights (front, rear) and centres across the car
   spec.lamps = [spec.headlight[1], spec.taillight[1]];
@@ -1196,6 +1246,19 @@ function createLoftedCarMaterial(spec, fixedColorHex = null) {
     painted = mix(mix(painted, color(0x121417), badge), color(0xffbe14), max(emblem, letters).mul(badge));
     painted = mix(painted, color(0x121417), medallion);
   }
+  if (spec.matatu) {
+    // Matatu: a diagonal-striped graphic in a contrasting colour (the paint's channels turned round) along the lower
+    // body, under the yellow PSV band that runs below the windows
+    const sides = isSide.mul(isBody);
+    const bandY = belt.sub(0.16);
+    const psv = smoothstep(0.055, 0.045, abs(p.y.sub(bandY))).mul(along).mul(sides);
+    const stripes = step(0.55, fract(p.z.add(p.y.mul(0.9)).mul(1.4)))
+      .mul(smoothstep(sillY + 0.05, sillY + 0.08, p.y))
+      .mul(step(p.y, bandY.sub(0.08)))
+      .mul(along)
+      .mul(sides);
+    painted = mix(mix(painted, paint.zxy.mul(0.85).add(0.1), stripes), color(0xf2c200), psv);
+  }
 
   // Panel shading: soft occlusion low down & under the arch lips; unpainted cladding (SUVs); door shut lines &
   // handles; trunk / hood shut lines; black cowl panel under the windshield
@@ -2007,7 +2070,98 @@ function createLoftedHelicopterMaterial() {
   return mat;
 }
 
+// ============================================================================
+// 6. BODA BODA: A 150 CC COMMUTER MOTORBIKE, ITS RIDER & PILLION PASSENGER
+// ============================================================================
+// Boxes and cylinders in metres (+z forward, +x the bike's left, y up from the road), merged per instanced draw:
+// - bike & rider (`buildBodaGeometry`): red tank and mudguards, black seat, chrome exhaust on the right, dark trousers
+//   and a helmet, coloured by vertex colours;
+// - the rider's reflective vest (`buildBodaVestGeometry`), coloured per instance;
+// - a pillion passenger behind: clothes coloured per instance (`buildBodaPassengerGeometry`), head as painted
+//   (`buildBodaPassengerHeadGeometry`).
+function bodaParts(parts) {
+  const geos = parts.map(([kind, size, pos, col, rotX = 0]) => {
+    const g =
+      kind === 'wheel' ? new THREE.CylinderGeometry(size[0], size[0], size[1], 14).rotateZ(Math.PI / 2)
+        : kind === 'ball' ? new THREE.SphereGeometry(size[0], 10, 8)
+          : new THREE.BoxGeometry(size[0], size[1], size[2]);
+    g.rotateX(rotX).translate(pos[0], pos[1], pos[2]);
+    g.deleteAttribute('uv');
+    const c = new THREE.Color(col);
+    const n = g.attributes.position.count;
+    g.setAttribute('color', new THREE.Float32BufferAttribute(Array.from({ length: n * 3 }, (_, k) => [c.r, c.g, c.b][k % 3]), 3));
+    return g;
+  });
+  return mergeGeometries(geos);
+}
+
+const BODA_RED = 0xb3121b;
+const TROUSERS = 0x2b2f38;
+const SKIN = 0x5a3a28;
+
+function buildBodaGeometry() {
+  return bodaParts([
+    ['wheel', [0.3, 0.1], [0, 0.3, 0.62], 0x1a1a1a],
+    ['wheel', [0.3, 0.1], [0, 0.3, -0.62], 0x1a1a1a],
+    ['wheel', [0.13, 0.12], [0, 0.3, 0.62], 0x9a9da2],
+    ['wheel', [0.13, 0.12], [0, 0.3, -0.62], 0x9a9da2],
+    ['box', [0.07, 0.62, 0.07], [0, 0.66, 0.56], 0x2a2a2a, -0.35], // front fork
+    ['box', [0.14, 0.04, 0.5], [0, 0.63, 0.62], BODA_RED], // mudguards
+    ['box', [0.14, 0.04, 0.46], [0, 0.66, -0.66], BODA_RED],
+    ['box', [0.26, 0.28, 0.42], [0, 0.44, 0.05], 0x55585c], // engine
+    ['box', [0.08, 0.08, 0.62], [-0.17, 0.36, -0.36], 0xb8bcc2], // exhaust
+    ['box', [0.32, 0.2, 0.46], [0, 0.82, 0.3], BODA_RED], // tank
+    ['box', [0.3, 0.1, 0.86], [0, 0.82, -0.36], 0x141414], // long seat, room for a passenger
+    ['box', [0.34, 0.04, 0.3], [0, 0.8, -0.86], 0x3a3c40], // carrier
+    ['box', [0.72, 0.04, 0.04], [0, 1.08, 0.52], 0x141414], // handlebar
+    ['box', [0.2, 0.18, 0.12], [0, 0.98, 0.64], 0x141414], // headlamp housing
+    ['box', [0.13, 0.1, 0.02], [0, 0.98, 0.705], 0xfff6d0],
+    ['box', [0.14, 0.06, 0.02], [0, 0.82, -1.015], 0xc8202c], // tail lamp
+    // rider: legs, shoes, arms to the bars, neck and helmet (the vest is drawn separately)
+    ['box', [0.38, 0.14, 0.44], [0, 0.93, 0.08], TROUSERS],
+    ['box', [0.12, 0.44, 0.12], [0.21, 0.62, 0.3], TROUSERS, 0.2],
+    ['box', [0.12, 0.44, 0.12], [-0.21, 0.62, 0.3], TROUSERS, 0.2],
+    ['box', [0.12, 0.08, 0.24], [0.21, 0.4, 0.38], 0x111111],
+    ['box', [0.12, 0.08, 0.24], [-0.21, 0.4, 0.38], 0x111111],
+    ['box', [0.09, 0.09, 0.56], [0.25, 1.24, 0.27], 0x23262d, 0.5],
+    ['box', [0.09, 0.09, 0.56], [-0.25, 1.24, 0.27], 0x23262d, 0.5],
+    ['box', [0.1, 0.1, 0.1], [0, 1.5, -0.02], SKIN],
+    ['ball', [0.15], [0, 1.64, 0.0], 0x202226] // helmet
+  ]);
+}
+
+function buildBodaVestGeometry() {
+  return bodaParts([['box', [0.42, 0.52, 0.26], [0, 1.22, -0.04], 0xffffff, -0.2]]);
+}
+
+function buildBodaPassengerGeometry() {
+  return bodaParts([
+    ['box', [0.4, 0.5, 0.26], [0, 1.18, -0.5], 0xffffff, -0.08], // top, coloured per instance
+    ['box', [0.36, 0.14, 0.36], [0, 0.93, -0.36], 0xffffff],
+    ['box', [0.12, 0.42, 0.12], [0.22, 0.66, -0.26], 0xffffff],
+    ['box', [0.12, 0.42, 0.12], [-0.22, 0.66, -0.26], 0xffffff]
+  ]);
+}
+
+function buildBodaPassengerHeadGeometry() {
+  return bodaParts([
+    ['box', [0.1, 0.1, 0.1], [0, 1.47, -0.5], SKIN],
+    ['ball', [0.12], [0, 1.6, -0.5], 0x1b1512]
+  ]);
+}
+
+// Vertex colours, multiplied by the instance colour where the mesh has one (the vest, the passenger's clothes, both
+// built white)
+function createBodaMaterial() {
+  return new THREE.MeshStandardNodeMaterial({ vertexColors: true, roughness: 0.6, metalness: 0.05 });
+}
+
 export {
+  buildBodaGeometry,
+  buildBodaVestGeometry,
+  buildBodaPassengerGeometry,
+  buildBodaPassengerHeadGeometry,
+  createBodaMaterial,
   CAR_PARTS,
   BODY_SPECS,
   carLayout,

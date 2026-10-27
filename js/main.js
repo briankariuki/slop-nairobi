@@ -45,7 +45,7 @@ console.log(`[nairobi] scene built in ${Math.round(performance.now() - t0)} ms: 
 
 // Traffic on the road graph (no sidewalks or obstacles yet: every lane is open), signalised at city-config's SIGNALS
 const traffic = createTrafficSystem(scene, [], [], SIGNALS);
-console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${traffic.network.nodes.filter((n) => n.signal).length} signalised junctions, ${traffic.cars.length} cars, ${traffic.buses.length} buses`);
+console.log(`[nairobi] traffic: ${traffic.network.edges.length} road edges, ${traffic.network.nodes.filter((n) => n.signal).length} signalised junctions, ${traffic.cars.filter((c) => !c.isMatatu).length} cars, ${traffic.cars.filter((c) => c.isMatatu).length} matatus, ${traffic.bodas.length} boda bodas, ${traffic.buses.length} buses`);
 
 const fly = new FlyCamera(camera, renderer.domElement);
 fly.lookFrom(...START.from, ...START.at);
@@ -104,6 +104,6 @@ renderer.setAnimationLoop((time) => {
     const p = camera.position;
     const ground = heightAt(p.x, p.z);
     place.textContent = nearestName(p.x, p.z);
-    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s · ${traffic.cars.filter((v) => v.edge).length + traffic.buses.filter((v) => v.edge).length} vehicles`;
+    stats.textContent = `${fps} fps · ${Math.round(GEO.terrain.base + ground)} m above sea level · ${Math.round(p.y - ground)} m up · ${Math.round(fly.speed)} m/s · ${[...traffic.cars, ...traffic.buses, ...traffic.bodas].filter((v) => v.edge).length} vehicles`;
   }
 });

@@ -20,7 +20,12 @@ import {
   buildBusSignGeometry,
   buildBusWheelGeo,
   createBusWheelMaterial,
-  createLoftedBusMaterial
+  createLoftedBusMaterial,
+  buildBodaGeometry,
+  buildBodaVestGeometry,
+  buildBodaPassengerGeometry,
+  buildBodaPassengerHeadGeometry,
+  createBodaMaterial
 } from './actor-models.js';
 
 // Cars and buses follow the road graph, obey signals, yield at crossings and react to collisions.
@@ -30,18 +35,22 @@ import {
 // traffic is a right turn, ACROSS), roundabouts (road-network.js makes the ring the main road, so traffic entering
 // gives way to it), every signal on its own cycle offset, and vehicles on the terrain and the Expressway's decks (each
 // sits at the road's height under its axles and pitches with the slope, elevation.js). No taxis or NYPD: Kenyan police
-// cars, and a city bus.
+// cars, matatus (one vehicle in five: minibuses, keener drivers), boda bodas (motorbike taxis, leaning into turns) and a
+// city bus.
 
 // Kenya drives on the left: turning right crosses the oncoming lanes, turning left keeps to the kerb
 const ACROSS = 'R';
 
 const NUM_CARS = 200;
 const NUM_BUSES = 12;
+const NUM_BODAS = 45;
 
 // Intelligent Driver Model: max acceleration, comfortable braking, time headway, standstill gap; and the sideways
 // acceleration drivers accept in bends, which sets how fast they take each turn or lane shift
 const CAR_DRIVER = { a: 2.0, b: 3.0, T: 1.2, s0: 2.0, aLat: 3.5 };
 const BUS_DRIVER = { a: 1.1, b: 2.5, T: 1.5, s0: 2.5, aLat: 2.0 };
+const MATATU_DRIVER = { a: 2.4, b: 3.6, T: 0.9, s0: 1.5, aLat: 3.8 }; // in a hurry: the next fare
+const BODA_DRIVER = { a: 3.2, b: 4.5, T: 0.8, s0: 1.2, aLat: 4.5 };
 const LOOKAHEAD = 70; // metres a driver looks ahead for vehicles, stop lines and signals
 
 // Retire distant actors even when looking their way: keeping them indefinitely starves upcoming streets.
@@ -158,6 +167,8 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
 
   const sedanMat = createLoftedCarMaterial(BODY_SPECS.sedan);
   const suvMat = createLoftedCarMaterial(BODY_SPECS.suv);
+  const matatuGeo = buildCarGeometry(BODY_SPECS.matatu, false);
+  const matatuMat = createLoftedCarMaterial(BODY_SPECS.matatu);
   const carWheelMat = createLoftedCarMaterial(BODY_SPECS.sedan, 0xffbe14);
 
   // Nairobi's traffic is mostly white and silver (imported Japanese saloons, Prados and Land Cruisers)
@@ -178,20 +189,36 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     new THREE.Color(0x3a434d), // Slate grey
     new THREE.Color(0xe9ebe6)  // Off-white
   ];
+  // Matatus are painted loud (the graphic and the yellow PSV band are the material's: spec.matatu)
+  const matatuPalette = [
+    new THREE.Color(0x1c1c22), // Black
+    new THREE.Color(0x6a1fb0), // Purple
+    new THREE.Color(0x0f8a3c), // Green
+    new THREE.Color(0xe8e8e8), // White
+    new THREE.Color(0xd8420f), // Orange
+    new THREE.Color(0x1446b8), // Blue
+    new THREE.Color(0xc2101e)  // Red
+  ];
 
   const cars = [];
   let sedanCount = 0;
   let suvCount = 0;
+  let matatuCount = 0;
   let policeCount = 0;
 
   for (let i = 0; i < NUM_CARS; i++) {
     const isPolice = (i % 100) === 6;
     const isSUV = !isPolice && (i % 5 === 0 || i % 5 === 3);
+    const isMatatu = !isPolice && i % 5 === 1;
 
     let bodyType = 'sedan';
     let col;
 
-    if (isSUV) {
+    if (isMatatu) {
+      bodyType = 'matatu';
+      matatuCount++;
+      col = matatuPalette[Math.floor(i / 5) % matatuPalette.length];
+    } else if (isSUV) {
       bodyType = 'suv';
       suvCount++;
       col = suvPalette[i % suvPalette.length];
@@ -201,10 +228,14 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
       if (isPolice) policeCount++;
     }
 
-    const car = createVehicle(false, isSUV ? 2.3 : 2.25, isSUV ? 0.92 : 0.86, isSUV ? 1.4 : 1.38, CAR_DRIVER, 10 + (i % 5) * 0.9);
+    const car = isMatatu
+      ? createVehicle(false, 2.42, 0.94, 1.35, MATATU_DRIVER, 11.5 + (i % 4) * 0.8)
+      : createVehicle(false, isSUV ? 2.3 : 2.25, isSUV ? 0.92 : 0.86, isSUV ? 1.4 : 1.38, CAR_DRIVER, 10 + (i % 5) * 0.9);
     // paint as float32 values, so renderCar() can tell whether an instance slot's paint changes by comparing
     const paint = [Math.fround(col.r), Math.fround(col.g), Math.fround(col.b)];
-    Object.assign(car, { isPolice, isSUV, bodyType, paint });
+    // collision body: half-length and mass
+    const [halfL, mass] = isMatatu ? [2.4, 2600] : isSUV ? [2.22, 2100] : [2.18, 1600];
+    Object.assign(car, { isPolice, isSUV, isMatatu, bodyType, paint, halfL, mass });
     cars.push(car);
   }
 
@@ -213,7 +244,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   // can see (or whose shadow it may see), see renderCar(). Per-instance paint & lamp / livery state the car material
   // reads: brake lights, left (+x) & right (-x) turn signals, livery (1 = police: white with a blue band).
   const bodies = {};
-  for (const [kind, geo, count, mat] of [['sedan', sedanGeo, sedanCount, sedanMat], ['suv', suvGeo, suvCount, suvMat]]) {
+  for (const [kind, geo, count, mat] of [['sedan', sedanGeo, sedanCount, sedanMat], ['suv', suvGeo, suvCount, suvMat], ['matatu', matatuGeo, matatuCount, matatuMat]]) {
     const n = Math.max(1, count);
     const lodMesh = (g) => {
       g.setAttribute('paintColor', new THREE.InstancedBufferAttribute(new Float32Array(n * 3), 3));
@@ -306,9 +337,38 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   busWheelRightInst.castShadow = busWheelRightInst.receiveShadow = true;
 
   const buses = [];
-  for (let i = 0; i < NUM_BUSES; i++) buses.push(createVehicle(true, 6.0, 1.3, 3.6, BUS_DRIVER, 8 + (i % 3)));
-  const vehicles = [...cars, ...buses];
+  for (let i = 0; i < NUM_BUSES; i++) {
+    buses.push(Object.assign(createVehicle(true, 6.0, 1.3, 3.6, BUS_DRIVER, 8 + (i % 3)), { halfL: 5.72, mass: 12000 }));
+  }
   group.add(busBodyInst, busHeaderInst, busWheelLeftInst, busWheelRightInst);
+
+  // =========================================================================
+  // 2b. BODA BODAS
+  // =========================================================================
+  // Motorbike taxis, keeping to their lane like everyone else (no filtering between cars yet). Riders in reflective
+  // vests; about half carry a passenger.
+  const bodaMat = createBodaMaterial();
+  const bodaInst = new THREE.InstancedMesh(buildBodaGeometry(), bodaMat, NUM_BODAS);
+  const bodaVestInst = new THREE.InstancedMesh(buildBodaVestGeometry(), createBodaMaterial(), NUM_BODAS);
+  const bodaPassengerInst = new THREE.InstancedMesh(buildBodaPassengerGeometry(), createBodaMaterial(), NUM_BODAS);
+  const bodaPassengerHeadInst = new THREE.InstancedMesh(buildBodaPassengerHeadGeometry(), bodaMat, NUM_BODAS);
+  const bodaShadowInst = new THREE.InstancedMesh(unitPlane, contactShadowMat, NUM_BODAS);
+  bodaShadowInst.renderOrder = 998;
+  for (const m of [bodaInst, bodaVestInst, bodaPassengerInst, bodaPassengerHeadInst]) m.castShadow = m.receiveShadow = true;
+  // instance colours exist from the start, so the material is built reading them
+  const VEST_WHITE = new THREE.Color(1, 1, 1);
+  for (let i = 0; i < NUM_BODAS; i++) for (const m of [bodaVestInst, bodaPassengerInst]) m.setColorAt(i, VEST_WHITE);
+  const VESTS = [0xc6f01e, 0xff7a12, 0xc6f01e, 0xffd21a, 0x2f8f3a].map((c) => new THREE.Color(c));
+  const CLOTHES = [0x8a2432, 0x2b4a8c, 0xd9d2c3, 0x3d6b44, 0x6b4f2a, 0xc98b1c, 0x1f2026].map((c) => new THREE.Color(c));
+  const bodas = [];
+  for (let i = 0; i < NUM_BODAS; i++) {
+    bodas.push(Object.assign(createVehicle(false, 1.0, 0.4, 0.62, BODA_DRIVER, 11 + (i % 4) * 1.2), {
+      boda: true, halfL: 1.0, mass: i % 2 ? 230 : 300, passenger: i % 2 === 0, lean: 0,
+      vest: VESTS[i % VESTS.length], clothes: CLOTHES[(i * 3) % CLOTHES.length]
+    }));
+  }
+  group.add(bodaInst, bodaVestInst, bodaPassengerInst, bodaPassengerHeadInst);
+  const vehicles = [...cars, ...buses, ...bodas];
 
   // =========================================================================
   // 3. PEDESTRIAN SYSTEM
@@ -323,7 +383,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   if (pedestrianSystem.meshes.length) group.add(...pedestrianSystem.meshes); // none yet: add() with nothing logs an error
 
   // Add vehicle contact shadows last + pre-allocated Clustered SpotLight / PointLight pools
-  group.add(carShadowInst, busShadowInst);
+  group.add(carShadowInst, busShadowInst, bodaShadowInst);
 
   // Nairobi has neither night nor clustered lighting yet: without ClusteredLighting every pooled light would be a
   // regular scene light in every material, so the pools stay empty (and the lamps unlit) until then
@@ -1173,8 +1233,8 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     body.prevX = v.prevX; body.prevZ = v.prevZ;
     body.sin = Math.sin(heading); body.cos = Math.cos(heading);
     body.halfW = v.halfWidth;
-    body.halfL = v.bus ? 5.72 : v.isSUV ? 2.22 : 2.18;
-    body.mass = v.bus ? 12000 : v.isSUV ? 2100 : 1600;
+    body.halfL = v.halfL;
+    body.mass = v.mass;
     body.vx = v.tx * v.speed + v.vx;
     body.vz = v.tz * v.speed + v.vz;
     body.angularVel = v.yawRate + v.yawVel;
@@ -1362,6 +1422,8 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
   let visibleCars = 0;
   let policeDrawn = 0;
   let visibleBuses = 0;
+  let visibleBodas = 0;
+  let bodaPassengers = 0;
   let updates = 0;
 
   function flagRange(attr, n) {
@@ -1519,6 +1581,35 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     }
 
     placeWheels(b, i, rotY, 0, BUS_SPEC.wheelRadius, BUS_SPEC.wheelX, BUS_SPEC.wheelZ, busWheelLeftInst, busWheelRightInst, BUS_SPEC.wheelRadius);
+  }
+
+  // A boda boda leans into its turns (by the lean that balances the turn, eased in), and pitches with the road
+  function renderBoda(b, dt) {
+    const rotY = b.yaw + b.yawOffset;
+    const lean = -Math.atan((b.speed * b.yawRate) / 9.81);
+    b.lean += (clamp(lean, -0.6, 0.6) - b.lean) * Math.min(1, dt * 6);
+    if (hasView && !visible(b.x, b.z, 4, b.y + 1)) return;
+
+    const i = visibleBodas++;
+    dummy.position.set(b.x, b.y + 0.018, b.z);
+    dummy.rotation.set(-b.slope, rotY, 0, 'YXZ');
+    dummy.scale.set(0.9, 1.0, 2.3);
+    dummy.updateMatrix();
+    bodaShadowInst.setMatrixAt(i, dummy.matrix);
+
+    dummy.position.set(b.x, b.y, b.z);
+    dummy.rotation.set(b.pitch - b.slope, rotY, b.lean, 'YXZ');
+    dummy.scale.set(1, 1, 1);
+    dummy.updateMatrix();
+    bodaInst.setMatrixAt(i, dummy.matrix);
+    bodaVestInst.setMatrixAt(i, dummy.matrix);
+    bodaVestInst.setColorAt(i, b.vest);
+    if (b.passenger) {
+      const k = bodaPassengers++;
+      bodaPassengerInst.setMatrixAt(k, dummy.matrix);
+      bodaPassengerHeadInst.setMatrixAt(k, dummy.matrix);
+      bodaPassengerInst.setColorAt(k, b.clothes);
+    }
   }
 
   function smoothDistFade(d, start, end) {
@@ -1692,6 +1783,8 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     visibleCars = 0;
     policeDrawn = 0;
     visibleBuses = 0;
+    visibleBodas = 0;
+    bodaPassengers = 0;
     for (let i = 0; i < vehicles.length; i++) {
       const v = vehicles[i];
       if (!v.edge) continue;
@@ -1711,6 +1804,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     for (const v of vehicles) {
       if (!v.edge) continue;
       if (v.bus) renderBus(v);
+      else if (v.boda) renderBoda(v, dt);
       else renderCar(v);
     }
     const hideEmpty = ++updates > 2;
@@ -1755,6 +1849,12 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     syncInst(busWheelLeftInst, visibleBuses * 2);
     syncInst(busWheelRightInst, visibleBuses * 2);
     syncInst(busShadowInst, visibleBuses);
+    syncInst(bodaInst, visibleBodas);
+    syncInst(bodaVestInst, visibleBodas);
+    syncInst(bodaPassengerInst, bodaPassengers);
+    syncInst(bodaPassengerHeadInst, bodaPassengers);
+    syncInst(bodaShadowInst, visibleBodas);
+    for (const m of [bodaVestInst, bodaPassengerInst]) if (m.instanceColor && m.count) flagRange(m.instanceColor, m.count);
     if (visibleBuses > 0) flagRange(busStates, visibleBuses);
     updateTrafficLights();
 
@@ -1776,6 +1876,7 @@ function createTrafficSystem(scene, sidewalks = [], obstacles = [], signalInters
     setCollisionListener,
     cars,
     buses,
+    bodas,
     peds: pedestrianSystem.peds,
     network
   };
