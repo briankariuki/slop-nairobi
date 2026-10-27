@@ -238,11 +238,13 @@ class CameraSystem {
           entity.position.z - Math.cos(totalYaw) * horizDist
         );
 
+        // aiming 5.2 m beyond the entity along the camera's own line of sight (straight ahead of it when the camera is
+        // behind), so an orbit keeps it centred and swings round it in a circle
         const lookUpBias = entity.type === 'helicopter' ? 0.2 : (entity.type === 'car' ? 0.52 : 1.55);
         desiredLook.set(
-          entity.position.x + Math.sin(entity.heading) * 5.2,
+          entity.position.x + Math.sin(totalYaw) * 5.2,
           entity.position.y + entity.cameraTargetOffset.y + lookUpBias,
-          entity.position.z + Math.cos(entity.heading) * 5.2
+          entity.position.z + Math.cos(totalYaw) * 5.2
         );
         break;
       }
@@ -355,6 +357,9 @@ class CameraSystem {
       // surged back and forth behind an accelerating or fast car. Relative to the entity a steady drive keeps the
       // camera steady, while turns, orbit drags, zoom & the speed pull-back are still eased. The entity's height is
       // eased in world space (hills, ramps, jumps, the helicopter climbing).
+      //
+      // The camera's offset is eased as an angle round the entity, a distance and a height, not as a vector: eased in a
+      // straight line, an orbit drag (or a sharp turn) cut across the circle and swung the camera in close.
       if (this.followEntity !== entity) {
         // preset or mode switch: start from where the camera is and glide over to the new framing
         this.followEntity = entity;
@@ -364,7 +369,14 @@ class CameraSystem {
       }
       const k = 1 - Math.exp(-dt * 8.5);
       this.followBaseY += (entity.position.y - this.followBaseY) * k;
-      this.followOffset.lerp(desiredPos.sub(entity.position), k);
+      const want = desiredPos.sub(entity.position);
+      const o = this.followOffset;
+      const r0 = Math.hypot(o.x, o.z), r1 = Math.hypot(want.x, want.z);
+      const a0 = Math.atan2(o.x, o.z), a1 = Math.atan2(want.x, want.z);
+      let da = a1 - a0;
+      da -= Math.round(da / (Math.PI * 2)) * Math.PI * 2;
+      const a = a0 + da * k, r = r0 + (r1 - r0) * k;
+      o.set(Math.sin(a) * r, o.y + (want.y - o.y) * k, Math.cos(a) * r);
       this.followLookOffset.lerp(desiredLook.sub(entity.position), k);
       this.currentPos.set(entity.position.x, this.followBaseY, entity.position.z).add(this.followOffset);
       this.currentLookAt.set(entity.position.x, this.followBaseY, entity.position.z).add(this.followLookOffset);
