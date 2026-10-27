@@ -103,7 +103,7 @@ const LANDMARKS = {
   'pan pacific serviced suites': [STYLE.fins, '#c4ced4', 3.2],
   'pan pacific suites': [STYLE.fins, '#c4ced4', 3.2],
   'eigthy-eight': [STYLE.fins, '#c0d3e0', 3.1],
-  'times tower': [STYLE.glass, '#3b4249', 3.7],
+  'times tower': [STYLE.glass, '#7f8c97', 3.7],
   'prism tower': [STYLE.fins, '#bcd4e4', 3.9],
   'bunge tower': [STYLE.fins, '#c4ccd3', 4.2],
   'teleposta towers': [STYLE.ribbon, '#d6c08f', 3.6],

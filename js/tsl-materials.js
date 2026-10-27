@@ -271,7 +271,8 @@ function createCurbMaterial() {
  * from each wall's own frame (`wuv`: metres along it and up it; `wall`: its width, height, style and seed; `dims`: the
  * building's storey height and bay width; `tint`: its colour). Styles (buildings.js STYLE): painted render with punched
  * windows and sills, concrete offices with piers and ribbon windows between floor bands, glass curtain walls with
- * mullions and spandrels, roofs, and plain walls. Glass reflects the sky and the sun; at night (cityUniforms.uInteriorGlow)
+ * mullions and spandrels, roofs, and plain walls. Glass mirrors the sky and the sun (as light of its own, so panes in
+ * shade still show the sky); at night (cityUniforms.uInteriorGlow)
  * a share of the windows light up warm. Windows are recessed with bumpNormal; grids are box-filtered so they settle to
  * their mean at distance instead of shimmering.
  */
@@ -342,16 +343,19 @@ function createFacadeMaterial() {
   const lit = step(float(1.0).sub(litProb), hash2D(cellId.add(vec2(seed.mul(0.37), 5.1))));
   const warmth = hash2D(cellId.add(vec2(2.3, seed)));
 
+  // The glass's reflection of the sky (the time of day's colours, lighting.js) and of the sun: light of its own
+  // (emissiveNode), not lit colour, since a pane in shade still mirrors the bright sky; how much of it, by the angle
+  const viewDir = normalize(cameraPosition.sub(positionWorld));
+  const reflectDir = reflect(viewDir.negate(), normalWorldGeometry);
+  const fresnel = pow(clamp(float(1.0).sub(abs(dot(viewDir, normalWorldGeometry))), 0.0, 1.0), 2.0);
+  const reflectance = fresnel.mul(0.7).add(0.15);
+  const skyReflect = mix(cityUniforms.uSkyHorizonColor, cityUniforms.uSkyTopColor, clamp(reflectDir.y.mul(1.2).add(0.2), 0.0, 1.0));
+  const sunSpec = pow(max(dot(reflectDir, normalize(cityUniforms.uSunDir)), 0.0), 40.0).mul(0.6);
+
   mat.colorNode = Fn(() => {
-    const viewDir = normalize(cameraPosition.sub(positionWorld));
-    const n = normalWorldGeometry;
-    const reflectDir = reflect(viewDir.negate(), n);
-    const fresnel = pow(clamp(float(1.0).sub(abs(dot(viewDir, n))), 0.0, 1.0), 2.0);
-    const skyReflect = mix(cityUniforms.uSkyHorizonColor, cityUniforms.uSkyTopColor, clamp(reflectDir.y.mul(1.2).add(0.2), 0.0, 1.0));
-    const sunSpec = pow(max(dot(reflectDir, normalize(cityUniforms.uSunDir)), 0.0), 40.0).mul(0.6);
-    // glass: the building's tint on the curtain walls, dark glazing on the others, the sky over it at grazing angles
+    // glass: the building's tint on the curtain walls, dark glazing on the others, less of it the more it reflects
     const paneBase = mix(mix(cGlassDark, tint.mul(mix(float(0.8), float(1.05), isFins)), isGlass), color(0x4f6c82), isRibbon);
-    const glass = mix(paneBase, skyReflect, fresnel.mul(0.7).add(0.15)).add(cityUniforms.uSunColor.mul(sunSpec));
+    const glass = paneBase.mul(float(1.0).sub(reflectance.mul(0.5)));
     const shopGlass = mix(cGlassDark.mul(1.3), cWarmLight.mul(0.35), lit.mul(0.5));
     const pane = mix(glass, shopGlass, isGround.mul(float(1.0).sub(isGlass)));
 
@@ -382,7 +386,8 @@ function createFacadeMaterial() {
   })();
 
   mat.roughnessNode = mix(mix(float(0.86), float(0.14), windowMask), float(0.92), isRoof);
-  mat.metalnessNode = windowMask.mul(mix(float(0.15), float(0.55), isGlass));
+  // (barely metallic: with no environment map to reflect, metal goes black in shade; the reflection is the emissive's)
+  mat.metalnessNode = windowMask.mul(0.08);
 
   // Recessed windows (and raised mullions), fading with distance and when the grid is under a few pixels
   mat.normalNode = Fn(() => {
@@ -394,10 +399,12 @@ function createFacadeMaterial() {
   })();
 
   mat.emissiveNode = Fn(() => {
-    const viewDir = normalize(cameraPosition.sub(positionWorld));
-    const transmission = float(1.0).sub(pow(clamp(float(1.0).sub(abs(dot(viewDir, normalWorldGeometry))), 0.0, 1.0), 2.0).mul(0.7));
+    const transmission = float(1.0).sub(fresnel.mul(0.7));
     const glow = mix(cWarmLight, color(0xd8e6ff), step(0.8, warmth)).mul(mix(float(0.45), float(1.0), warmth));
-    return glow.mul(lit).mul(windowMask).mul(transmission).mul(smoothstep(0.3, 1.2, cityUniforms.uInteriorGlow)).mul(0.9);
+    const lights = glow.mul(lit).mul(transmission).mul(smoothstep(0.3, 1.2, cityUniforms.uInteriorGlow)).mul(0.9);
+    // the sky and sun mirrored in the panes (not the shops' windows, which show their insides)
+    const mirror = skyReflect.mul(reflectance).mul(0.55).add(cityUniforms.uSunColor.mul(sunSpec)).mul(float(1.0).sub(isGround.mul(float(1.0).sub(isGlass))));
+    return lights.add(mirror).mul(windowMask);
   })();
   return mat;
 }
