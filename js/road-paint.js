@@ -6,7 +6,7 @@ import { createRoadPaintMaterial } from './tsl-materials.js';
 
 // Road markings generated from the drivable road network (js/road-network.js), so the paint matches where traffic
 // actually drives and stops. Slop New York's road-paint.js (MIT, © 2026 Mr.doob), with Kenya's markings: broken white
-// centre lines (solid where there are two lanes or more each way) and lane lines, yellow edge lines along the main
+// centre lines (solid where there are two lanes or more each way, double down a divided road) and lane lines, yellow edge lines along the main
 // roads, stop bars at the signals, broken give-way lines where a minor road or a roundabout's entry meets traffic with
 // priority, and zebra stripes at the crossings: OSM's (traffic.js `zebras`) and each signalised junction's crosswalks
 // (where pedestrian-routes.js walks people over). Laid on the ground like the streets (street-geometry.js drape), or on
@@ -130,8 +130,13 @@ function buildRoadPaint(scene, network, zebras = []) {
       else along(e, mid, 0.12, WHITE, ...DASH);
     }
 
-    // Yellow edge lines 0.4 m in from the kerbs of the main roads
-    if (e.axis === 'ave') for (const o of [-e.half + 0.4, e.half - 0.4]) along(e, o, 0.1, YELLOW);
+    // One way of a divided road whose other way runs between other junctions (road-network.js): its half of the road,
+    // up to its half of a double white line down the middle
+    const half = !back && e.divided;
+    if (half) along(e, -0.15, 0.12, WHITE);
+
+    // Yellow edge lines 0.4 m in from the kerbs of the main roads (a divided road's other way paints the far one)
+    if (e.axis === 'ave') for (const o of half ? [-e.half + 0.4] : [-e.half + 0.4, e.half - 0.4]) along(e, o, 0.1, YELLOW);
 
     for (const [end, node] of [[0, e.from], [1, e.to]]) {
       if (!node.shape) continue;

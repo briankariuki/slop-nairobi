@@ -18,6 +18,7 @@ const LANE_CLEAR = 1.2; // half width each lane keeps free of obstacles
 const CROSSWALK = 2.5; // depth between a junction and its stop lines
 // Road kinds the traffic drives on, by importance (service roads, mostly alleys and yards, and tunnels are left out)
 const RANK = { motorway: 7, trunk: 6, primary: 5, secondary: 4, tertiary: 3, unclassified: 2, residential: 2, living_street: 1 };
+const MEDIAN = 3; // m: the widest median a divided road's two roadways are drawn together over
 const MAJOR = 4; // secondary and up: main roads (axis 'ave'), the only ones buses take
 const MAX_LANES = 6; // per direction (the connector cache key assumes fewer than 16)
 // Speed limits (km/h) where OSM has no maxspeed
@@ -317,14 +318,14 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
   {
     const oneWay = edges.filter((e) => !e.divided && e.centred && !e.ring); // lanes about its centreline
     const lift = (e) => (e.from.lift + e.to.lift) / 2;
-    const cells = new Map(); // 16 m cells -> the one-way edges passing within 4 m
+    const cells = new Map(); // 16 m cells -> the one-way edges passing within 8 m (so roadways 16 m apart share one)
     oneWay.forEach((e, i) => {
       e.oneWay = i;
       for (let t = 0; t <= e.span; t += 8) {
         const x = e.x0 + e.dx * t;
         const z = e.z0 + e.dz * t;
-        for (let ix = Math.floor((x - 4) / 16); ix <= Math.floor((x + 4) / 16); ix++) {
-          for (let iz = Math.floor((z - 4) / 16); iz <= Math.floor((z + 4) / 16); iz++) {
+        for (let ix = Math.floor((x - 8) / 16); ix <= Math.floor((x + 8) / 16); ix++) {
+          for (let iz = Math.floor((z - 8) / 16); iz <= Math.floor((z + 8) / 16); iz++) {
             const k = (ix + 4096) * 8192 + (iz + 4096);
             const list = cells.get(k);
             if (!list) cells.set(k, [e]);
@@ -333,7 +334,7 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
         }
       }
     });
-    // metres of e along f whose lanes come within 3 m of f's (going the other way, a lane a to e's right is -a to f's)
+    // metres of e along f where their roadways overlap, or no more than a kerbed median lies between them
     const onTop = (e, f) => {
       let hits = 0;
       for (let t = 0; t <= e.span; t += 2) {
@@ -342,11 +343,24 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
         const u = px * f.dx + pz * f.dz;
         if (u < 0 || u > f.span) continue;
         const side = px * f.rx + pz * f.rz;
-        if (e.lanes.some((a) => f.lanes.some((b) => Math.abs(side - a - b) < 3))) hits += 2;
+        if (Math.abs(side) < e.half + f.half + MEDIAN) hits += 2;
       }
       return hits;
     };
-    const partner = new Map(); // edge -> half width of the widest roadway running the other way on top of it
+    // where f's line runs to e's right (m, the median along their overlap): two roadways drawn a few metres apart meet
+    // halfway, on one centreline
+    const offsetOf = (e, f) => {
+      const sides = [];
+      for (let t = 0; t <= e.span; t += 2) {
+        const px = e.x0 + e.dx * t - f.x0;
+        const pz = e.z0 + e.dz * t - f.z0;
+        const u = px * f.dx + pz * f.dz;
+        if (u >= 0 && u <= f.span) sides.push(px * f.rx + pz * f.rz);
+      }
+      sides.sort((a, b) => a - b);
+      return sides.length ? sides[sides.length >> 1] : 0;
+    };
+    const partner = new Map(); // edge -> { half, offset, hits } of the roadway running the other way on top of it
     const tested = new Set();
     for (const list of cells.values()) {
       for (let i = 0; i < list.length; i++) {
@@ -357,15 +371,24 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
           const key = Math.min(e.oneWay, f.oneWay) * 65536 + Math.max(e.oneWay, f.oneWay);
           if (tested.has(key)) continue;
           tested.add(key);
-          if (Math.max(onTop(e, f), onTop(f, e)) < 6) continue;
-          partner.set(e, Math.max(partner.get(e) || 0, f.half));
-          partner.set(f, Math.max(partner.get(f) || 0, e.half));
+          const hits = Math.max(onTop(e, f), onTop(f, e));
+          if (hits < 10) continue;
+          // (two roadways either side of a wide median, which only meet at their ends, stay apart; a kerb between them
+          // doesn't: a long roadway may face several shorter ones, and they must all meet it)
+          const offset = offsetOf(e, f);
+          if (Math.abs(offset) >= e.half + f.half + MEDIAN) continue;
+          for (const [p, q, o] of [[e, f, offset], [f, e, offsetOf(f, e)]]) {
+            const best = partner.get(p);
+            if (!best || hits > best.hits) partner.set(p, { half: q.half, offset: o, hits });
+          }
         }
       }
     }
-    for (const [e, other] of partner) {
+    for (const [e, { half, offset }] of partner) {
+      e.x0 += e.rx * offset / 2;
+      e.z0 += e.rz * offset / 2;
       e.lanes = leftOf(e.cand).filter((o) => laneOpen(e.x0, e.z0, e.dx, e.dz, e.span, o));
-      e.half += other;
+      e.half += half;
       if (e.half >= 7.25) e.axis = 'ave'; // as wide as a main road
       e.divided = true;
     }
@@ -538,8 +561,9 @@ function buildRoadNetwork(sidewalks = [], obstacles = [], signalIntersections = 
   // Paint describes the physical streets, including dead ends and roads AI traffic cannot circulate through.
   // Snapshot their geometry before routing moves stop lines, drops edges and renumbers the surviving junctions.
   const paintNodes = new Map(nodes.map((n, id) => [n, { id, x: n.x, z: n.z, lift: n.lift, shape: n.shape }]));
-  const paintEdges = edges.map(({ from, to, axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes }) => ({
-    from: paintNodes.get(from), to: paintNodes.get(to), axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes
+  const paintEdges = edges.map(({ from, to, axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes, divided }) => ({
+    from: paintNodes.get(from), to: paintNodes.get(to), axis, x0, z0, sx, sz, dx, dz, rx, rz, span, len, half, lanes,
+    divided: !!divided
   }));
   // ...and the streets as built (streets.js lays their asphalt, junctions and sidewalks): every edge, short ones too,
   // centre to centre, with each node's lift and the roads meeting it
