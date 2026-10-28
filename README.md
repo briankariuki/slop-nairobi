@@ -1,4 +1,4 @@
-# Nairobi Tour
+# Slop Cities - Nairobi
 
 ![Flying the helicopter over KICC, CBK Pension Towers and Times Tower at golden hour](screenshots/nairobi.jpg)
 
